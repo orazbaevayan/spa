@@ -1,5 +1,5 @@
 <template>
-  <h1>Home</h1>
+  <h1 class="text-gray-500">Home</h1>
   <LogoutButton />
 </template>
 
