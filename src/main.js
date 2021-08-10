@@ -7,8 +7,8 @@ import '@/assets/styles/reset.css'
 import '@/assets/styles/styles.css'
 
 router.beforeEach((to, from, next) => {
-	store.dispatch('auth/getUser').then(() => {
-		if (to.matched.some(record => record.meta.requiresAuth)) {
+	if (to.matched.some(record => record.meta.requiresAuth)) {
+		store.dispatch('auth/getUser').then(() => {
 			if (!store.getters['auth/user']) {
 				next({
 					name: 'Login',
@@ -17,10 +17,10 @@ router.beforeEach((to, from, next) => {
 			} else {
 				next()
 			}
-		} else {
-			next()
-		}
-	});
+		});
+	} else {
+		next()
+	}
 })
 
 const app = createApp(App)
