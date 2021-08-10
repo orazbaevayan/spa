@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="login">
+  <form @submit.prevent="login(credentials)">
     <label for="iin">ИИН</label>
     <input id="iin" type="text" v-model="credentials.email" autocomplete="off">
     <label for="password">Пароль</label>
@@ -9,6 +9,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
     data() {
       return {
@@ -19,13 +21,9 @@
       }
     },
     methods: {
-      login() {
-        this.$axios.get('http://localhost:8040/sanctum/csrf-cookie').then(() => {
-          this.$axios.post('http://localhost:8040/login', this.credentials).then(response => {
-            if (response.status === 200) this.$router.push({ name: 'Home' });
-          });
-        });
-      },
+      ...mapActions([
+        'login'
+      ]),
     }
   }
 </script>

@@ -12,4 +12,4 @@ app.use(router)
 app.mount('#app')
 
 axios.defaults.withCredentials = true;
-app.config.globalProperties.$axios = axios
+window.axios = axios;
