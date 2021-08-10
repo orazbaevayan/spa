@@ -5,7 +5,6 @@ import store from './store'
 import axios from 'axios'
 import '@/assets/styles/reset.css'
 import '@/assets/styles/styles.css'
-import 'tailwindcss/dist/tailwind.css'
 
 const app = createApp(App)
 app.use(store)
