@@ -1,7 +1,6 @@
 import router from '@/router'
 
 export default {
-	name: 'auth',
 	namespaced: true,
 	state: {
 		user: null
