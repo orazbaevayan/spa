@@ -1,5 +1,7 @@
 <template>
-	<LoginForm />
+	<div id="content">
+		<LoginForm />
+	</div>
 </template>
 
 <script>
@@ -12,5 +14,10 @@
 </script>
 
 <style lang="scss">
-
+#content {
+	display: flex;
+	flex-grow: 1;
+	justify-content: center;
+	align-items: center;
+}
 </style>

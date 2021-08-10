@@ -4,7 +4,7 @@
     <input id="iin" type="text" v-model="credentials.email" autocomplete="off">
     <label for="password">Пароль</label>
     <input id="password" type="password" v-model="credentials.password">
-    <input type="button" value="Вход" @click.prevent="login">
+    <input type="submit" value="Вход">
   </form>
 </template>
 
@@ -20,8 +20,8 @@
     },
     methods: {
       login() {
-        this.axios.get('http://localhost:8040/sanctum/csrf-cookie').then(() => {
-          this.axios.post('http://localhost:8040/login', this.credentials).then(response => {
+        this.$axios.get('http://localhost:8040/sanctum/csrf-cookie').then(() => {
+          this.$axios.post('http://localhost:8040/login', this.credentials).then(response => {
             if (response.status === 200) this.$router.push({ name: 'Home' });
           });
         });
@@ -36,8 +36,6 @@
     width: 300px;
     display: flex;
     flex-direction: column;
-    align-self: center;
-    margin: 0 auto;
     label {
       margin-bottom: 4px;
     }
