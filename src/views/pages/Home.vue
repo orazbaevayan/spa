@@ -4,7 +4,6 @@
     <LogoutButton />
   </div>
   <div id="content">
-    <button @click.prevent="login({ email: 'a@a.a', password: 'a' })">LOGIN</button>
     {{ user }}
   </div>
 </template>
