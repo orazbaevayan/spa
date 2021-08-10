@@ -21,9 +21,9 @@
       }
     },
     methods: {
-      ...mapActions([
-        'login'
-      ]),
+      ...mapActions({
+        login: 'auth/login'
+      }),
     }
   }
 </script>

@@ -5,8 +5,7 @@
   </div>
   <div id="content">
     <button @click.prevent="login({ email: 'a@a.a', password: 'a' })">LOGIN</button>
-    <button @click.prevent="getAuthUser">GET AUTH USER</button>
-    {{ AUTH_USER }}
+    {{ user }}
   </div>
 </template>
 
@@ -20,15 +19,14 @@ export default {
     LogoutButton
   },
   computed: {
-    ...mapGetters([
-      'AUTH_USER'
-    ])
+    ...mapGetters({
+      user: 'auth/user'
+    })
   },
   methods: {
-    ...mapActions([
-      'getAuthUser',
-      'login'
-    ])
+    ...mapActions({
+      login: 'auth/login'
+    })
   }
 }
 </script>

@@ -7,9 +7,9 @@
 
 	export default {
 		methods: {
-			...mapActions([
-				'logout'
-			])
+			...mapActions({
+				logout: 'auth/logout'
+			})
 		}
 	}
 </script>
