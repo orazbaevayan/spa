@@ -2,7 +2,7 @@
   <div id="header">
     <h1>Home</h1>
     <SelectLanguage />
-    <span>{{ user.name }}</span>
+    <span>{{ user?.name }}</span>
     <LogoutButton />
   </div>
   <div id="content">

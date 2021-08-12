@@ -54,8 +54,8 @@ export default {
 		logout(context) {
 			window.axios.post('http://localhost:8040/logout').then(response => {
 				if (response.status === 204) {
-					context.commit('SET_USER', null);
 					router.push({ name: 'Login' });
+					context.commit('SET_USER', null);
 				}
 			}).catch(error => {
 				console.log(error);
