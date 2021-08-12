@@ -45,7 +45,9 @@ export default {
 						});
 					}
 				}).catch(error => {
-					console.log(error.response);
+					if ([422, 429].includes(error.response.status)) {
+						alert(error.response.data.message);
+					}
 				});
 			});
 		},
