@@ -40,8 +40,12 @@ export default {
 							} else {
 								router.push({ path: router.currentRoute._value.query.redirect });
 							}
+						}).catch(error => {
+							console.log(error.response);
 						});
 					}
+				}).catch(error => {
+					console.log(error.response);
 				});
 			});
 		},
@@ -51,6 +55,8 @@ export default {
 					context.commit('SET_USER', null);
 					router.push({ name: 'Login' });
 				}
+			}).catch(error => {
+				console.log(error);
 			});
 		},
 	},
