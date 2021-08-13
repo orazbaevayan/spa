@@ -6,7 +6,7 @@
     <LogoutButton />
   </div>
   <div id="content">
-
+    <button @click.prevent="test">REQUEST</button>
   </div>
 </template>
 
@@ -26,6 +26,13 @@ export default {
       user: 'auth/user'
     })
   },
+  methods: {
+    test() {
+      window.axios.get('http://localhost:8040/api/test').then(response => {
+        console.log(response);
+      });
+    }
+  }
 }
 </script>
 
@@ -38,5 +45,7 @@ export default {
 }
 #content {
   flex-grow: 1;
+  text-align: center;
+  padding: 20px;
 }
 </style>

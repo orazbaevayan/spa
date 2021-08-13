@@ -62,5 +62,14 @@ app.use(router)
 app.use(i18n)
 app.mount('#app')
 
+axios.interceptors.request.use(
+	function (config) {
+		config.headers['Accept-Language'] = store.getters['locales/language'];
+		return config;
+	},
+	function (error) {
+		return Promise.reject(error);
+	}
+);
 axios.defaults.withCredentials = true;
 window.axios = axios;
