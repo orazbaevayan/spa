@@ -20,7 +20,7 @@ export default createI18n({
 				'Пароль': 'Password'
 			}
 		},
-		kz: {
+		kk: {
 			ui: {
 				'Выход': 'Шығу',
 				'Вход': 'Кіру',

@@ -1,12 +1,14 @@
-//import store from '@/store'
-//import { i18n } from '@/main'
-
 export default {
 	namespaced: true,
 	getters: {
 		language: () => {
 			if (!localStorage.getItem("language")) {
-				localStorage.setItem("language", 'ru');
+				let browserLanguage = navigator.language.split('-')[0];
+				if (['ru', 'en', 'kk'].includes(browserLanguage)) {
+					localStorage.setItem("language", browserLanguage);
+				} else {
+					localStorage.setItem("language", 'ru');
+				}
 			}
 			return localStorage.getItem("language");
 		}

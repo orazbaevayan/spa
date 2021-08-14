@@ -19,6 +19,10 @@ router.beforeEach((to, from, next) => {
 				next()
 			}
 		});
+	} else if(to.matched.some(record => record.meta.requiresGuest)) {
+		next({
+			name: 'Home'
+		})
 	} else {
 		next()
 	}

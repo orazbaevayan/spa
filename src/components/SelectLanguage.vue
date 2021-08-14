@@ -1,7 +1,7 @@
 <template>
   <select v-model="language">
     <option value="ru">РУС</option>
-    <option value="kz">ҚАЗ</option>
+    <option value="kk">ҚАЗ</option>
     <option value="en">ENG</option>
   </select>
 </template>
