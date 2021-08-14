@@ -8,8 +8,8 @@ import '@/assets/styles/reset.css'
 import '@/assets/styles/styles.css'
 
 router.beforeEach((to, from, next) => {
-	if (to.matched.some(record => record.meta.requiresAuth)) {
-		store.dispatch('auth/getUser').then(() => {
+	store.dispatch('auth/getUser').then(() => {
+		if (to.matched.some(record => record.meta.requiresAuth)) {
 			if (!store.getters['auth/user']) {
 				next({
 					name: 'Login',
@@ -18,14 +18,14 @@ router.beforeEach((to, from, next) => {
 			} else {
 				next()
 			}
-		});
-	} else if(to.matched.some(record => record.meta.requiresGuest)) {
-		next({
-			name: 'Home'
-		})
-	} else {
-		next()
-	}
+		} else if(to.matched.some(record => record.meta.requiresGuest) && store.getters['auth/user'] != null) {
+			next({
+				name: 'Home'
+			})
+		} else {
+			next()
+		}
+	});
 })
 
 const app = createApp(App)
