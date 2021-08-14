@@ -1,5 +1,5 @@
 <template>
-	<input type="button" value="Выход" @click.prevent="logout">
+	<input type="button" :value="$t('ui.Выход')" @click.prevent="logout">
 </template>
 
 <script>

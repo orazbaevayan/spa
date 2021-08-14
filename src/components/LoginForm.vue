@@ -1,10 +1,10 @@
 <template>
   <form @submit.prevent="login(credentials)">
-    <label for="iin">ИИН</label>
+    <label for="iin">{{ $t('ui.ИИН') }}</label>
     <input id="iin" type="text" v-model="credentials.email" autocomplete="off">
-    <label for="password">Пароль</label>
+    <label for="password">{{ $t('ui.Пароль') }}</label>
     <input id="password" type="password" v-model="credentials.password">
-    <input type="submit" value="Вход">
+    <input type="submit" :value="$t('ui.Вход')">
   </form>
 </template>
 

@@ -7,6 +7,15 @@
   </div>
   <div id="content">
     <button @click.prevent="test">REQUEST</button>
+    <br>
+    <br>
+    <button @click.prevent="test2">LOCALES</button>
+    <br>
+    <br>
+    <button @click.prevent="test3">RELOAD</button>
+    <br>
+    <br>
+
   </div>
 </template>
 
@@ -31,7 +40,15 @@ export default {
       window.axios.get('http://localhost:8040/api/test').then(response => {
         console.log(response);
       });
-    }
+    },
+    test2() {
+      window.axios.get('http://localhost:8040/api/locales').then(response => {
+        console.log(response);
+      });
+    },
+    test3() {
+      location.reload();
+    },
   }
 }
 </script>
