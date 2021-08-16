@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="login(credentials)">
-    <label for="iin">{{ $t('ui.ИИН') }}</label>
-    <input id="iin" type="text" v-model="credentials.iin" maxlength="12" autocomplete="off">
+    <label for="username">{{ $t('ui.ИИН') }} / {{ $t('ui.Номер телефона') }}</label>
+    <input id="username" type="text" v-model="credentials.username" maxlength="12" autocomplete="off">
     <label for="password">{{ $t('ui.Пароль') }}</label>
     <input id="password" type="password" v-model="credentials.password">
     <input type="submit" :value="$t('ui.Вход')">
@@ -15,7 +15,7 @@
     data() {
       return {
         credentials: {
-          iin: '',
+          username: '',
           password: ''
         }
       }
