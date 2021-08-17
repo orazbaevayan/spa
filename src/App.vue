@@ -1,6 +1,6 @@
 <template>
-  <LoadingOverlay />
   <router-view/>
+  <LoadingOverlay />
 </template>
 
 <script>

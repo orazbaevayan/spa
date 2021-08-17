@@ -9,7 +9,7 @@ export default {
 	},
 	getters: {
 		user: state => {
-			return User.find(state.user) || null;
+			return User.query().with('roles').find(state.user) || null;
 		},
 		check: state => {
 			return state.user != null;

@@ -22,7 +22,7 @@
     </li>
     <br>
     <br>
-    {{ users[0] }}
+    {{ user }}
   </div>
 </template>
 
@@ -35,7 +35,7 @@ import User from '@/store/models/User'
 export default {
   name: 'Home',
   mounted() {
-    User.api().get('api/users');
+    //User.api().get('api/users');
   },
   data() {
     return {
