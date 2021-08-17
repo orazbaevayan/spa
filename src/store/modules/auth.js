@@ -28,9 +28,9 @@ export default {
 			return axios.get('api/user').then(response => {
 				if (response.status === 200) {
 					User.insert({
-						data: response.data
+						data: response.data.data
 					});
-					context.commit('SET_USER', response.data.id);
+					context.commit('SET_USER', response.data.data.id);
 				}
 			}).catch(error => {
 				if (error.status === 401) {
