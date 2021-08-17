@@ -26,11 +26,14 @@
 <script>
 import LogoutButton from '@/components/LogoutButton'
 import SelectLanguage from '@/components/SelectLanguage'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import User from '@/store/models/User'
 
 export default {
   name: 'Home',
+  mounted() {
+    this.getUser(3)
+  },
   data() {
     return {
       entity: {
@@ -51,6 +54,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      'getAllUsers': 'users/getAllUsers',
+      'getUser': 'users/getUser',
+    }),
     test() {
       window.axios.get('http://localhost:8040/api/test').then(response => {
         console.log(response);

@@ -10,6 +10,7 @@ axios.interceptors.request.use(
 		return Promise.reject(error);
 	}
 );
+axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 axios.defaults.withCredentials = true;
 
 export default axios

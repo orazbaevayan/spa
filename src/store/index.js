@@ -3,6 +3,7 @@ import auth from './modules/auth'
 import locales from './modules/locales'
 import VuexORM from '@vuex-orm/core'
 import database from '@/modules/vuex-orm'
+import users from './modules/users'
 
 export default createStore({
   state: {
@@ -15,7 +16,8 @@ export default createStore({
   },
   modules: {
     auth,
-    locales
+    locales,
+    users
   },
   plugins: [VuexORM.install(database)]
 })

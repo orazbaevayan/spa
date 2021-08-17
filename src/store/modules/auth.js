@@ -22,10 +22,10 @@ export default {
 	},
 	actions: {
 		getCookie() {
-			return window.axios.get('http://localhost:8040/sanctum/csrf-cookie');
+			return window.axios.get('sanctum/csrf-cookie');
 		},
 		getUser(context) {
-			return window.axios.get('http://localhost:8040/api/user').then(response => {
+			return window.axios.get('api/user').then(response => {
 				if (response.status === 200) {
 					User.insert({
 						data: response.data
@@ -40,7 +40,7 @@ export default {
 		},
 		login(context, credentials) {
 			context.dispatch('getCookie').then(() => {
-				window.axios.post('http://localhost:8040/login', credentials).then(response => {
+				window.axios.post('login', credentials).then(response => {
 					if (response.status === 200) {
 						context.dispatch('getUser').then(() => {
 							if (!router.currentRoute._value.query.redirect) {
@@ -60,7 +60,7 @@ export default {
 			});
 		},
 		logout(context) {
-			window.axios.post('http://localhost:8040/logout').then(response => {
+			window.axios.post('logout').then(response => {
 				if (response.status === 204) {
 					router.push({ name: 'Login' });
 					context.commit('SET_USER', null);
