@@ -1,4 +1,6 @@
 import { Model } from '@vuex-orm/core'
+import RoleUser from '@/store/models/RoleUser'
+import Role from '@/store/models/Role'
 
 export default class User extends Model {
 	static entity = 'users'
@@ -12,6 +14,7 @@ export default class User extends Model {
 			email: this.attr(''),
 			phone: this.attr(''),
 			iin: this.attr(''),
+			roles: this.belongsToMany(Role, RoleUser, 'user_id', 'role_id')
 		}
 	}
 }
