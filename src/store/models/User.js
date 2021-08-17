@@ -11,6 +11,7 @@ export default class User extends Model {
 			first_name: this.attr(''),
 			last_name: this.attr(''),
 			middle_name: this.attr(''),
+			position: this.attr(''),
 			email: this.attr(''),
 			phone: this.attr(''),
 			iin: this.attr(''),

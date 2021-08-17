@@ -22,7 +22,7 @@
     </li>
     <br>
     <br>
-    {{ users }}
+    {{ users[0] }}
   </div>
 </template>
 
