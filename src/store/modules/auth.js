@@ -1,4 +1,5 @@
 import router from '@/router'
+import store from '@/store'
 
 export default {
 	namespaced: true,
@@ -7,12 +8,15 @@ export default {
 	},
 	getters: {
 		user: state => {
-			return state.user;
+			return store.getters.['users/getUserById'](state.user) || null;
+		},
+		check: state => {
+			return state.user != null;
 		}
 	},
 	mutations: {
-		SET_USER (state, user) {
-			state.user = user;
+		SET_USER (state, user_id) {
+			state.user = user_id;
 		}
 	},
 	actions: {
@@ -22,7 +26,8 @@ export default {
 		getUser(context) {
 			return window.axios.get('http://localhost:8040/api/user').then(response => {
 				if (response.status === 200) {
-					context.commit('SET_USER', response.data);
+					store.commit('users/SET_USER', response.data);
+					context.commit('SET_USER', response.data.id);
 				}
 			}).catch(error => {
 				if (error.status === 401) {

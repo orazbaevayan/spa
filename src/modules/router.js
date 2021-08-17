@@ -4,7 +4,7 @@ import store from '@/store'
 router.beforeEach((to, from, next) => {
 	store.dispatch('auth/getUser').then(() => {
 		if (to.matched.some(record => record.meta.requiresAuth)) {
-			if (!store.getters['auth/user']) {
+			if (!store.getters['auth/check']) {
 				next({
 					name: 'Login',
 					query: { redirect: to.fullPath }
@@ -12,7 +12,7 @@ router.beforeEach((to, from, next) => {
 			} else {
 				next()
 			}
-		} else if(to.matched.some(record => record.meta.requiresGuest) && store.getters['auth/user'] != null) {
+		} else if(to.matched.some(record => record.meta.requiresGuest) && store.getters['auth/check']) {
 			next({
 				name: 'Home'
 			})
