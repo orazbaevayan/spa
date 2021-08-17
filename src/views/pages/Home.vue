@@ -31,15 +31,11 @@ import LogoutButton from '@/components/LogoutButton'
 import SelectLanguage from '@/components/SelectLanguage'
 import { mapGetters, mapActions } from 'vuex'
 import User from '@/store/models/User'
-//import Role from '@/store/models/Role'
 
 export default {
   name: 'Home',
   mounted() {
     User.api().get('api/users');
-    //Role.api().get('api/roles');
-    /*this.getAllUsers();
-    this.getAllRoles();*/
   },
   data() {
     return {
@@ -70,12 +66,12 @@ export default {
       'getUser': 'users/getUser',
     }),
     test() {
-      window.axios.get('http://localhost:8040/api/test').then(response => {
+      this.$axios.get('http://localhost:8040/api/test').then(response => {
         console.log(response);
       });
     },
     test2() {
-      window.axios.get('http://localhost:8040/api/locales').then(response => {
+      this.$axios.get('http://localhost:8040/api/locales').then(response => {
         console.log(response);
       });
     },

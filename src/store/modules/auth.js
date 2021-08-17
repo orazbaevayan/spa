@@ -1,6 +1,5 @@
 import router from '@/router'
 import axios from '@/modules/axios'
-//import store from '@/store'
 import User from '@/store/models/User'
 
 export default {
