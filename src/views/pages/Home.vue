@@ -20,6 +20,9 @@
     <li v-for="entity in entities" :key="entity.id">
       {{ entity.first_name }}
     </li>
+    <br>
+    <br>
+    {{ users }}
   </div>
 </template>
 
@@ -28,11 +31,15 @@ import LogoutButton from '@/components/LogoutButton'
 import SelectLanguage from '@/components/SelectLanguage'
 import { mapGetters, mapActions } from 'vuex'
 import User from '@/store/models/User'
+//import Role from '@/store/models/Role'
 
 export default {
   name: 'Home',
   mounted() {
-    this.getUser(3)
+    User.api().get('api/users');
+    //Role.api().get('api/roles');
+    /*this.getAllUsers();
+    this.getAllRoles();*/
   },
   data() {
     return {
@@ -47,8 +54,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: 'auth/user'
+      user: 'auth/user',
     }),
+    users() {
+      return User.query().with('roles').get();
+    },
     entities() {
       return User.all();
     }
@@ -56,6 +66,7 @@ export default {
   methods: {
     ...mapActions({
       'getAllUsers': 'users/getAllUsers',
+      'getAllRoles': 'roles/getAllRoles',
       'getUser': 'users/getUser',
     }),
     test() {

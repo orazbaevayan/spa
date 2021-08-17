@@ -1,4 +1,5 @@
 import router from '@/router'
+import axios from '@/modules/axios'
 //import store from '@/store'
 import User from '@/store/models/User'
 
@@ -22,10 +23,10 @@ export default {
 	},
 	actions: {
 		getCookie() {
-			return window.axios.get('sanctum/csrf-cookie');
+			return axios.get('sanctum/csrf-cookie');
 		},
 		getUser(context) {
-			return window.axios.get('api/user').then(response => {
+			return axios.get('api/user').then(response => {
 				if (response.status === 200) {
 					User.insert({
 						data: response.data
@@ -40,7 +41,7 @@ export default {
 		},
 		login(context, credentials) {
 			context.dispatch('getCookie').then(() => {
-				window.axios.post('login', credentials).then(response => {
+				axios.post('login', credentials).then(response => {
 					if (response.status === 200) {
 						context.dispatch('getUser').then(() => {
 							if (!router.currentRoute._value.query.redirect) {
@@ -60,7 +61,7 @@ export default {
 			});
 		},
 		logout(context) {
-			window.axios.post('logout').then(response => {
+			axios.post('logout').then(response => {
 				if (response.status === 204) {
 					router.push({ name: 'Login' });
 					context.commit('SET_USER', null);
