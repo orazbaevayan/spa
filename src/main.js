@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, defineAsyncComponent } from 'vue'
 import App from '@/App.vue'
 import router from '@/modules/router'
 import store from '@/store'
@@ -11,6 +11,11 @@ const app = createApp(App)
 app.use(store)
 app.use(router)
 app.use(i18n)
-app.mount('#app');
+
+app.component('MainLayout', defineAsyncComponent(() => import('./views/layouts/MainLayout')))
+app.component('DefaultLayout', defineAsyncComponent(() => import('./views/layouts/DefaultLayout')))
+
+app.mount('#app')
+
 
 app.config.globalProperties.$axios = axios

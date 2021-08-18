@@ -1,5 +1,7 @@
 <template>
-  <router-view/>
+  <component :is="$route.meta.layout">
+    <router-view/>
+  </component>
   <LoadingOverlay />
 </template>
 
