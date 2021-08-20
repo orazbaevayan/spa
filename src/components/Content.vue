@@ -26,6 +26,7 @@
 	flex-grow: 1;
 	position: relative;
 	#content {
+		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
 		flex-grow: 1;
