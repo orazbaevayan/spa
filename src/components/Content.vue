@@ -20,20 +20,21 @@
 <style lang="scss" scoped>
 #body {
 	max-width: 100%;
-	width: 1140px;
+	width: $body-width;
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
 	position: relative;
 	#content {
-		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
 		flex-grow: 1;
 		max-width: 100%;
-		width: 840px;
-		padding-left: 300px;
-		padding-top: 41px;
+		width: $body-width;
+		@include media-breakpoint-up(lg) {
+			padding-left: $sidebar-width;
+		}
+		padding-top: $header-hight;
 	}
 }
 </style>

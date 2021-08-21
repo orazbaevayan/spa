@@ -1,7 +1,8 @@
 export default {
 	namespaced: true,
 	state: {
-		loads: 0
+		loads: 0,
+		focus: ''
 	},
 	getters: {
 		loads: state => {
@@ -9,6 +10,9 @@ export default {
 		},
 		loading: state => {
 			return state.loads > 0;
+		},
+		focus: state => {
+			return state.focus;
 		}
 	},
 	mutations: {
@@ -17,9 +21,18 @@ export default {
 		},
 		DECREMENT_LOADS (state) {
 			state.loads--;
+		},
+		SET_FOCUS (state, focus) {
+			state.focus = focus;
 		}
 	},
 	actions: {
-
+		toggleFocus(context, focus = '') {
+			if (context.getters.focus != '' && context.getters.focus == focus) {
+				context.commit('SET_FOCUS', '');
+			} else {
+				context.commit('SET_FOCUS', focus);
+			}
+		}
 	},
 }

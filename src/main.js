@@ -4,8 +4,9 @@ import router from '@/modules/router'
 import store from '@/store'
 import axios from '@/modules/axios'
 import i18n from '@/modules/i18n'
-import '@/assets/styles/reset.css'
-import '@/assets/styles/styles.css'
+import "bootstrap/scss/bootstrap.scss"
+import "bootstrap"
+import '@/assets/styles/styles.scss'
 
 const app = createApp(App)
 app.use(store)
@@ -16,6 +17,5 @@ app.component('MainLayout', defineAsyncComponent(() => import('./views/layouts/M
 app.component('DefaultLayout', defineAsyncComponent(() => import('./views/layouts/DefaultLayout')))
 
 app.mount('#app')
-
 
 app.config.globalProperties.$axios = axios
