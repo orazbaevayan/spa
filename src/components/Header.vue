@@ -1,7 +1,7 @@
 <template>
 	<div id="header">
 		<div id="header-body">
-			<button type="button" id="left-sidebar-open-button" class="btn text-light" @click.prevent="toggleFocus('left-sidebar')">
+			<button type="button" id="left-sidebar-open-button" class="btn text-light d-lg-none" @click.prevent="toggleLeftSidebar">
 				<font-awesome-icon :icon="['fas', 'bars']" />
 			</button>
 			<div id="logo">
@@ -28,8 +28,16 @@
 				'SET_FOCUS': 'ui/SET_FOCUS'
 			}),
 			...mapActions({
-				'toggleFocus': 'ui/toggleFocus'
-			})
+				'toggleFocus': 'ui/toggleFocus',
+				'clearFocus': 'ui/clearFocus'
+			}),
+			toggleLeftSidebar() {
+				if (window.innerWidth >= 992) {
+					this.clearFocus('left-sidebar');
+				} else {
+					this.toggleFocus('left-sidebar');
+				}
+			}
 		},
 		computed: {
 			...mapGetters([
@@ -56,6 +64,7 @@
 			align-items: center;
 			height: $header-hight;
 			#left-sidebar-open-button {
+				border-radius: 0;
 				&:hover {
 					background-color: darken($primary, 10%);
 				}

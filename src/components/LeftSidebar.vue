@@ -94,6 +94,7 @@
 		left: -$sidebar-width;
 		&.open {
 			left: 0px;
+			z-index: 1000;
 		}
 		&:not(.moves) {
 			transition: left 0.2s ease;

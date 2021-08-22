@@ -1,9 +1,9 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
-
 $sidebar-width: 300px;
 $header-hight: 40px;
 $body-width: 1140px;
 
 $primary: #4b636e;
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";

@@ -28,7 +28,7 @@ export default {
 	},
 	actions: {
 		toggleFocus(context, focus = '') {
-			if (context.getters.focus != '' && context.getters.focus == focus) {
+			if (context.getters.focus == focus) {
 				context.commit('SET_FOCUS', '');
 			} else {
 				context.commit('SET_FOCUS', focus);

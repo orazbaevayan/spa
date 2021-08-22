@@ -8,3 +8,8 @@ html, body, #app {
 #app {
 	align-items: center;
 }
+
+:focus {
+	outline: none !important;
+	box-shadow: none !important;
+}
