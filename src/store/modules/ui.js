@@ -33,6 +33,11 @@ export default {
 			} else {
 				context.commit('SET_FOCUS', focus);
 			}
+		},
+		clearFocus(context, focus = null) {
+			if (context.getters.focus === focus) {
+				context.commit('SET_FOCUS', '');
+			}
 		}
 	},
 }

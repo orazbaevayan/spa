@@ -1,9 +1,12 @@
 <template>
 	<div id="header">
 		<div id="header-body">
-			<a href="#" id="logo" @click.prevent="toggleFocus('leftSidebar')">
+			<button type="button" id="left-sidebar-open-button" class="btn text-light" @click.prevent="toggleFocus('left-sidebar')">
+				<font-awesome-icon :icon="['fas', 'bars']" />
+			</button>
+			<div id="logo">
 				<img src="/images/logo-light.svg" alt="Учебный центр АЗиЯ 2012">
-			</a>
+			</div>
 			<SelectLanguage />
 			<LogoutButton />
 		</div>
@@ -44,7 +47,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		background-color: #4b636e;
+		background-color: $primary;
 		#header-body {
 			max-width: 100%;
 			width: $body-width;
@@ -52,15 +55,20 @@
 			justify-content: space-between;
 			align-items: center;
 			height: $header-hight;
-		}
-		#logo {
-			padding: 10px;
-			&:hover {
-				background-color: $primary;
+			#left-sidebar-open-button {
+				&:hover {
+					background-color: darken($primary, 10%);
+				}
 			}
-			img {
-				height: 20px;
-				display: block;
+			#logo {
+				padding: 10px;
+				&:hover {
+					background-color: darken($primary, 10%);
+				}
+				img {
+					height: 20px;
+					display: block;
+				}
 			}
 		}
 	}

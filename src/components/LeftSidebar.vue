@@ -1,5 +1,5 @@
 <template>
-	<div id="left-sidebar" :class="{ open: open, moves: moves }" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove">
+	<div :id="$options.name" :class="{ open: open, moves: moves }" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove" v-closable="{ handler: clearFocus, exclude: ['left-sidebar-open-button'] }">
 		<router-link class="link" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
 		<router-link class="link" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
 	</div>
@@ -9,7 +9,7 @@
 	import { mapMutations } from 'vuex'
 
 	export default {
-		name: 'leftSidebar',
+		name: 'left-sidebar',
 		data() {
 			return {
 				moves: false,
@@ -26,6 +26,9 @@
 			...mapMutations({
 				'SET_FOCUS': 'ui/SET_FOCUS'
 			}),
+			clearFocus() {
+				this.$store.dispatch('ui/clearFocus', this.$options.name);
+			},
 			setMoves(event) {
 				event.targetTouches.length ? this.moves = true : this.moves = false;
 				this.activeTouch(event, this.lastTouch.identifier) ? this.diffX = event.target.offsetLeft - this.activeTouch(event, this.lastTouch.identifier).clientX : this.diffX = 0;
@@ -61,7 +64,7 @@
 				this.setMoves(event);
 				let left = event.target.offsetLeft;
 				if (left < -(event.target.offsetWidth / 2) || this.speed < -0.1) {
-					this.SET_FOCUS();
+					this.clearFocus(this.$options.name);
 				} else {
 					this.SET_FOCUS(this.$options.name);
 				}
@@ -83,11 +86,11 @@
 	position: fixed;
 	max-width: 80%;
 	width: $sidebar-width;
-	top: 0;
+	top: $header-hight;
 	bottom: 0;
-	padding-top: 40px;
 	background-color: #d4e8fa;
 	@include media-breakpoint-down(lg) {
+		top: 0;
 		left: -$sidebar-width;
 		&.open {
 			left: 0px;
