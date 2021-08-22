@@ -5,7 +5,9 @@
 		<br>
 		{{ 'diff: ' + diff }}
 		<br>
-		{{ 'lastTouch: ' + lastTouch }},
+		{{ 'lastTouch: ' + lastTouch }}
+		<br>
+		{{ 'speed: ' + speed }}
 	</div>
 </template>
 
@@ -19,6 +21,9 @@
 				moves: false,
 				lastTouch: null,
 				diff: 0,
+				lastPosX: 0,
+				lastTime: 0,
+				speed: 0
 			}
 		},
 		methods: {
@@ -44,6 +49,11 @@
 			},
 			touchmove(event) {
 				let left = this.activeTouch(event, this.lastTouch).clientX + this.diff;
+				if (event.changedTouches[0].identifier === this.lastTouch) {
+					this.speed = (event.changedTouches[0].clientX - this.lastPosX)/(event.timeStamp - this.lastTime);
+					this.lastTime = event.timeStamp;
+					this.lastPosX = event.changedTouches[0].clientX;
+				}
 				if (left > 0) {
 					event.target.style.left = '0px';
 				} else if (left < -event.target.offsetWidth) {
@@ -59,6 +69,9 @@
 					this.SET_FOCUS();
 				} else {
 					this.SET_FOCUS(this.$options.name);
+				}
+				if (this.speed < -0.1) {
+					this.SET_FOCUS();
 				}
 				if (!event.targetTouches.length) {
 					event.target.style.left = '';
