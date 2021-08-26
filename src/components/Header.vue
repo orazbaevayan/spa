@@ -65,14 +65,19 @@
 			height: $header-hight;
 			#left-sidebar-open-button {
 				border-radius: 0;
-				&:hover {
-					background-color: darken($primary, 10%);
+				@media(hover: hover) and (pointer: fine) {
+					&:hover {
+						background-color: darken($primary, 10%);
+					}
 				}
 			}
 			#logo {
 				padding: 10px;
-				&:hover {
-					background-color: darken($primary, 10%);
+				cursor: pointer;
+				@media(hover: hover) and (pointer: fine) {
+					&:hover {
+						background-color: darken($primary, 10%);
+					}
 				}
 				img {
 					height: 20px;

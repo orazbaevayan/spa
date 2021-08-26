@@ -1,7 +1,7 @@
 <template>
 	<div :id="$options.name" :class="{ open: open, moves: moves }" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove" v-closable="{ handler: clearFocus, exclude: ['left-sidebar-open-button'] }">
-		<router-link class="link" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
-		<router-link class="link" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
+		<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
+		<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
 	</div>
 </template>
 
@@ -41,16 +41,20 @@
 					}
 				}
 			},
+			setLastTouch(event) {
+				this.lastTouch.timeStamp = event.timeStamp;
+				this.lastTouch.clientX = event.changedTouches[0].clientX;
+			},
 			touchstart(event) {
 				this.lastTouch.identifier = event.changedTouches.item(0).identifier;
+				this.setLastTouch(event);
 				this.setMoves(event);
 			},
 			touchmove(event) {
 				let left = this.activeTouch(event, this.lastTouch.identifier).clientX + this.diffX;
 				if (event.changedTouches[0].identifier === this.lastTouch.identifier) {
 					this.speed = (event.changedTouches[0].clientX - this.lastTouch.clientX)/(event.timeStamp - this.lastTouch.timeStamp);
-					this.lastTouch.timeStamp = event.timeStamp;
-					this.lastTouch.clientX = event.changedTouches[0].clientX;
+					this.setLastTouch(event);
 				}
 				if (window.innerWidth < 992) {
 					if (left > 0) {
@@ -65,13 +69,15 @@
 			touchend(event) {
 				this.setMoves(event);
 				let left = event.target.offsetLeft;
-				if (left < -(event.target.offsetWidth / 2) || this.speed < -0.1) {
-					this.clearFocus(this.$options.name);
-				} else {
-					this.SET_FOCUS(this.$options.name);
-				}
-				if (!event.targetTouches.length) {
-					event.target.style.left = '';
+				if (window.innerWidth < 992) {
+					if (left < -(event.target.offsetWidth / 2) || this.speed < -0.1) {
+						this.clearFocus(this.$options.name);
+					} else {
+						this.SET_FOCUS(this.$options.name);
+					}
+					if (!event.targetTouches.length) {
+						event.target.style.left = '';
+					}
 				}
 			},
 		},
@@ -107,7 +113,10 @@
 		display: block;
 		text-decoration: none;
 		padding: 8px;
-		line-height: 100%;
+		line-height: 150%;
+		&.active {
+			text-decoration: underline;
+		}
 	}
 }
 </style>
