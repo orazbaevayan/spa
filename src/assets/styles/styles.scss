@@ -7,6 +7,7 @@ html, body, #app {
 
 #app {
 	align-items: center;
+	background-color: $app-background-color;
 }
 
 :focus {

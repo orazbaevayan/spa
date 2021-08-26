@@ -25,6 +25,7 @@
 	flex-direction: column;
 	flex-grow: 1;
 	position: relative;
+	margin-top: $header-hight;
 	#content {
 		display: flex;
 		flex-direction: column;
@@ -34,7 +35,6 @@
 		@include media-breakpoint-up(lg) {
 			padding-left: $sidebar-width;
 		}
-		padding-top: $header-hight;
 	}
 }
 </style>

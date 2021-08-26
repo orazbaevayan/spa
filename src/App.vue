@@ -2,15 +2,15 @@
   <component :is="$route.meta.layout">
     <router-view/>
   </component>
-  <LoadingOverlay />
+  <Overlay />
 </template>
 
 <script>
-  import LoadingOverlay from '@/components/LoadingOverlay'
+  import Overlay from '@/components/Overlay'
 
   export default {
     components: {
-      LoadingOverlay
+      Overlay
     }
   }
 </script>

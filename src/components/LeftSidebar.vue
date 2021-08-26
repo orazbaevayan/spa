@@ -52,12 +52,14 @@
 					this.lastTouch.timeStamp = event.timeStamp;
 					this.lastTouch.clientX = event.changedTouches[0].clientX;
 				}
-				if (left > 0) {
-					event.target.style.left = '0px';
-				} else if (left < -event.target.offsetWidth) {
-					event.target.style.left = -event.target.offsetWidth + 'px';
-				} else {
-					event.target.style.left = this.activeTouch(event, this.lastTouch.identifier).clientX + this.diffX + 'px';
+				if (window.innerWidth < 992) {
+					if (left > 0) {
+						event.target.style.left = '0px';
+					} else if (left < -event.target.offsetWidth) {
+						event.target.style.left = -event.target.offsetWidth + 'px';
+					} else {
+						event.target.style.left = this.activeTouch(event, this.lastTouch.identifier).clientX + this.diffX + 'px';
+					}
 				}
 			},
 			touchend(event) {
@@ -88,12 +90,13 @@
 	width: $sidebar-width;
 	top: $header-hight;
 	bottom: 0;
-	background-color: #d4e8fa;
+	background-color: #fff;
+	padding: 16px;
 	@include media-breakpoint-down(lg) {
 		top: 0;
-		z-index: 1000;
 		left: -$sidebar-width;
 		&.open {
+			z-index: 1;
 			left: 0px;
 		}
 		&:not(.moves) {

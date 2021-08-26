@@ -30,8 +30,8 @@ app.directive('closable', {
 			const { handler, exclude } = binding.value;
 			let clickedOnExcludedEl = false;
 			if(exclude) {
-				exclude.forEach(refName => {
-					let container = document.getElementById(refName);
+				exclude.forEach(el => {
+					let container = document.getElementById(el);
 					if (!clickedOnExcludedEl) {
 						clickedOnExcludedEl = event.target === container || container.contains(event.target);
 					}

@@ -2,7 +2,8 @@ export default {
 	namespaced: true,
 	state: {
 		loads: 0,
-		focus: ''
+		focus: '',
+		overlay: false
 	},
 	getters: {
 		loads: state => {
@@ -13,6 +14,12 @@ export default {
 		},
 		focus: state => {
 			return state.focus;
+		},
+		overlay: state => {
+			let overlayElements = [
+				'left-sidebar'
+			];
+			return overlayElements.includes(state.focus) ? true : state.overlay;
 		}
 	},
 	mutations: {
@@ -35,7 +42,7 @@ export default {
 			}
 		},
 		clearFocus(context, focus = null) {
-			if (context.getters.focus === focus) {
+			if (context.getters.focus === focus || focus === null) {
 				context.commit('SET_FOCUS', '');
 			}
 		}
