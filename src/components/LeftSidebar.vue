@@ -91,10 +91,10 @@
 	background-color: #d4e8fa;
 	@include media-breakpoint-down(lg) {
 		top: 0;
+		z-index: 1000;
 		left: -$sidebar-width;
 		&.open {
 			left: 0px;
-			z-index: 1000;
 		}
 		&:not(.moves) {
 			transition: left 0.2s ease;
