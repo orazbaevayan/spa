@@ -1,26 +1,14 @@
 <template>
-	<div id="body">
+	<div id="body" class="container">
 		<div id="content">
 			<slot />
 		</div>
-		<LeftSidebar />
 	</div>
 </template>
 
-<script>
-	import LeftSidebar from '@/components/LeftSidebar'
-
-	export default {
-		components: {
-			LeftSidebar
-		}
-	}
-</script>
-
 <style lang="scss" scoped>
 #body {
-	max-width: 100%;
-	width: $body-width;
+	padding: 0;
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;

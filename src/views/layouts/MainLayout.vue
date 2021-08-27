@@ -1,18 +1,21 @@
 <template>
 	<Header />
-	<Content>
+	<Body>
 		<slot />
-	</Content>
+	</Body>
+	<Ui />
 </template>
 
 <script>
 	import Header from '@/components/Header'
-	import Content from '@/components/Content'
+	import Body from '@/components/Body'
+	import Ui from '@/components/Ui'
 
 	export default {
 		components: {
 			Header,
-			Content
+			Body,
+			Ui
 		}
 	}
 </script>
