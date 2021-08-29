@@ -18,4 +18,8 @@ export default class User extends Model {
 			roles: this.belongsToMany(Role, RoleUser, 'user_id', 'role_id')
 		}
 	}
+
+	get fullName() {
+		return this.last_name + ' ' + this.first_name + (this.middle_name ? ' ' + this.middle_name : '');
+	}
 }

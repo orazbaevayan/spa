@@ -5,7 +5,7 @@
 				
 			</div>
 			<div id="info">
-				<h6>{{ user?.last_name }} {{ user?.first_name }} {{ user?.middle_name }}</h6>
+				<h6>{{ user?.fullName }}</h6>
 				<span>ИИН {{ user?.iin }}</span>
 				<span>{{ user?.phone }}</span>
 			</div>
@@ -132,7 +132,7 @@
 	#user-info {
 		display: flex;
 		flex-direction: row;
-		background-color: lighten($primary, 10%);
+		background-color: lighten($primary, 20%);
 		padding: 8px;
 		align-items: center;
 		#avatar {
