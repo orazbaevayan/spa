@@ -1,11 +1,23 @@
 <template>
 	<div :id="$options.name" :class="{ open: open, moves: moves }" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove" v-closable="{ handler: clearFocus, exclude: ['right-sidebar-open-button'] }">
-		<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('ui.Выход') }}</router-link>
+		<div id="user-info">
+			<div id="avatar">
+				
+			</div>
+			<div id="info">
+				<h6>{{ user?.last_name }} {{ user?.first_name }} {{ user?.middle_name }}</h6>
+				<span>ИИН {{ user?.iin }}</span>
+				<span>{{ user?.phone }}</span>
+			</div>
+		</div>
+		<div id="menu">
+			<a href="#" class="link" @click.prevent="$store.dispatch('auth/logout')">{{ $t('ui.Выход') }}</a>
+		</div>
 	</div>
 </template>
 
 <script>
-	import { mapMutations } from 'vuex'
+	import { mapMutations, mapGetters } from 'vuex'
 
 	export default {
 		name: 'right-sidebar',
@@ -81,9 +93,11 @@
 			},
 		},
 		computed: {
+			...mapGetters({
+				'user': 'auth/user'
+			}),
 			open() {
 				return this.$options.name === this.$store.getters['ui/focus'];
-				//return true;
 			}
 		}
 	}
@@ -94,14 +108,12 @@
 	position: fixed;
 	max-width: 80%;
 	width: $sidebar-width;
-	top: $header-hight;
 	background-color: #fff;
-	padding: 16px;
 	&:not(.moves) {
 		transition: right 0.2s ease, visibility .2s 0s ease, opacity .2s ease;
 	}
 	@include media-breakpoint-up(lg) {
-		top: $header-hight;
+		top: $header-hight + 3px;
 		border: 1px solid $gray-300;
 		&:not(.open) {
 			visibility: hidden;
@@ -112,19 +124,54 @@
 		top: 0;
 		bottom: 0;
 		right: -$sidebar-width;
-		border-left: 1px solid $gray-300;
 		&.open {
 			z-index: 1;
 			right: 0px;
 		}
 	}
-	.link {
-		display: block;
-		text-decoration: none;
+	#user-info {
+		display: flex;
+		flex-direction: row;
+		background-color: lighten($primary, 10%);
 		padding: 8px;
-		line-height: 150%;
-		&.active {
-			text-decoration: underline;
+		align-items: center;
+		#avatar {
+			background-color: #fff;
+			border-radius: 50%;
+			width: 4rem;
+			height: 4rem;
+			margin: 8px;
+		}
+		#info {
+			display: flex;
+			flex-direction: column;
+			h6, span {
+				color: #fff;
+				line-height: 100%;
+				margin: 0;
+			}
+			h6 {
+				font-size: 0.9rem;
+				margin-bottom: 8px;
+			}
+			span {
+				font-size: 0.7rem;
+			}
+			span:not(:last-child) {
+				margin-bottom: 8px;
+			}
+		}
+	}
+	#menu {
+		padding: 16px;
+		.link {
+			display: block;
+			text-decoration: none;
+			padding: 8px;
+			line-height: 150%;
+			&.active {
+				text-decoration: underline;
+			}
 		}
 	}
 }

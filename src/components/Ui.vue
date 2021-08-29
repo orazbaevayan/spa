@@ -27,11 +27,13 @@
 	padding: 0;
 	#left {
 		flex-grow: 1;
-		direction: ltr;
+		display: flex;
+		justify-content: start;
 	}
 	#right {
 		flex-grow: 1;
-		direction: rtl;
+		display: flex;
+		justify-content: end;
 	}
 }
 </style>
