@@ -112,6 +112,7 @@
 		top: 0;
 		bottom: 0;
 		right: -$sidebar-width;
+		border-left: 1px solid $gray-300;
 		&.open {
 			z-index: 1;
 			right: 0px;

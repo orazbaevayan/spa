@@ -1,5 +1,5 @@
 <template>
-	<div id="overlay" v-if="show">
+	<div id="overlay" :class="$store.getters['ui/overlayClass']">
 		<Loading v-if="$store.getters['ui/loading']" />
 	</div>
 </template>
@@ -10,11 +10,6 @@
 	export default {
 		components: {
 			Loading
-		},
-		computed: {
-			show() {
-				return this.$store.getters['ui/overlay'] || this.$store.getters['ui/loading'];
-			}
 		}
 	}
 </script>

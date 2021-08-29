@@ -17,6 +17,13 @@ export default {
 		},
 		overlay: state => {
 			return state.overlay;
+		},
+		overlayClass: (state) => {
+			let classes = {
+				'left-sidebar': '',
+				'right-sidebar': 'd-lg-none'
+			};
+			return classes[state.focus] != undefined ? classes[state.focus] : 'd-none';
 		}
 	},
 	mutations: {
