@@ -19,7 +19,6 @@ export default {
 			let overlayElements = [
 				'left-sidebar'
 			];
-			if (window.innerWidth < 992) overlayElements.push('right-sidebar');
 			return overlayElements.includes(state.focus) || state.overlay ? true : false;
 		}
 	},
