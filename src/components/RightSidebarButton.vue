@@ -16,11 +16,7 @@ import { mapActions } from 'vuex'
 				'clearFocus': 'ui/clearFocus'
 			}),
 			toggleRightSidebar() {
-				if (window.innerWidth >= 992) {
-					this.clearFocus('right-sidebar');
-				} else {
-					this.toggleFocus('right-sidebar');
-				}
+				this.toggleFocus('right-sidebar');
 			}
 		}
 	}

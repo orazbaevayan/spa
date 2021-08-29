@@ -26,25 +26,6 @@
 			...mapMutations({
 				'SET_FOCUS': 'ui/SET_FOCUS'
 			}),
-			clearFocus() {
-				this.$store.dispatch('ui/clearFocus', this.$options.name);
-			},
-			setMoves(event) {
-				event.targetTouches.length ? this.moves = true : this.moves = false;
-				this.activeTouch(event, this.lastTouch.identifier) ? this.diffX = event.target.offsetLeft - this.activeTouch(event, this.lastTouch.identifier).clientX : this.diffX = 0;
-			},
-			activeTouch(event, identifier) {
-				for (var i = 0, len = event.targetTouches.length; i < len; i++) {
-					var touch = event.targetTouches[i];
-					if (touch.identifier === identifier) {
-						return touch;
-					}
-				}
-			},
-			setLastTouch(event) {
-				this.lastTouch.timeStamp = event.timeStamp;
-				this.lastTouch.clientX = event.changedTouches[0].clientX;
-			},
 			touchstart(event) {
 				this.lastTouch.identifier = event.changedTouches.item(0).identifier;
 				this.setLastTouch(event);
@@ -65,6 +46,25 @@
 						event.target.style.left = this.activeTouch(event, this.lastTouch.identifier).clientX + this.diffX + 'px';
 					}
 				}
+			},
+			clearFocus() {
+				this.$store.dispatch('ui/clearFocus', this.$options.name);
+			},
+			setMoves(event) {
+				event.targetTouches.length ? this.moves = true : this.moves = false;
+				this.activeTouch(event, this.lastTouch.identifier) ? this.diffX = event.target.offsetLeft - this.activeTouch(event, this.lastTouch.identifier).clientX : this.diffX = 0;
+			},
+			activeTouch(event, identifier) {
+				for (var i = 0, len = event.targetTouches.length; i < len; i++) {
+					var touch = event.targetTouches[i];
+					if (touch.identifier === identifier) {
+						return touch;
+					}
+				}
+			},
+			setLastTouch(event) {
+				this.lastTouch.timeStamp = event.timeStamp;
+				this.lastTouch.clientX = event.changedTouches[0].clientX;
 			},
 			touchend(event) {
 				this.setMoves(event);

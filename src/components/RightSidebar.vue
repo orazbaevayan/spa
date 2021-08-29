@@ -25,12 +25,13 @@
 			...mapMutations({
 				'SET_FOCUS': 'ui/SET_FOCUS'
 			}),
-			clearFocus() {
-				this.$store.dispatch('ui/clearFocus', this.$options.name);
+			setLastTouch(event) {
+				this.lastTouch.timeStamp = event.timeStamp;
+				this.lastTouch.clientX = event.changedTouches[0].clientX;
 			},
 			setMoves(event) {
 				event.targetTouches.length ? this.moves = true : this.moves = false;
-				this.activeTouch(event, this.lastTouch.identifier) ? this.diffX = event.target.offsetRight - this.activeTouch(event, this.lastTouch.identifier).clientX : this.diffX = 0;
+				this.activeTouch(event, this.lastTouch.identifier) ? this.diffX = event.target.offsetLeft - this.activeTouch(event, this.lastTouch.identifier).clientX : this.diffX = 0;
 			},
 			activeTouch(event, identifier) {
 				for (var i = 0, len = event.targetTouches.length; i < len; i++) {
@@ -40,28 +41,24 @@
 					}
 				}
 			},
-			setLastTouch(event) {
-				this.lastTouch.timeStamp = event.timeStamp;
-				this.lastTouch.clientX = event.changedTouches[0].clientX;
-			},
 			touchstart(event) {
 				this.lastTouch.identifier = event.changedTouches.item(0).identifier;
 				this.setLastTouch(event);
 				this.setMoves(event);
 			},
 			touchmove(event) {
-				let right = window.innerWidth - (this.activeTouch(event, this.lastTouch.identifier).clientX + this.diffX);
+				let left = this.activeTouch(event, this.lastTouch.identifier).clientX + this.diffX;
 				if (event.changedTouches[0].identifier === this.lastTouch.identifier) {
 					this.speed = (event.changedTouches[0].clientX - this.lastTouch.clientX)/(event.timeStamp - this.lastTouch.timeStamp);
 					this.setLastTouch(event);
 				}
 				if (window.innerWidth < 992) {
-					if (right < event.target.offsetWidth) {
-						event.target.style.right = event.target.offsetWidth + 'px';
-					} else if (right > 0) {
-						event.target.style.right = '0px';
+					if (left > window.innerWidth) {
+						event.target.style.right = -event.target.offsetWidth + 'px';
+					} else if (left < window.innerWidth - event.target.offsetWidth) {
+						event.target.style.right = '0';
 					} else {
-						event.target.style.right = -(this.activeTouch(event, this.lastTouch.identifier).clientX + this.diffX + 'px');
+						event.target.style.right = window.innerWidth - event.target.offsetWidth - (this.activeTouch(event, this.lastTouch.identifier).clientX + this.diffX) + 'px';
 					}
 				}
 			},
@@ -69,15 +66,18 @@
 				this.setMoves(event);
 				let left = event.target.offsetLeft;
 				if (window.innerWidth < 992) {
-					if (left < -(event.target.offsetWidth / 2) || this.speed < -0.1) {
+					if (left > window.innerWidth - (event.target.offsetWidth / 2) || this.speed > 0.1) {
 						this.clearFocus(this.$options.name);
 					} else {
 						this.SET_FOCUS(this.$options.name);
 					}
 					if (!event.targetTouches.length) {
-						event.target.style.left = '';
+						event.target.style.right = '';
 					}
 				}
+			},
+			clearFocus() {
+				this.$store.dispatch('ui/clearFocus', this.$options.name);
 			},
 		},
 		computed: {
@@ -95,18 +95,28 @@
 	max-width: 80%;
 	width: $sidebar-width;
 	top: $header-hight;
-	bottom: 0;
 	background-color: #fff;
 	padding: 16px;
+	&:not(.moves) {
+		transition: all 0.2s ease;
+	}
+	@include media-breakpoint-up(lg) {
+		top: $header-hight;
+		&.open {
+			border: 1px solid $gray-300;
+		}
+		&:not(.open) {
+			visibility: hidden;
+			opacity: 0;
+		}
+	}
 	@include media-breakpoint-down(lg) {
 		top: 0;
+		bottom: 0;
 		right: -$sidebar-width;
 		&.open {
 			z-index: 1;
 			right: 0px;
-		}
-		&:not(.moves) {
-			transition: right 0.2s ease;
 		}
 	}
 	.link {
