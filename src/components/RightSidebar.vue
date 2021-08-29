@@ -98,13 +98,11 @@
 	background-color: #fff;
 	padding: 16px;
 	&:not(.moves) {
-		transition: all 0.2s ease;
+		transition: right 0.2s ease, visibility .2s 0s ease, opacity .2s ease;
 	}
 	@include media-breakpoint-up(lg) {
 		top: $header-hight;
-		&.open {
-			border: 1px solid $gray-300;
-		}
+		border: 1px solid $gray-300;
 		&:not(.open) {
 			visibility: hidden;
 			opacity: 0;

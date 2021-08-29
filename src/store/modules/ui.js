@@ -16,10 +16,7 @@ export default {
 			return state.focus;
 		},
 		overlay: state => {
-			let overlayElements = [
-				'left-sidebar'
-			];
-			return overlayElements.includes(state.focus) || state.overlay ? true : false;
+			return state.overlay;
 		}
 	},
 	mutations: {
@@ -31,7 +28,10 @@ export default {
 		},
 		SET_FOCUS (state, focus) {
 			state.focus = focus;
-		}
+		},
+		SET_OVERLAY (state, overlay) {
+			state.overlay = overlay;
+		},
 	},
 	actions: {
 		toggleFocus(context, focus = '') {
