@@ -1,7 +1,11 @@
 <template>
 	<div :id="$options.name" :class="{ open: open, moves: moves }" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove" v-closable="{ handler: clearFocus, exclude: ['left-sidebar-open-button'] }">
-		<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
-		<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
+		<div id="user">
+			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
+		</div>
+		<div id="admin">
+			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
+		</div>
 	</div>
 </template>
 

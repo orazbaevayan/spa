@@ -5,6 +5,7 @@ export default [
 	path: '/',
 	name: 'Home',
 	meta: {
+		title: 'Главная',
 		requiresAuth: true,
 		layout: 'MainLayout'
 	},

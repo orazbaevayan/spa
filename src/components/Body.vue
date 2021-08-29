@@ -1,10 +1,21 @@
 <template>
 	<div id="body" class="container">
 		<div id="content">
+			<Breadcrumbs />
 			<slot />
 		</div>
 	</div>
 </template>
+
+<script>
+	import Breadcrumbs from '@/components/Breadcrumbs'
+
+	export default {
+		components: {
+			Breadcrumbs
+		}
+	}
+</script>
 
 <style lang="scss" scoped>
 #body {
