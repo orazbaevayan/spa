@@ -1,13 +1,13 @@
 <template>
 	<button type="button" id="right-sidebar-open-button" class="btn text-light" @click.prevent="toggleRightSidebar">
-		<span id="name">Аян</span>
+		<span id="name">{{ user?.first_name }}</span>
 		<div id="avatar"></div>
 		<font-awesome-icon :icon="['fa', 'chevron-down']" />
 	</button>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 	export default {
 		methods: {
@@ -18,6 +18,11 @@ import { mapActions } from 'vuex'
 			toggleRightSidebar() {
 				this.toggleFocus('right-sidebar');
 			}
+		},
+		computed: {
+			...mapGetters({
+				'user': 'auth/user'
+			})
 		}
 	}
 </script>

@@ -1,16 +1,67 @@
 <template>
 	<div :id="$options.name" :class="{ open: open, moves: moves }" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove" v-closable="{ handler: clearFocus, exclude: ['left-sidebar-open-button'] }">
-		<div id="user">
+		<div id="all" class="role">
 			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
 		</div>
-		<div id="admin">
+		<div id="user" class="role" v-if="user?.roles.filter(e => e.name === 'user').length > 0">
+			<h6 class="title">Студент</h6>
+			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
+		</div>
+		<div id="teacher" class="role"  v-if="user?.roles.filter(e => e.name === 'teacher').length > 0">
+			<h6 class="title">Преподаватель</h6>
+			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
+		</div>
+		<div id="manager" class="role" v-if="user?.roles.filter(e => e.name === 'manager').length > 0">
+			<h6 class="title">Менеджер</h6>
+			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
+		</div>
+		<div id="admin" class="role" v-if="user?.roles.filter(e => e.name === 'admin').length > 0">
+			<h6 class="title">Администратор</h6>
+			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
+		</div>
+		<div id="all" class="role">
+			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
+		</div>
+		<div id="user" class="role" v-if="user?.roles.filter(e => e.name === 'user').length > 0">
+			<h6 class="title">Студент</h6>
+			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
+		</div>
+		<div id="teacher" class="role"  v-if="user?.roles.filter(e => e.name === 'teacher').length > 0">
+			<h6 class="title">Преподаватель</h6>
+			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
+		</div>
+		<div id="manager" class="role" v-if="user?.roles.filter(e => e.name === 'manager').length > 0">
+			<h6 class="title">Менеджер</h6>
+			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
+		</div>
+		<div id="admin" class="role" v-if="user?.roles.filter(e => e.name === 'admin').length > 0">
+			<h6 class="title">Администратор</h6>
+			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
+		</div>
+		<div id="all" class="role">
+			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
+		</div>
+		<div id="user" class="role" v-if="user?.roles.filter(e => e.name === 'user').length > 0">
+			<h6 class="title">Студент</h6>
+			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
+		</div>
+		<div id="teacher" class="role"  v-if="user?.roles.filter(e => e.name === 'teacher').length > 0">
+			<h6 class="title">Преподаватель</h6>
+			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
+		</div>
+		<div id="manager" class="role" v-if="user?.roles.filter(e => e.name === 'manager').length > 0">
+			<h6 class="title">Менеджер</h6>
+			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
+		</div>
+		<div id="admin" class="role" v-if="user?.roles.filter(e => e.name === 'admin').length > 0">
+			<h6 class="title">Администратор</h6>
 			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
 		</div>
 	</div>
 </template>
 
 <script>
-	import { mapMutations } from 'vuex'
+	import { mapMutations, mapGetters } from 'vuex'
 
 	export default {
 		name: 'left-sidebar',
@@ -74,7 +125,7 @@
 				this.setMoves(event);
 				let left = event.target.offsetLeft;
 				if (window.innerWidth < 992) {
-					if (left < -(event.target.offsetWidth / 2) || this.speed < -0.1) {
+					if (left < -(event.target.offsetWidth / 2) || this.speed < -0.5) {
 						this.clearFocus(this.$options.name);
 					} else {
 						this.SET_FOCUS(this.$options.name);
@@ -88,7 +139,10 @@
 		computed: {
 			open() {
 				return this.$options.name === this.$store.getters['ui/focus'];
-			}
+			},
+			...mapGetters({
+				'user': 'auth/user'
+			})
 		}
 	}
 </script>
@@ -102,6 +156,7 @@
 	bottom: 0;
 	background-color: #fff;
 	padding: 16px;
+	overflow-y: scroll;
 	@include media-breakpoint-down(lg) {
 		top: 0;
 		left: -$sidebar-width;
@@ -114,10 +169,21 @@
 			transition: left 0.2s ease;
 		}
 	}
+	.role {
+		&:not(:last-child) {
+			margin-bottom: 16px;
+		}
+		.title {
+			padding: 4px 8px;
+			line-height: 150%;
+			font-weight: bold;
+			margin: 0;
+		}
+	}
 	.link {
 		display: block;
 		text-decoration: none;
-		padding: 8px;
+		padding: 4px 8px;
 		line-height: 150%;
 		&.active {
 			text-decoration: underline;

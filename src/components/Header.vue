@@ -3,7 +3,7 @@
 		<div class="container">
 			<LeftSidebarButton />
 			<Logo />
-			<SelectLanguage />
+			<SelectLanguage class="d-none d-lg-block" />
 			<RightSidebarButton />
 		</div>
 	</div>
