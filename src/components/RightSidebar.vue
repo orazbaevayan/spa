@@ -27,10 +27,12 @@
 				lastTouch: {
 					identifier: null,
 					clientX: 0,
+					clientY: 0,
 					timestamp: 0
 				},
 				diffX: 0,
-				speed: 0
+				speedX: 0,
+				speedY: 0
 			}
 		},
 		methods: {
@@ -40,10 +42,11 @@
 			setLastTouch(event) {
 				this.lastTouch.timeStamp = event.timeStamp;
 				this.lastTouch.clientX = event.changedTouches[0].clientX;
+				this.lastTouch.clientY = event.changedTouches[0].clientY;
 			},
 			setMoves(event) {
 				event.targetTouches.length ? this.moves = true : this.moves = false;
-				this.activeTouch(event, this.lastTouch.identifier) ? this.diffX = event.target.offsetLeft - this.activeTouch(event, this.lastTouch.identifier).clientX : this.diffX = 0;
+				this.activeTouch(event, this.lastTouch.identifier) ? this.diffX = event.currentTarget.offsetLeft - this.activeTouch(event, this.lastTouch.identifier).clientX : this.diffX = 0;
 			},
 			activeTouch(event, identifier) {
 				for (var i = 0, len = event.targetTouches.length; i < len; i++) {
@@ -61,30 +64,31 @@
 			touchmove(event) {
 				let left = this.activeTouch(event, this.lastTouch.identifier).clientX + this.diffX;
 				if (event.changedTouches[0].identifier === this.lastTouch.identifier) {
-					this.speed = (event.changedTouches[0].clientX - this.lastTouch.clientX)/(event.timeStamp - this.lastTouch.timeStamp);
+					this.speedX = (event.changedTouches[0].clientX - this.lastTouch.clientX)/(event.timeStamp - this.lastTouch.timeStamp);
+					this.speedY = (event.changedTouches[0].clientY - this.lastTouch.clientY)/(event.timeStamp - this.lastTouch.timeStamp);
 					this.setLastTouch(event);
 				}
-				if (window.innerWidth < 992) {
+				if (window.innerWidth < 992 && (Math.abs(this.speedX) > Math.abs(this.speedY))) {
 					if (left > window.innerWidth) {
-						event.target.style.right = -event.target.offsetWidth + 'px';
-					} else if (left < window.innerWidth - event.target.offsetWidth) {
-						event.target.style.right = '0';
+						event.currentTarget.style.right = -event.currentTarget.offsetWidth + 'px';
+					} else if (left < window.innerWidth - event.currentTarget.offsetWidth) {
+						event.currentTarget.style.right = '0';
 					} else {
-						event.target.style.right = window.innerWidth - event.target.offsetWidth - (this.activeTouch(event, this.lastTouch.identifier).clientX + this.diffX) + 'px';
+						event.currentTarget.style.right = window.innerWidth - event.currentTarget.offsetWidth - (this.activeTouch(event, this.lastTouch.identifier).clientX + this.diffX) + 'px';
 					}
 				}
 			},
 			touchend(event) {
 				this.setMoves(event);
-				let left = event.target.offsetLeft;
-				if (window.innerWidth < 992) {
-					if (left > window.innerWidth - (event.target.offsetWidth / 2) || this.speed > 0.1) {
+				let left = event.currentTarget.offsetLeft;
+				if (window.innerWidth < 992 && event.changedTouches[0].identifier === this.lastTouch.identifier) {
+					if (left > window.innerWidth - (event.currentTarget.offsetWidth / 2) || (this.speedX > 0.1 && (Math.abs(this.speedX) > Math.abs(this.speedY)))) {
 						this.clearFocus(this.$options.name);
 					} else {
 						this.SET_FOCUS(this.$options.name);
 					}
 					if (!event.targetTouches.length) {
-						event.target.style.right = '';
+						event.currentTarget.style.right = '';
 					}
 				}
 			},

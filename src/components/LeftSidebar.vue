@@ -1,8 +1,5 @@
 <template>
 	<div :id="$options.name" :ref="$options.name" :class="{ open: open, moves: moves }" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove" v-closable="{ handler: clearFocus, exclude: ['left-sidebar-open-button'] }">
-		{{ 'speedX: ' + speedX }}
-		<br>
-		{{ 'speedY: ' + speedY }}
 		<div id="all" class="role">
 			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
 		</div>
@@ -129,10 +126,10 @@
 				this.lastTouch.clientY = event.changedTouches[0].clientY;
 			},
 			touchend(event) {
-				if (window.innerWidth < 992 && event.changedTouches[0].identifier === this.lastTouch.identifier && (Math.abs(this.speedX) > Math.abs(this.speedY))) {
+				if (window.innerWidth < 992 && event.changedTouches[0].identifier === this.lastTouch.identifier) {
 					this.setMoves(event);
 					let left = event.currentTarget.offsetLeft;
-					if (left < -(event.currentTarget.offsetWidth / 2) || this.speedX < -0.1) {
+					if (left < -(event.currentTarget.offsetWidth / 2) || (this.speedX < -0.1  && (Math.abs(this.speedX) > Math.abs(this.speedY)))) {
 						this.clearFocus(this.$options.name);
 					} else {
 						this.SET_FOCUS(this.$options.name);
