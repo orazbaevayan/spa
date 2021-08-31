@@ -161,6 +161,16 @@
 	background-color: #fff;
 	padding: 16px;
 	overflow-y: scroll;
+
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Hide scrollbar for IE, Edge and Firefox */
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+
 	@include media-breakpoint-down(lg) {
 		top: 0;
 		left: -$sidebar-width;

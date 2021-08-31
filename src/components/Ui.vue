@@ -28,12 +28,12 @@
 	#left {
 		flex-grow: 1;
 		display: flex;
-		justify-content: start;
+		justify-content: flex-start;
 	}
 	#right {
 		flex-grow: 1;
 		display: flex;
-		justify-content: end;
+		justify-content: flex-end;
 	}
 }
 </style>
