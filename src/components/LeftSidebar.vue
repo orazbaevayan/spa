@@ -161,6 +161,7 @@
 	background-color: #fff;
 	padding: 16px;
 	overflow-y: scroll;
+	overscroll-behavior: none;
 
 	/* Hide scrollbar for Chrome, Safari and Opera */
 	&::-webkit-scrollbar {
