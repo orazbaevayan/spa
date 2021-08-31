@@ -19,44 +19,6 @@
 			<h6 class="title">Администратор</h6>
 			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
 		</div>
-		<div id="all" class="role">
-			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
-		</div>
-		<div id="user" class="role" v-if="user?.roles.filter(e => e.name === 'user').length > 0">
-			<h6 class="title">Студент</h6>
-			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
-		</div>
-		<div id="teacher" class="role"  v-if="user?.roles.filter(e => e.name === 'teacher').length > 0">
-			<h6 class="title">Преподаватель</h6>
-			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
-		</div>
-		<div id="manager" class="role" v-if="user?.roles.filter(e => e.name === 'manager').length > 0">
-			<h6 class="title">Менеджер</h6>
-			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
-		</div>
-		<div id="admin" class="role" v-if="user?.roles.filter(e => e.name === 'admin').length > 0">
-			<h6 class="title">Администратор</h6>
-			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
-		</div>
-		<div id="all" class="role">
-			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
-		</div>
-		<div id="user" class="role" v-if="user?.roles.filter(e => e.name === 'user').length > 0">
-			<h6 class="title">Студент</h6>
-			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
-		</div>
-		<div id="teacher" class="role"  v-if="user?.roles.filter(e => e.name === 'teacher').length > 0">
-			<h6 class="title">Преподаватель</h6>
-			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
-		</div>
-		<div id="manager" class="role" v-if="user?.roles.filter(e => e.name === 'manager').length > 0">
-			<h6 class="title">Менеджер</h6>
-			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
-		</div>
-		<div id="admin" class="role" v-if="user?.roles.filter(e => e.name === 'admin').length > 0">
-			<h6 class="title">Администратор</h6>
-			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
-		</div>
 	</div>
 </template>
 
