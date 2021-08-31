@@ -17,7 +17,7 @@
 </template>
 
 <script>
-	import { mapMutations, mapGetters } from 'vuex'
+	import { mapActions, mapGetters } from 'vuex'
 
 	export default {
 		name: 'right-sidebar',
@@ -36,8 +36,8 @@
 			}
 		},
 		methods: {
-			...mapMutations({
-				'SET_FOCUS': 'ui/SET_FOCUS'
+			...mapActions({
+				'activateFocus': 'ui/activateFocus'
 			}),
 			setLastTouch(event) {
 				this.lastTouch.timeStamp = event.timeStamp;
@@ -85,7 +85,7 @@
 					if (left > window.innerWidth - (event.currentTarget.offsetWidth / 2) || (this.speedX > 0.1 && (Math.abs(this.speedX) > Math.abs(this.speedY)))) {
 						this.clearFocus(this.$options.name);
 					} else {
-						this.SET_FOCUS(this.$options.name);
+						this.activateFocus(this.$options.name);
 					}
 					if (!event.targetTouches.length) {
 						event.currentTarget.style.right = '';
@@ -179,6 +179,10 @@
 		}
 		-ms-overflow-style: none;  /* IE and Edge */
 		scrollbar-width: none;  /* Firefox */
+		-webkit-user-select: none;  /* Chrome all / Safari all */
+		-moz-user-select: none;     /* Firefox all */
+		-ms-user-select: none;      /* IE 10+ */
+		user-select: none;          /* Likely future */   
 		.link {
 			display: block;
 			text-decoration: none;

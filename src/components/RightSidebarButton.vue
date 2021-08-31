@@ -13,7 +13,6 @@ import { mapActions, mapGetters } from 'vuex'
 		methods: {
 			...mapActions({
 				'toggleFocus': 'ui/toggleFocus',
-				'clearFocus': 'ui/clearFocus'
 			}),
 			toggleRightSidebar() {
 				this.toggleFocus('right-sidebar');

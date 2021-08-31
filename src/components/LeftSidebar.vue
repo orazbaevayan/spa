@@ -1,29 +1,12 @@
 <template>
 	<div :id="$options.name" :ref="$options.name" :class="{ open: open, moves: moves }" @touchstart="touchstart" @touchend="touchend" @touchmove="touchmove" v-closable="{ handler: clearFocus, exclude: ['left-sidebar-open-button'] }">
-		<div id="all" class="role">
-			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
-		</div>
-		<div id="user" class="role" v-if="user?.roles.filter(e => e.name === 'user').length > 0">
-			<h6 class="title">Студент</h6>
-			<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
-		</div>
-		<div id="teacher" class="role"  v-if="user?.roles.filter(e => e.name === 'teacher').length > 0">
-			<h6 class="title">Преподаватель</h6>
-			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
-		</div>
-		<div id="manager" class="role" v-if="user?.roles.filter(e => e.name === 'manager').length > 0">
-			<h6 class="title">Менеджер</h6>
-			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
-		</div>
-		<div id="admin" class="role" v-if="user?.roles.filter(e => e.name === 'admin').length > 0">
-			<h6 class="title">Администратор</h6>
-			<router-link class="link" active-class="active" :to="{ name: 'Courses' }">{{ $t('pages.Курсы') }}</router-link>
-		</div>
+		<NavigationMenu />
 	</div>
 </template>
 
 <script>
-	import { mapMutations, mapGetters } from 'vuex'
+	import NavigationMenu from '@/components/NavigationMenu'
+	import { mapActions } from 'vuex'
 
 	export default {
 		name: 'left-sidebar',
@@ -41,9 +24,12 @@
 				speedY: 0
 			}
 		},
+		components: {
+			NavigationMenu
+		},
 		methods: {
-			...mapMutations({
-				'SET_FOCUS': 'ui/SET_FOCUS'
+			...mapActions({
+				'setFocus': 'ui/setFocus'
 			}),
 			touchstart(event) {
 				this.lastTouch.identifier = event.changedTouches.item(0).identifier;
@@ -94,7 +80,7 @@
 					if (left < -(event.currentTarget.offsetWidth / 2) || (this.speedX < -0.1  && (Math.abs(this.speedX) > Math.abs(this.speedY)))) {
 						this.clearFocus(this.$options.name);
 					} else {
-						this.SET_FOCUS(this.$options.name);
+						this.setFocus(this.$options.name);
 					}
 					if (!event.targetTouches.length) {
 						event.currentTarget.style.left = '';
@@ -105,10 +91,7 @@
 		computed: {
 			open() {
 				return this.$options.name === this.$store.getters['ui/focus'];
-			},
-			...mapGetters({
-				'user': 'auth/user'
-			})
+			}
 		}
 	}
 </script>
@@ -122,18 +105,19 @@
 	bottom: 0;
 	background-color: #fff;
 	padding: 16px;
-	overflow-y: scroll;
+	overflow-y: auto;
 	overscroll-behavior: none;
-
 	/* Hide scrollbar for Chrome, Safari and Opera */
 	&::-webkit-scrollbar {
 		display: none;
 	}
-
 	/* Hide scrollbar for IE, Edge and Firefox */
 	-ms-overflow-style: none;  /* IE and Edge */
 	scrollbar-width: none;  /* Firefox */
-
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+	user-select: none;          /* Likely future */   
 	@include media-breakpoint-down(lg) {
 		top: 0;
 		left: -$sidebar-width;
@@ -144,26 +128,6 @@
 		}
 		&:not(.moves) {
 			transition: left 0.2s ease;
-		}
-	}
-	.role {
-		&:not(:last-child) {
-			margin-bottom: 16px;
-		}
-		.title {
-			padding: 4px 8px;
-			line-height: 150%;
-			font-weight: bold;
-			margin: 0;
-		}
-	}
-	.link {
-		display: block;
-		text-decoration: none;
-		padding: 4px 8px;
-		line-height: 150%;
-		&.active {
-			text-decoration: underline;
 		}
 	}
 }

@@ -42,7 +42,7 @@ export default {
 	},
 	actions: {
 		toggleFocus(context, focus = '') {
-			if (context.getters.focus == focus) {
+			if (context.getters['focus'] == focus) {
 				context.commit('SET_FOCUS', '');
 			} else {
 				context.commit('SET_FOCUS', focus);
@@ -52,6 +52,9 @@ export default {
 			if (context.getters.focus === focus || focus === null) {
 				context.commit('SET_FOCUS', '');
 			}
+		},
+		activateFocus(context, focus = '') {
+			context.commit('SET_FOCUS', focus);
 		}
 	},
 }
