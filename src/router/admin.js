@@ -1,7 +1,6 @@
 export default [
 {
-	path: '/courses',
-	name: 'Courses',
+	path: '/admin/courses',
 	meta: {
 		title: 'Курсы',
 		requiresAuth: true,
@@ -10,6 +9,6 @@ export default [
 		{ name: 'Home' }
 		]
 	},
-	component: () => import(/* webpackChunkName: "courses" */ '../views/pages/admin/courses/IndexCourses.vue')
+	component: () => import('../views/pages/admin/courses/IndexCourses.vue')
 },
 ];
