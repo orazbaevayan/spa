@@ -3,7 +3,8 @@ export default {
 	state: {
 		loads: 0,
 		focus: '',
-		overlay: false
+		overlay: false,
+		notifications: []
 	},
 	getters: {
 		loads: state => {
@@ -18,12 +19,15 @@ export default {
 		overlay: state => {
 			return state.overlay;
 		},
+		notifications: state => {
+			return state.notifications;
+		},
 		overlayClass: (state) => {
 			let classes = {
 				'left-sidebar': '',
 				'right-sidebar': 'd-lg-none'
 			};
-			return classes[state.focus] != undefined ? classes[state.focus] : 'd-none';
+			return classes[state.focus] != undefined ? classes[state.focus] : (state.overlay || state.loading ? '' : 'd-none');
 		}
 	},
 	mutations: {
@@ -55,6 +59,18 @@ export default {
 		},
 		activateFocus(context, focus = '') {
 			context.commit('SET_FOCUS', focus);
+		},
+		notify: (context, payload = { text: '', status: '' }) => {
+			let id = (Math.random().toString(36) + Date.now().toString(36)).substr(2);
+			context.state.notifications.push({
+				...payload,
+				id: id
+			});
+			setTimeout(function() {
+				context.state.notifications = context.state.notifications.filter(notification => {
+					return notification.id != id;
+				});
+			}, 5000);
 		}
 	},
 }

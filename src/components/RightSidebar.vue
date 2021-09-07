@@ -139,7 +139,7 @@
 	#user-info {
 		display: flex;
 		flex-direction: row;
-		background-color: lighten($primary, 20%);
+		background-color: lighten($header-background, 20%);
 		padding: 8px;
 		align-items: center;
 		#avatar {

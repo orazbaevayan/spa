@@ -34,7 +34,7 @@ import { mapActions, mapGetters } from 'vuex'
 	align-items: center;
 	@media(hover: hover) and (pointer: fine) {
 		&:hover {
-			background-color: darken($primary, 5%);
+			background-color: darken($header-background, 5%);
 		}
 	}
 	#name {

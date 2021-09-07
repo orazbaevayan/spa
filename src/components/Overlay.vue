@@ -1,18 +1,6 @@
 <template>
-	<div id="overlay" :class="$store.getters['ui/overlayClass']">
-		<Loading v-if="$store.getters['ui/loading']" />
-	</div>
+	<div id="overlay" :class="$store.getters['ui/overlayClass']"></div>
 </template>
-
-<script>
-	import Loading from '@/components/Loading'
-
-	export default {
-		components: {
-			Loading
-		}
-	}
-</script>
 
 <style lang="scss" scoped>
 	#overlay {

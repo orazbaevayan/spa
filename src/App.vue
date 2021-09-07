@@ -2,17 +2,12 @@
   <component :is="$route.meta.layout">
     <router-view />
   </component>
-  <Overlay />
 </template>
 
 <script>
-  import Overlay from '@/components/Overlay'
   import { mapGetters } from 'vuex'
 
   export default {
-    components: {
-      Overlay
-    },
     computed: {
       ...mapGetters({
         'focus': 'ui/focus'

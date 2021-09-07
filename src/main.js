@@ -20,9 +20,14 @@ app.use(store)
 app.use(router)
 app.use(i18n)
 
+// Layouts
 app.component('MainLayout', defineAsyncComponent(() => import('./views/layouts/MainLayout')))
 app.component('DefaultLayout', defineAsyncComponent(() => import('./views/layouts/DefaultLayout')))
 app.component('font-awesome-icon', FontAwesomeIcon)
+
+// Components
+app.component('Title', defineAsyncComponent(() => import('./components/Title')))
+
 
 app.directive('closable', {
 	beforeMount(el, binding) {

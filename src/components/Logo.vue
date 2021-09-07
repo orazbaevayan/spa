@@ -10,7 +10,7 @@
 	cursor: pointer;
 	@media(hover: hover) and (pointer: fine) {
 		&:hover {
-			background-color: darken($primary, 5%);
+			background-color: darken($header-background, 5%);
 		}
 	}
 	img {

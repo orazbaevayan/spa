@@ -33,7 +33,7 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		background-color: $primary;
+		background-color: $header-background;
 		.container {
 			padding: 0;
 			display: flex;
