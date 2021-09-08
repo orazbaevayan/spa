@@ -1,11 +1,17 @@
 $sidebar-width: 300px;
 $header-hight: 40px;
-$body-width: 1140px;
 
 $primary: #7a97a5;
 
-//$header-background: #4b636e;
 $header-background: darken($primary, 20%);
+
+$container-max-widths: (
+	sm: 540px,
+	md: 720px,
+	lg: 960px,
+	xl: 1140px,
+	xxl: 1140px
+);
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";

@@ -30,7 +30,6 @@
 		flex-direction: column;
 		flex-grow: 1;
 		max-width: 100%;
-		width: $body-width;
 		@include media-breakpoint-up(lg) {
 			padding-left: $sidebar-width;
 		}

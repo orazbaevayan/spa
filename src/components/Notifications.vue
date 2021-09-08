@@ -18,8 +18,9 @@
 		z-index: 600000;
 		top: 40px;
 		right: 0px;
+		padding: 8px;
 		.notification {
-			margin: 10px;
+			margin: 8px;
 		}
 	}
 </style>
