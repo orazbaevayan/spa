@@ -3,20 +3,36 @@ const { t } = i18n.global
 
 export default [
 {
-	name: 'admin-index-courses',
-	path: '/admin/courses',
+	name: 'manager-index-courses',
+	path: '/manager/courses',
 	meta: {
 		title: 'Курсы',
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
 		{ name: 'Home' },
-		{ isLink: false, text: t('roles.Админ') },
+		{ isLink: false, text: t('roles.Менеджер') },
 		]
 	},
-	component: () => import('../views/pages/admin/courses/IndexCourses.vue')
+	component: () => import('../views/pages/manager/courses/IndexCourses.vue')
 },
 {
+	name: 'manager-index-groups',
+	path: '/manager/courses/:course_id/groups',
+	meta: {
+		title: 'Группы',
+		requiresAuth: true,
+		layout: 'MainLayout',
+		breadcrumbs: [
+		{ name: 'Home' },
+		{ isLink: false, text: t('roles.Менеджер') },
+		{ name: 'manager-index-courses' },
+		{ isLink: false, text: 'Промышленная безопасность' },
+		]
+	},
+	component: () => import('../views/pages/manager/courses/ShowCourse.vue')
+},
+/*{
 	name: 'admin-create-course',
 	path: '/admin/courses/create',
 	meta: {
@@ -25,7 +41,6 @@ export default [
 		layout: 'MainLayout',
 		breadcrumbs: [
 		{ name: 'Home' },
-		{ isLink: false, text: t('roles.Админ') },
 		{ name: 'admin-index-courses' }
 		]
 	},
@@ -40,10 +55,9 @@ export default [
 		layout: 'MainLayout',
 		breadcrumbs: [
 		{ name: 'Home' },
-		{ isLink: false, text: t('roles.Админ') },
 		{ name: 'admin-index-courses' }
 		]
 	},
 	component: () => import('../views/pages/admin/courses/EditCourse.vue')
-},
+},*/
 ];
