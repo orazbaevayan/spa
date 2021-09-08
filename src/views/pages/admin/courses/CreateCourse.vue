@@ -17,9 +17,7 @@
 	export default {
 		data() {
 			return {
-				course: {
-					name: ''
-				}
+				course: new Course
 			}
 		},
 		methods: {
