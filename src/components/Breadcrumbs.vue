@@ -10,7 +10,7 @@
 						<router-link :to="breadcrumb" v-text="$router.resolve(breadcrumb).meta.title" class="px-2 py-1 navigation-link"/>
 					</div>
 					<div v-else>
-						<span class="navigation-link px-2 py-1" v-text="breadcrumb.text"></span>
+						<span class="navigation-link px-2 py-1" v-text="breadcrumb.text($route)"></span>
 					</div>
 					<span>/</span>
 					<span v-if="(index + 1) == breadcrumbs.length" class="px-2 py-1 navigation-link active" v-text="$route.meta.title"></span>

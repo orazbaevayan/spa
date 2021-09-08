@@ -1,4 +1,5 @@
 import i18n from '@/modules/i18n'
+/*import Course from '@/store/models/Course'*/
 const { t } = i18n.global
 
 export default [
@@ -11,7 +12,7 @@ export default [
 		layout: 'MainLayout',
 		breadcrumbs: [
 		{ name: 'Home' },
-		{ isLink: false, text: t('roles.Менеджер') },
+		{ isLink: false, text: () => t('roles.Менеджер') },
 		]
 	},
 	component: () => import('../views/pages/manager/courses/IndexCourses.vue')
@@ -25,39 +26,11 @@ export default [
 		layout: 'MainLayout',
 		breadcrumbs: [
 		{ name: 'Home' },
-		{ isLink: false, text: t('roles.Менеджер') },
+		{ isLink: false, text: () => t('roles.Менеджер') },
 		{ name: 'manager-index-courses' },
-		{ isLink: false, text: 'Промышленная безопасность' },
+		{ isLink: false, text: () => 'Пром без' },
 		]
 	},
 	component: () => import('../views/pages/manager/courses/ShowCourse.vue')
 },
-/*{
-	name: 'admin-create-course',
-	path: '/admin/courses/create',
-	meta: {
-		title: 'Создание курса',
-		requiresAuth: true,
-		layout: 'MainLayout',
-		breadcrumbs: [
-		{ name: 'Home' },
-		{ name: 'admin-index-courses' }
-		]
-	},
-	component: () => import('../views/pages/admin/courses/CreateCourse.vue')
-},
-{
-	name: 'admin-edit-course',
-	path: '/admin/courses/:course_id',
-	meta: {
-		title: 'Редактирование курса',
-		requiresAuth: true,
-		layout: 'MainLayout',
-		breadcrumbs: [
-		{ name: 'Home' },
-		{ name: 'admin-index-courses' }
-		]
-	},
-	component: () => import('../views/pages/admin/courses/EditCourse.vue')
-},*/
 ];

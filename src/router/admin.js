@@ -11,7 +11,7 @@ export default [
 		layout: 'MainLayout',
 		breadcrumbs: [
 		{ name: 'Home' },
-		{ isLink: false, text: t('roles.Админ') },
+		{ isLink: false, text: () => t('roles.Админ') },
 		]
 	},
 	component: () => import('../views/pages/admin/courses/IndexCourses.vue')
@@ -25,7 +25,7 @@ export default [
 		layout: 'MainLayout',
 		breadcrumbs: [
 		{ name: 'Home' },
-		{ isLink: false, text: t('roles.Админ') },
+		{ isLink: false, text: () => t('roles.Админ') },
 		{ name: 'admin-index-courses' }
 		]
 	},
@@ -40,7 +40,7 @@ export default [
 		layout: 'MainLayout',
 		breadcrumbs: [
 		{ name: 'Home' },
-		{ isLink: false, text: t('roles.Админ') },
+		{ isLink: false, text: () => t('roles.Админ') },
 		{ name: 'admin-index-courses' }
 		]
 	},

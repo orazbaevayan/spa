@@ -32,14 +32,14 @@
 
 	export default {
 		created() {
-			Course.api().get('api/courses');
+			Course.api().fetch();
 		},
 		components: {
 			Card
 		},
 		methods: {
 			deleteCourse(course) {
-				Course.api().delete('api/courses/' + course.id)
+				Course.api().deleteById(course.id)
 				.then(r => {
 					if (r.response.data === true) Course.delete(course.id);
 				})

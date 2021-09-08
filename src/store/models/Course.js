@@ -9,4 +9,19 @@ export default class User extends Model {
 			name: this.attr('')
 		}
 	}
+
+	static apiConfig = {
+		actions: {
+			fetch: {
+				method: 'get',
+				url: '/api/courses'
+			},
+			fetchById (id) {
+				return this.get(`/api/courses/${id}`)
+			},
+			deleteById (id) {
+				return this.delete(`/api/courses/${id}`)
+			}
+		}
+	}
 }
