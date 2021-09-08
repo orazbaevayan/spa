@@ -8,9 +8,6 @@
 
 <script>
 	export default {
-		mounted() {
-			console.log(this.$store.getters['ui/notifications']);
-		},
 		name: 'notification',
 	}
 </script>

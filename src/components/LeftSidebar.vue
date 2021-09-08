@@ -123,7 +123,6 @@
 		left: -$sidebar-width;
 		border-right: 1px solid $gray-300;
 		&.open {
-			z-index: 1;
 			left: 0px;
 		}
 		&:not(.moves) {

@@ -132,7 +132,6 @@
 		bottom: 0;
 		right: -$sidebar-width;
 		&.open {
-			z-index: 1;
 			right: 0px;
 		}
 	}

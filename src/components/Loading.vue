@@ -14,6 +14,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	opacity: 0.7;
+	background-color: black;
 	.lds-ellipsis {
 		display: inline-block;
 		position: relative;

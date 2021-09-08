@@ -1,13 +1,13 @@
 <template>
 	<div id="ui" class="container">
 		<Header />
+		<Overlay />
 		<div id="left">
 			<LeftSidebar />
 		</div>
 		<div id="right">
 			<RightSidebar />
 		</div>
-		<Overlay />
 		<Notifications />
 		<Loading />
 	</div>
