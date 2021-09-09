@@ -2,7 +2,7 @@ import { Model } from '@vuex-orm/core'
 import store from '@/store'
 
 export default class User extends Model {
-	static entity = 'courses'
+	static entity = 'groups'
 
 	static fields () {
 		return {
@@ -15,13 +15,13 @@ export default class User extends Model {
 		actions: {
 			fetch: {
 				method: 'get',
-				url: '/api/courses'
+				url: '/api/groups'
 			},
-			fetchById (id) {
-				return this.get(`/api/courses/${id}`)
+			fetchById(id) {
+				return this.get(`/api/groups/${id}`);
 			},
 			deleteById(id) {
-				return this.delete(`/api/courses/${id}`, {
+				return this.delete(`/api/groups/${id}`, {
 					delete: id
 				}).then((r) => {
 					if (r.response.data === true) {

@@ -19,7 +19,7 @@ export default [
 },
 {
 	name: 'manager-index-groups',
-	path: '/manager/groups/course/:course_id',
+	path: '/manager/course/:course_id/groups',
 	meta: {
 		title: (route) => Course.find(route.params.course_id)?.name,
 		requiresAuth: true,
@@ -31,5 +31,37 @@ export default [
 		]
 	},
 	component: () => import('../views/pages/manager/groups/IndexGroups.vue')
+},
+{
+	name: 'manager-create-group',
+	path: '/manager/course/:course_id/groups/create',
+	meta: {
+		title: () => t('pages.Создание группы'),
+		requiresAuth: true,
+		layout: 'MainLayout',
+		breadcrumbs: [
+		{ name: 'Home' },
+		{ isLink: false, text: () => t('roles.Менеджер') },
+		{ name: 'manager-index-courses' },
+		{ name: 'manager-index-groups' },
+		]
+	},
+	component: () => import('../views/pages/manager/groups/CreateGroup.vue')
+},
+{
+	name: 'manager-edit-group',
+	path: '/manager/course/:course_id/groups/:group_id',
+	meta: {
+		title: () => t('pages.Редактирование группы'),
+		requiresAuth: true,
+		layout: 'MainLayout',
+		breadcrumbs: [
+		{ name: 'Home' },
+		{ isLink: false, text: () => t('roles.Менеджер') },
+		{ name: 'manager-index-courses' },
+		{ name: 'manager-index-groups' },
+		]
+	},
+	component: () => import('../views/pages/manager/groups/EditGroup.vue')
 },
 ];

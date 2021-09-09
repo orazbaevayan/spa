@@ -39,11 +39,7 @@
 		},
 		methods: {
 			deleteCourse(course) {
-				Course.api().deleteById(course.id)
-				.then(r => {
-					if (r.response.data === true) Course.delete(course.id);
-				})
-				.catch(e => alert(e));
+				Course.api().deleteById(course.id);
 			}
 		},
 		computed: {
