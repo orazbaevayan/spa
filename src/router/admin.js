@@ -6,7 +6,7 @@ export default [
 	name: 'admin-index-courses',
 	path: '/admin/courses',
 	meta: {
-		title: 'Курсы',
+		title: t('pages.Курсы'),
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
@@ -20,7 +20,7 @@ export default [
 	name: 'admin-create-course',
 	path: '/admin/courses/create',
 	meta: {
-		title: 'Создание курса',
+		title: t('pages.Создание курса'),
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
@@ -35,7 +35,7 @@ export default [
 	name: 'admin-edit-course',
 	path: '/admin/courses/:course_id',
 	meta: {
-		title: 'Редактирование курса',
+		title: t('pages.Редактирование курса'),
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [

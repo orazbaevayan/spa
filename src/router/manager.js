@@ -1,5 +1,5 @@
 import i18n from '@/modules/i18n'
-/*import Course from '@/store/models/Course'*/
+import Course from '@/store/models/Course'
 const { t } = i18n.global
 
 export default [
@@ -7,7 +7,7 @@ export default [
 	name: 'manager-index-courses',
 	path: '/manager/courses',
 	meta: {
-		title: 'Курсы',
+		title: t('pages.Курсы'),
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
@@ -21,16 +21,16 @@ export default [
 	name: 'manager-index-groups',
 	path: '/manager/courses/:course_id/groups',
 	meta: {
-		title: 'Группы',
+		title: t('pages.Группы'),
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
 		{ name: 'Home' },
 		{ isLink: false, text: () => t('roles.Менеджер') },
 		{ name: 'manager-index-courses' },
-		{ isLink: false, text: () => 'Пром без' },
+		{ isLink: false, text: (route) => Course.find(route.params.course_id)?.name },
 		]
 	},
-	component: () => import('../views/pages/manager/courses/ShowCourse.vue')
+	component: () => import('../views/pages/manager/groups/IndexGroups.vue')
 },
 ];

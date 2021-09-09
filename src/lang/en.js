@@ -11,8 +11,11 @@ export default {
 	pages: {
 		'Главная': 'Home',
 		'Курсы': 'Courses',
+		'Группы': 'Groups',
 		'Создание курса': 'Create course',
 		'Редактирование курса': 'Edit course',
+		'Авторизация': 'Login',
+		'Страница не найдена': 'Page not found',
 	},
 	roles: {
 		'Студент': 'Student',
