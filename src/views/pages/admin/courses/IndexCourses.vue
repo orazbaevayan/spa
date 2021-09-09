@@ -1,6 +1,6 @@
 <template>
 	<div class="p-2 d-flex flex-column">
-		<Title>Курсы</Title>
+		<Title>{{ $t('pages.Курсы') }}</Title>
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between">
 			<input type="checkbox" class="mx-1">
 			<router-link class="text-primary px-1 py-0" :to="{ name: 'admin-create-course' }">
