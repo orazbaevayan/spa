@@ -1,12 +1,12 @@
 import i18n from '@/modules/i18n'
+import Course from '@/store/models/Course'
 const { t } = i18n.global
-
 export default [
 {
 	name: 'admin-index-courses',
 	path: '/admin/courses',
 	meta: {
-		title: t('pages.Курсы'),
+		title: () => t('pages.Курсы'),
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
@@ -20,7 +20,7 @@ export default [
 	name: 'admin-create-course',
 	path: '/admin/courses/create',
 	meta: {
-		title: t('pages.Создание курса'),
+		title: () => t('pages.Создание курса'),
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
@@ -35,7 +35,7 @@ export default [
 	name: 'admin-edit-course',
 	path: '/admin/courses/:course_id',
 	meta: {
-		title: t('pages.Редактирование курса'),
+		title: (route) => Course.find(route.params.course_id)?.name,
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [

@@ -7,7 +7,7 @@ export default [
 	path: '/',
 	name: 'Home',
 	meta: {
-		title: t('pages.Главная'),
+		title: () => t('pages.Главная'),
 		requiresAuth: true,
 		layout: 'MainLayout'
 	},
@@ -17,7 +17,7 @@ export default [
 	path: '/login',
 	name: 'Login',
 	meta: {
-		title: t('pages.Авторизация'),
+		title: () => t('pages.Авторизация'),
 		requiresGuest: true,
 		layout: 'DefaultLayout'
 	},
@@ -27,7 +27,7 @@ export default [
 	path: '/:pathMatch(.*)*',
 	name: '404',
 	meta: {
-		title: t('pages.Страница не найдена'),
+		title: () => t('pages.Страница не найдена'),
 		layout: 'DefaultLayout'
 	},
 	component: () => import(/* webpackChunkName: "404" */ '../views/pages/404.vue')

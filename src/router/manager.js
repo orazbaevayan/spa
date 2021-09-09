@@ -7,7 +7,7 @@ export default [
 	name: 'manager-index-courses',
 	path: '/manager/courses',
 	meta: {
-		title: t('pages.Курсы'),
+		title: () => t('pages.Курсы'),
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
@@ -21,7 +21,7 @@ export default [
 	name: 'manager-index-groups',
 	path: '/manager/courses/:course_id/groups',
 	meta: {
-		title: t('pages.Группы'),
+		title: () => t('pages.Группы'),
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
