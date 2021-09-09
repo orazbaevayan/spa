@@ -12,7 +12,7 @@
 	</div>
 	<div id="manager" class="role" v-if="user?.roles.filter(e => e.name === 'manager').length > 0">
 		<h6 class="title">{{ $t('roles.Менеджер') }}</h6>
-		<router-link class="link" active-class="active" :to="{ name: 'manager-index-courses' }">{{ $t('pages.Курсы') }}</router-link>
+		<router-link class="link" active-class="active" :to="{ name: 'manager-index-courses' }">{{ $t('pages.Группы') }}</router-link>
 	</div>
 	<div id="admin" class="role" v-if="user?.roles.filter(e => e.name === 'admin').length > 0">
 		<h6 class="title">{{ $t('roles.Админ') }}</h6>

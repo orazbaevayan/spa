@@ -5,9 +5,9 @@ const { t } = i18n.global
 export default [
 {
 	name: 'manager-index-courses',
-	path: '/manager/courses',
+	path: '/manager/groups',
 	meta: {
-		title: () => t('pages.Курсы'),
+		title: () => t('pages.Группы'),
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
@@ -19,16 +19,15 @@ export default [
 },
 {
 	name: 'manager-index-groups',
-	path: '/manager/courses/:course_id/groups',
+	path: '/manager/groups/course/:course_id',
 	meta: {
-		title: () => t('pages.Группы'),
+		title: (route) => Course.find(route.params.course_id)?.name,
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
 		{ name: 'Home' },
 		{ isLink: false, text: () => t('roles.Менеджер') },
 		{ name: 'manager-index-courses' },
-		{ isLink: false, text: (route) => Course.find(route.params.course_id)?.name },
 		]
 	},
 	component: () => import('../views/pages/manager/groups/IndexGroups.vue')
