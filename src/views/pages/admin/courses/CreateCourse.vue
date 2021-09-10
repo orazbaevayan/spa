@@ -1,5 +1,5 @@
 <template>
-	<form class="p-2" @submit.prevent="storeCourse">
+	<form class="p-2 w-100" @submit.prevent="storeCourse">
 		<Title>{{ $t('pages.Создание курса') }}</Title>
 		<div class="p-2">
 			<label class="form-label" for="name">Название</label>
