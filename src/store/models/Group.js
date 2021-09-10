@@ -1,13 +1,16 @@
 import { Model } from '@vuex-orm/core'
 import store from '@/store'
+import GroupUser from '@/store/models/GroupUser'
+import User from '@/store/models/User'
 
-export default class User extends Model {
+export default class Group extends Model {
 	static entity = 'groups'
 
 	static fields () {
 		return {
 			id: this.attr(null),
-			name: this.attr('')
+			name: this.attr(''),
+			users: this.belongsToMany(User, GroupUser, 'group_id', 'user_id'),
 		}
 	}
 

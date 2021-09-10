@@ -6,6 +6,7 @@ import Role from '@/store/models/Role'
 import RoleUser from '@/store/models/RoleUser'
 import Course from '@/store/models/Course'
 import Group from '@/store/models/Group'
+import GroupUser from '@/store/models/GroupUser'
 
 VuexORM.use(VuexORMAxios, { axios, dataKey: 'data' })
 
@@ -15,5 +16,6 @@ database.register(Role)
 database.register(RoleUser)
 database.register(Course)
 database.register(Group)
+database.register(GroupUser)
 
 export default database
