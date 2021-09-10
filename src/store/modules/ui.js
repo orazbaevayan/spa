@@ -70,7 +70,7 @@ export default {
 				context.state.notifications = context.state.notifications.filter(notification => {
 					return notification.id != id;
 				});
-			}, 5000);
+			}, 3000);
 		}
 	},
 }
