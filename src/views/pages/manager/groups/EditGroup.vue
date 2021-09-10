@@ -59,7 +59,7 @@
 		},
 		methods: {
 			updateGroup() {
-				Course.api().patch('/api/groups/' + this.$route.params.group_id, this.group)
+				Group.api().patch('/api/groups/' + this.$route.params.group_id, this.group)
 				.then(r => {
 					if (r.response.status === 200) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
