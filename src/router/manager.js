@@ -1,5 +1,6 @@
 import i18n from '@/modules/i18n'
 import Course from '@/store/models/Course'
+import Group from '@/store/models/Group'
 const { t } = i18n.global
 
 export default [
@@ -52,7 +53,7 @@ export default [
 	name: 'manager-edit-group',
 	path: '/manager/course/:course_id/groups/:group_id',
 	meta: {
-		title: () => t('pages.Редактирование группы'),
+		title: (route) => Group.find(route.params.group_id)?.name,
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
