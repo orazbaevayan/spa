@@ -10,7 +10,7 @@
 		</div>
 	</form>
 	<div class="p-2 d-flex flex-column">
-		<Title>{{ $t('pages.Студенты') }}</Title>
+		<Title>{{ stateGroup.name }}</Title>
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1">
 			<!-- <router-link class="text-primary px-1 py-0" :to="{ name: 'manager-create-group' }">
@@ -39,18 +39,14 @@
 <script>
 	import Course from '@/store/models/Course'
 	import Group from '@/store/models/Group'
-	import Card from '@/components/Card'
 
 	export default {
-		created() {
+		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
 			Group.api().fetchById(this.$route.params.group_id)
 			.then(() => {
 				this.group = Group.query().with(['users']).find(this.$route.params.group_id);
 			});
-		},
-		components: {
-			Card
 		},
 		data() {
 			return {
@@ -66,6 +62,11 @@
 					}
 				})
 				.catch(e => console.log(e));
+			}
+		},
+		computed: {
+			stateGroup() {
+				return Group.find(this.$route.params.group_id) || new Group;
 			}
 		}
 	}

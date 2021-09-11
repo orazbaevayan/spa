@@ -26,7 +26,10 @@
 		},
 		methods: {
 			storeGroup() {
-				Group.api().post('api/groups', this.group)
+				Group.api().post('api/groups', {
+					...this.group,
+					course_id: this.$route.params.course_id
+				})
 				.then(r => {
 					if (r.response.status === 201) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });

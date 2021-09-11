@@ -10,6 +10,7 @@ export default class Group extends Model {
 		return {
 			id: this.attr(null),
 			name: this.attr(''),
+			course_id: this.attr(null),
 			users: this.belongsToMany(User, GroupUser, 'group_id', 'user_id'),
 		}
 	}

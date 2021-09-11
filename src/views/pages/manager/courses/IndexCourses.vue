@@ -16,14 +16,10 @@
 
 <script>
 	import Course from '@/store/models/Course'
-	import Card from '@/components/Card'
 
 	export default {
 		created() {
 			Course.api().get('api/courses');
-		},
-		components: {
-			Card
 		},
 		computed: {
 			courses() {

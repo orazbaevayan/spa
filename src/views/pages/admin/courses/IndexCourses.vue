@@ -28,14 +28,10 @@
 
 <script>
 	import Course from '@/store/models/Course'
-	import Card from '@/components/Card'
 
 	export default {
 		created() {
 			Course.api().fetch();
-		},
-		components: {
-			Card
 		},
 		methods: {
 			deleteCourse(course) {

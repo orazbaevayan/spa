@@ -7,7 +7,7 @@
 				<font-awesome-icon :icon="['fa', 'plus-square']" />
 			</router-link>
 		</div>
-		<Card class="mx-2 my-1" v-for="group in groups" :key="group.id">
+		<Card class="mx-2 my-1" v-for="group in course.groups" :key="group.id">
 			<template v-slot:prepend>
 				<input type="checkbox" class="mx-1">
 			</template>
@@ -29,15 +29,10 @@
 <script>
 	import Course from '@/store/models/Course'
 	import Group from '@/store/models/Group'
-	import Card from '@/components/Card'
 
 	export default {
-		created() {
+		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
-			Group.api().fetch();
-		},
-		components: {
-			Card
 		},
 		methods: {
 			deleteGroup(group) {
@@ -45,8 +40,8 @@
 			},
 		},
 		computed: {
-			groups() {
-				return Group.all();
+			course() {
+				return Course.query().with('groups').find(this.$route.params.course_id) || new Course;
 			},
 		}
 	}
