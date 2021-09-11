@@ -1,16 +1,16 @@
 <template>
-	<form class="p-2 w-100" @submit.prevent="updateGroup">
+	<form ref="groupForm" class="p-2 w-100" @submit.prevent="updateGroup">
 		<Title>{{ $t('pages.Редактирование группы') }}</Title>
 		<div class="p-2">
 			<label class="form-label" for="name">Название</label>
-			<input type="text" class="form-control form-control-sm" name="name" v-model="group.name">
+			<input type="text" class="form-control form-control-sm" name="name" :value="group.name">
 		</div>
 		<div class="p-2">
 			<input type="submit" class="btn btn-sm btn-warning text-white" :value="$t('ui.Редактировать')">
 		</div>
 	</form>
 	<div class="p-2 d-flex flex-column">
-		<Title>{{ stateGroup.name }}</Title>
+		<Title>{{ group.name }}</Title>
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1">
 			<!-- <router-link class="text-primary px-1 py-0" :to="{ name: 'manager-create-group' }">
@@ -43,19 +43,13 @@
 	export default {
 		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
-			Group.api().fetchById(this.$route.params.group_id)
-			.then(() => {
-				this.group = Group.query().with(['users']).find(this.$route.params.group_id);
-			});
-		},
-		data() {
-			return {
-				group: new Group
-			}
+			Group.api().fetchById(this.$route.params.group_id);
 		},
 		methods: {
 			updateGroup() {
-				Group.api().patch('/api/groups/' + this.$route.params.group_id, this.group)
+				let formData = new FormData(this.$refs.groupForm);
+				formData.append('_method', 'PATCH');
+				Group.api().post('/api/groups/' + this.$route.params.group_id, formData)
 				.then(r => {
 					if (r.response.status === 200) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
@@ -65,7 +59,7 @@
 			}
 		},
 		computed: {
-			stateGroup() {
+			group() {
 				return Group.find(this.$route.params.group_id) || new Group;
 			}
 		}
