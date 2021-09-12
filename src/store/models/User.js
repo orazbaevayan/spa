@@ -2,7 +2,6 @@ import { Model } from '@vuex-orm/core'
 import store from '@/store'
 import RoleUser from '@/store/models/RoleUser'
 import Role from '@/store/models/Role'
-import Group from '@/store/models/Group'
 import GroupUser from '@/store/models/GroupUser'
 
 export default class User extends Model {
@@ -19,7 +18,7 @@ export default class User extends Model {
 			phone: this.attr(''),
 			iin: this.attr(''),
 			roles: this.belongsToMany(Role, RoleUser, 'user_id', 'role_id'),
-			groups: this.belongsToMany(Group, GroupUser, 'user_id', 'group_id'),
+			group_users: this.hasMany(GroupUser, 'user_id'),
 		}
 	}
 

@@ -17,12 +17,12 @@
 				<font-awesome-icon :icon="['fa', 'plus-square']" />
 			</router-link> -->
 		</div>
-		<Card class="mx-2 my-1" v-for="user in group.users" :key="user.id">
+		<Card class="mx-2 my-1" v-for="group_user in group.group_users" :key="group_user.id">
 			<template v-slot:prepend>
 				<input type="checkbox" class="mx-1">
 			</template>
 			<template v-slot:header>
-				{{ user.fullName }}
+				{{ group_user.user.fullName }}
 			</template>
 			<template v-slot:append>
 				<!-- <router-link class="text-primary px-1 py-0" :to="{ name: 'manager-edit-user', params: { user_id: user.id } }">
@@ -39,11 +39,13 @@
 <script>
 	import Course from '@/store/models/Course'
 	import Group from '@/store/models/Group'
+	import GroupUser from '@/store/models/GroupUser'
 
 	export default {
 		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
-			Group.api().fetchById(this.$route.params.group_id);
+			//Group.api().fetchById(this.$route.params.group_id);
+			GroupUser.api().fetch();
 		},
 		methods: {
 			updateGroup() {
@@ -60,7 +62,7 @@
 		},
 		computed: {
 			group() {
-				return Group.find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['group_users.user']).find(this.$route.params.group_id) || new Group;
 			}
 		}
 	}
