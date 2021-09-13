@@ -13,6 +13,31 @@
 		<Title>{{ group.name }}</Title>
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1">
+
+			<!-- Button trigger modal -->
+			<a class="text-primary px-1 py-0" data-bs-toggle="modal" href="#staticBackdrop">
+				<font-awesome-icon :icon="['fa', 'plus-square']" />
+			</a>
+
+			<!-- Modal -->
+			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							...
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary text-white">Understood</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<!-- <router-link class="text-primary px-1 py-0" :to="{ name: 'manager-create-group' }">
 				<font-awesome-icon :icon="['fa', 'plus-square']" />
 			</router-link> -->
