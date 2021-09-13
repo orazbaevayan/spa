@@ -1,5 +1,5 @@
 <template>
-	<form ref="courseForm" class="p-2 w-100" @submit.prevent="updateCourse">
+	<form class="p-2 w-100" @submit.prevent="updateCourse">
 		<Title>{{ $t('pages.Редактирование курса') }}</Title>
 		<div class="p-2">
 			<label class="form-label" for="name">Название</label>
@@ -19,8 +19,8 @@
 			Course.api().fetchById(this.$route.params.course_id);
 		},
 		methods: {
-			updateCourse() {
-				let formData = new FormData(this.$refs.courseForm);
+			updateCourse(event) {
+				let formData = new FormData(event.currentTarget);
 				formData.append('_method', 'PATCH');
 				Course.api().post(`/api/courses/${this.$route.params.course_id}`, formData)
 				.then(r => {

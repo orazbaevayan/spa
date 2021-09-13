@@ -1,5 +1,5 @@
 <template>
-	<form ref="groupForm" class="p-2 w-100" @submit.prevent="updateGroup">
+	<form class="p-2 w-100" @submit.prevent="updateGroup">
 		<Title>{{ $t('pages.Редактирование группы') }}</Title>
 		<div class="p-2">
 			<label class="form-label" for="name">Название</label>
@@ -48,8 +48,8 @@
 			GroupUser.api().fetch();
 		},
 		methods: {
-			updateGroup() {
-				let formData = new FormData(this.$refs.groupForm);
+			updateGroup(event) {
+				let formData = new FormData(event.currentTarget);
 				formData.append('_method', 'PATCH');
 				Group.api().post('/api/groups/' + this.$route.params.group_id, formData)
 				.then(r => {
