@@ -59,6 +59,11 @@
 			</template>
 		</Card>
 	</div>
+	<div class="p-2 d-flex flex-column">
+		<Tabs :tabs="['Обучение', 'Учебные материалы', 'Экзамен']">
+			
+		</Tabs>
+	</div>
 </template>
 
 <script>
