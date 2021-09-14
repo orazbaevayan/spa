@@ -61,7 +61,30 @@
 	</div>
 	<div class="p-2 d-flex flex-column">
 		<Tabs :tabs="['Обучение', 'Учебные материалы', 'Экзамен']">
-			
+			<template v-slot:0>
+				1
+			</template>
+			<template v-slot:1>
+				2
+			</template>
+			<template v-slot:2>
+				<Card class="mx-2 my-1" v-for="group_user in group.group_users" :key="group_user.id">
+					<template v-slot:prepend>
+						<input type="checkbox" class="mx-1">
+					</template>
+					<template v-slot:header>
+						{{ group_user.user.fullName }}
+					</template>
+					<template v-slot:append>
+						<!-- <router-link class="text-primary px-1 py-0" :to="{ name: 'manager-edit-user', params: { user_id: user.id } }">
+							<font-awesome-icon :icon="['fa', 'eye']" />
+						</router-link>
+						<a href="#" class="text-danger px-1 py-0" @click="deleteGroup(user)">
+							<font-awesome-icon :icon="['fa', 'trash-alt']" />
+						</a> -->
+					</template>
+				</Card>
+			</template>
 		</Tabs>
 	</div>
 </template>

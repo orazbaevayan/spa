@@ -6,7 +6,7 @@
 			</li>
 		</ul>
 	</div>
-	<slot :name="selectedTab" class="m-2" />
+	<slot :name="selectedTab" />
 </template>
 
 <script>
