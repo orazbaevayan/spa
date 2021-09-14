@@ -1,17 +1,12 @@
 <template>
-	<div>
+	<div id="tabs-wrapper" class="m-2">
 		<ul class="nav nav-tabs d-flex align-items-end">
 			<li v-for="(tab, index) in tabs" class="nav-item" :class="{ active: index === selectedTab }" :key="tab">
-				<a class="nav-link" :class="{ active: index === selectedTab }" @click.prevent="setTab(index)">{{ tab }}</a>
-			</li>
-			<li class="nav-item flex-fill">
-				<a href="#" class="nav-link"></a>
+				<a class="nav-link py-1 px-2" :class="{ active: index === selectedTab }" @click.prevent="setTab(index)">{{ tab }}</a>
 			</li>
 		</ul>
-		<!-- <div class="nav-content p-2"> -->
-			<slot :name="selectedTab"/>
-		<!-- </div> -->
 	</div>
+	<slot :name="selectedTab" class="m-2" />
 </template>
 
 <script>
@@ -36,22 +31,53 @@
 </script>
 
 <style lang="scss" scoped>
-.nav.nav-tabs {
-	flex-wrap: nowrap;
-	overflow-x: auto;
-	overflow-y: hidden;
-	border: none;
-	.nav-item {
-		flex-shrink: 0;
-		.nav-link {
-			cursor: pointer;
-			background-color: transparent;
-			margin: 0;
+#tabs-wrapper {
+	position: relative;
+	&::before {
+		background-color: $lighten-primary;
+		content: '';
+		position: absolute;
+		height: 1px;
+		width: 100%;
+		bottom: 0;
+	}
+	.nav.nav-tabs {
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		overflow-y: hidden;
+		border: none;
+		.nav-item {
+			flex-shrink: 0;
+			background-color: $app-background-color;
+			&:not(:first-child) {
+				margin-left: -1px;
+			}
+			&:first-child {
+				border-radius: 5px 0 0 0;
+			}
+			&:last-child {
+				border-radius: 0 5px 0 0;
+			}
 			&.active {
-				border-color: black black transparent;
+				border-width: 1px;
+				border-style: solid;
+				border-color: $lighten-primary $lighten-primary $app-background-color;
+				position: relative;
+				.nav-link {
+					color: $lighten-primary;
+				}
 			}
 			&:not(.active) {
-				border-bottom: 1px solid black;
+				border: 1px solid $secondary;
+				.nav-link {
+					color: $secondary;
+				}
+			}
+			.nav-link {
+				cursor: pointer;
+				background-color: transparent;
+				margin: 0;
+				border: none;
 			}
 		}
 	}
