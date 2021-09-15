@@ -1,18 +1,7 @@
 <template>
 	<div class="p-2 d-flex flex-column">
 		<Title>{{ $t('pages.Пользователи') }}</Title>
-		<div class="input-group p-2">
-			<div class="input-group-text p-0 border-none" style="overflow: hidden;">
-				<select class="form-select" style="border: none; border-radius: 0;">
-					<option value="1">ИИН</option>
-					<option value="2">Ф.И.О</option>
-				</select>
-			</div>
-			<input type="text" class="form-control">
-			<button class="btn btn-primary" type="button">
-				<font-awesome-icon :icon="['fa', 'search']" />
-			</button>
-		</div>
+		<SearchUsers />
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1 my-0 form-check-input">
 			<router-link class="text-primary px-1 py-0" :to="{ name: 'admin-create-course' }">
@@ -40,10 +29,14 @@
 
 <script>
 	import User from '@/store/models/User'
+	import SearchUsers from '@/components/SearchUsers'
 
 	export default {
 		created() {
 			User.api().fetch();
+		},
+		components: {
+			SearchUsers
 		},
 		methods: {
 			deleteUser(user) {
