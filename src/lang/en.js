@@ -18,6 +18,7 @@ export default {
 		'Редактирование группы': 'Edit group',
 		'Авторизация': 'Login',
 		'Страница не найдена': 'Page not found',
+		'Пользователи': 'Users',
 	},
 	roles: {
 		'Студент': 'Student',

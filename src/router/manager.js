@@ -5,6 +5,20 @@ const { t } = i18n.global
 
 export default [
 {
+	name: 'manager-index-users',
+	path: '/manager/users',
+	meta: {
+		title: () => t('pages.Пользователи'),
+		requiresAuth: true,
+		layout: 'MainLayout',
+		breadcrumbs: [
+		{ name: 'Home' },
+		{ isLink: false, text: () => t('roles.Менеджер') },
+		]
+	},
+	component: () => import('../views/pages/manager/users/IndexUsers.vue')
+},
+{
 	name: 'manager-index-courses',
 	path: '/manager/groups',
 	meta: {
