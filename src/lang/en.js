@@ -26,4 +26,11 @@ export default {
 		'Менеджер': 'Manager',
 		'Админ': 'Admin',
 	},
+	models: {
+		user: {
+			'Ф.И.О': 'Full Name',
+			'ИИН': 'IIN',
+			'Телефон': 'Phone',
+		}
+	},
 }

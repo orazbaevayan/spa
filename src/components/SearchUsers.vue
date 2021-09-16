@@ -1,10 +1,11 @@
 <template>
 	<form class="input-group input-group-sm p-2" @submit.prevent="search">
 		<select v-model="searchField" class="input-group-text bg-white flex-grow-0">
-			<option value="iin">ИИН</option>
-			<option value="fullName">Ф.И.О</option>
+			<option value="iin">{{ $t('models.user.ИИН') }}</option>
+			<option value="fullName">{{ $t(`models.user['Ф.И.О']`) }}</option>
+			<option value="phone">{{ $t('models.user.Телефон') }}</option>
 		</select>
-		<input type="text" class="form-control" v-model="searchText">
+		<input type="text" class="form-control" v-model="searchText" :maxlength="maxLength">
 		<button class="btn btn-primary" type="submit">
 			<font-awesome-icon :icon="['fa', 'search']" />
 		</button>
@@ -13,22 +14,63 @@
 
 <script>
 	import User from '@/store/models/User'
+	import Fuse from 'fuse.js'
 
 	export default {
+		mounted() {
+			this.query()
+		},
 		data() {
 			return {
-				searchText: '',
-				searchField: 'iin'
+				searchText: this.$route.query.search || '',
+				searchField: this.$route.query.field || 'iin'
 			}
 		},
 		methods: {
 			search() {
-				User.api().fetch().then(r => {
-					console.log(r.response.data.data.filter(user => {
-						return user[this.searchField] === this.searchText;
-					}));
+				this.query().then(() => {
+					this.$router.replace({ query: { ...this.$route.query, search: this.searchText, field: this.searchField } })
 				});
+			},
+			query() {
+				return User.api().fetch().then(() => {
+					const options = {
+						includeScore: true,
+						ignoreLocation: true,
+						threshold: this.threshold,
+						keys: [this.searchField]
+					}
+					const fuse = new Fuse(User.all(), options)
+					const result = fuse.search(this.searchText)
+					this.$emit('search', result.map(i => i.item))
+				});
+			}
+		},
+		computed: {
+			maxLength() {
+				const rules = {
+					iin: 12,
+					fullName: 256,
+					phone: 11
+				}
+				return rules[this.searchField];
+			},
+			threshold() {
+				const rules = {
+					iin: 0.0,
+					fullName: 0.5,
+					phone: 0.0
+				}
+				return rules[this.searchField];
 			}
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	form {
+		input, button {
+			z-index: auto !important;
+		}
+	}
+</style>
