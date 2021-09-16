@@ -69,6 +69,7 @@
 
 <style lang="scss" scoped>
 	form {
+		flex-direction: row;
 		input, button {
 			z-index: auto !important;
 		}
