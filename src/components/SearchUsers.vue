@@ -40,9 +40,8 @@
 						threshold: this.threshold,
 						keys: [this.searchField]
 					}
-					const fuse = new Fuse(User.all(), options)
-					const result = fuse.search(this.searchText)
-					this.$emit('search', result.map(i => i.item))
+					const result = this.searchText !== '' ? new Fuse(User.all(), options).search(this.searchText).map(i => i.item) : User.all()
+					this.$emit('search', result)
 				});
 			}
 		},
