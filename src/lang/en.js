@@ -13,6 +13,7 @@ export default {
 		'Курсы': 'Courses',
 		'Группы': 'Groups',
 		'Создание курса': 'Create course',
+		'Создание пользователя': 'Create user',
 		'Создание группы': 'Create group',
 		'Редактирование курса': 'Edit course',
 		'Редактирование группы': 'Edit group',
@@ -31,6 +32,10 @@ export default {
 			'Ф.И.О': 'Full Name',
 			'ИИН': 'IIN',
 			'Телефон': 'Phone',
+			'Фамилия': 'Last name',
+			'Имя': 'First name',
+			'Отчество': 'Middle name',
+			'E-mail': 'E-mail',
 		}
 	},
 }

@@ -5,6 +5,7 @@ import store from '@/store'
 import axios from '@/modules/axios'
 import i18n from '@/modules/i18n'
 import "bootstrap/scss/bootstrap.scss"
+import "croppie/croppie.css"
 import "bootstrap"
 import '@/assets/styles/styles.scss'
 

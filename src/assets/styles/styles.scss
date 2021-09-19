@@ -19,3 +19,19 @@ html {
 	outline: none !important;
 	box-shadow: none !important;
 }
+
+.form-label {
+	line-height: 1;
+}
+
+.croppie-container {
+	.cr-boundary {
+		z-index: auto !important;
+		.cr-overlay {
+			z-index: auto !important;
+		}
+	}
+	.cr-image {
+		z-index: auto !important;
+	}
+}

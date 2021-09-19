@@ -1,5 +1,5 @@
 <template>
-  <select v-model="language">
+  <select class="form-select form-select-sm py-0 ps-1 pe-3" v-model="language">
     <option value="ru">РУС</option>
     <option value="kk">ҚАЗ</option>
     <option value="en">ENG</option>
@@ -21,6 +21,8 @@
   }
 </script>
 
-<style lang="scss">
-
+<style lang="scss" scoped>
+  select {
+    background-position: right 0.1rem center;
+  }
 </style>

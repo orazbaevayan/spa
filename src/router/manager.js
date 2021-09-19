@@ -19,6 +19,21 @@ export default [
 	component: () => import('../views/pages/manager/users/IndexUsers.vue')
 },
 {
+	name: 'manager-create-user',
+	path: '/manager/users/create',
+	meta: {
+		title: () => t('pages.Создание пользователя'),
+		requiresAuth: true,
+		layout: 'MainLayout',
+		breadcrumbs: [
+		{ name: 'Home' },
+		{ isLink: false, text: () => t('roles.Менеджер') },
+		{ name: 'manager-index-users' },
+		]
+	},
+	component: () => import('../views/pages/manager/users/CreateUser.vue')
+},
+{
 	name: 'manager-index-courses',
 	path: '/manager/groups',
 	meta: {

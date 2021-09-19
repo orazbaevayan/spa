@@ -1,6 +1,6 @@
 <template>
 	<form class="input-group input-group-sm p-2" @submit.prevent="search">
-		<select v-model="searchField" class="input-group-text bg-white flex-grow-0">
+		<select v-model="searchField" class="text-start input-group-text bg-white flex-grow-0">
 			<option value="iin">{{ $t('models.user.ИИН') }}</option>
 			<option value="fullName">{{ $t(`models.user['Ф.И.О']`) }}</option>
 			<option value="phone">{{ $t('models.user.Телефон') }}</option>

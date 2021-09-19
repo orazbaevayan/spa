@@ -4,7 +4,7 @@
 		<SearchUsers @search="r => users = r" />
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1 my-0 form-check-input">
-			<router-link class="text-primary px-1 py-0" :to="{ name: 'admin-create-course' }">
+			<router-link class="text-primary px-1 py-0" :to="{ name: 'manager-create-user' }">
 				<font-awesome-icon :icon="['fa', 'plus-square']" />
 			</router-link>
 		</div>
