@@ -30,6 +30,8 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 app.component('Title', defineAsyncComponent(() => import('./components/Title')))
 app.component('Card', defineAsyncComponent(() => import('./components/Card')))
 app.component('Tabs', defineAsyncComponent(() => import('./components/Tabs')))
+app.component('Modal', defineAsyncComponent(() => import('./components/Modal')))
+app.component('Cropper', defineAsyncComponent(() => import('./components/Cropper')))
 
 
 app.directive('closable', {

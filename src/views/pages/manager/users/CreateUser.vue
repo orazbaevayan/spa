@@ -2,7 +2,14 @@
 	<form class="p-2 w-100 d-flex flex-row flex-wrap" @submit.prevent="storeUser">
 		<Title class="w-100">{{ $t('pages.Создание пользователя') }}</Title>
 		<div class="p-2">
-			<Photo v-model="user.photo"/>
+			<Photo :value="user.photo"/>
+			<Modal>
+				<template v-slot:modal-open-button>OPEN</template>
+				<template v-slot:modal-body>
+					Body
+				</template>
+			</Modal>
+			<Cropper :value="user.photo"></Cropper>
 		</div>
 		<div class="flex-fill">
 			<div class="p-2 d-flex flex-column">
@@ -40,11 +47,13 @@
 
 <script>
 	import User from '@/store/models/User'
-	import Photo from '@/components/Photo'
+	import Photo from '@/components/PhotoNEW'
+	import Cropper from '@/components/Cropper'
 
 	export default {
 		components: {
-			Photo
+			Photo,
+			Cropper
 		},
 		data() {
 			return {

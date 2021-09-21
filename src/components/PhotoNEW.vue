@@ -1,50 +1,50 @@
 <template>
 	<div id="photo-cropper">
-		<img :src="value">
-		<input type="file" ref="photo" name="photo" class="d-none">
-		<a :href="`#${$options.name}${index}`" class="brn btn btn-sm btn-warning text-white p-1" data-bs-toggle="modal">
-			<font-awesome-icon :icon="['fas', 'pencil-alt']" />
-		</a>
-	</div>
-	<div class="modal fade" :id="`${$options.name}${index}`" tabindex="-1" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-body text-center">
-						<div ref="croppie"></div>
+		<img :src="photo">
+		<input type="file" id="photophoto" ref="photo" name="photo" class="d-none">
 
-						<div v-if="editMode">
-							<span type="button" class="brn btn btn-sm btn-success p-1 lh-100" @click="crop">
-								<font-awesome-icon :icon="['fas', 'crop']" />
-							</span>
+		<Modal>
+			<template v-slot:modal-open-button>
+				<span class="brn btn btn-sm btn-warning text-white p-1">
+					<font-awesome-icon :icon="['fas', 'pencil-alt']" />
+				</span>
+			</template>
+			<template v-slot:modal-body>
+				<div ref="croppie" id="croppie"></div>
+				<div v-if="editMode">
+					<span class="brn btn btn-sm btn-success p-1 lh-100" @click="crop">
+						<font-awesome-icon :icon="['fas', 'crop']" />
+					</span>
 
-							<span type="button" class="brn btn btn-sm btn-primary p-1 lh-100" @click="zoomIn">
-								<font-awesome-icon :icon="['fas', 'plus']" />
-							</span>
+					<span class="brn btn btn-sm btn-primary p-1 lh-100" @click="zoomIn">
+						<font-awesome-icon :icon="['fas', 'plus']" />
+					</span>
 
-							<span type="button" class="brn btn btn-sm btn-primary p-1 lh-100" @click="zoomOut">
-								<font-awesome-icon :icon="['fas', 'minus']" />
-							</span>
+					<span class="brn btn btn-sm btn-primary p-1 lh-100" @click="zoomOut">
+						<font-awesome-icon :icon="['fas', 'minus']" />
+					</span>
 
-							<span type="button" class="brn btn btn-sm btn-primary p-1 lh-100" @click="rotateLeft">
-								<font-awesome-icon :icon="['fas', 'undo']" />
-							</span>
-							<span type="button" class="brn btn btn-sm btn-primary p-1 lh-100" @click="rotateRight">
-								<font-awesome-icon :icon="['fas', 'redo']" />
-							</span>
+					<span class="brn btn btn-sm btn-primary p-1 lh-100" @click="rotateLeft">
+						<font-awesome-icon :icon="['fas', 'undo']" />
+					</span>
+					<span class="brn btn btn-sm btn-primary p-1 lh-100" @click="rotateRight">
+						<font-awesome-icon :icon="['fas', 'redo']" />
+					</span>
 
-							<span type="button" class="brn btn btn-sm btn-danger p-1 lh-100" @click="cancelEdit">
-								<font-awesome-icon class="text-white" :icon="['fas', 'window-close']" />
-							</span>
-						</div>
-						<div v-else>
-							<label class="btn btn-sm btn-warning brn">
-								<font-awesome-icon class="text-white" :icon="['fas', 'upload']" />
-								<input type="file" accept="image/*" class="d-none" @change="selectImage">
-							</label>
-						</div>
+					<span class="brn btn btn-sm btn-danger p-1 lh-100" @click="cancelEdit">
+						<font-awesome-icon class="text-white" :icon="['fas', 'window-close']" />
+					</span>
 				</div>
-			</div>
-		</div>
+				<div v-else>
+					<label class="btn btn-sm btn-warning brn">
+						<font-awesome-icon class="text-white" :icon="['fas', 'upload']" />
+						<input type="file" accept="image/*" class="d-none" @change="selectImage">
+					</label>
+				</div>
+			</template>
+		</Modal>
+
+
 	</div>
 </template>
 
@@ -54,37 +54,39 @@
 	export default {
 		name: 'photoCropper',
 		props: {
-			value: {
+			modelValue: {
 				type: String,
-				default: '/images/blank-photo.jpeg'
+				default: null
 			},
-			index: {
-				type: String,
-				default: 'new'
-			}
 		},
+		emits: ['update:modelValue'],
 		mounted() {
-			this.croppie = new Croppie(this.$refs.croppie, {
-				showZoomer: false,
-				viewport: {
-					width: (document.body.clientWidth < 576) ? Math.round((document.body.clientWidth - 50) * 0.8) * 0.75 : Math.round((466 * 0.8) * 0.75),
-					height: (document.body.clientWidth < 576) ? Math.round((document.body.clientWidth - 50) * 0.8) : Math.round(466 * 0.8),
-				},
-				enableOrientation: true,
-				boundary: {
-					width: (document.body.clientWidth < 576) ? (document.body.clientWidth - 50) : 466,
-					height: (document.body.clientWidth < 576) ? (document.body.clientWidth - 50) : 466,
-				}
-			})
+			this.photo = this.modelValue ? this.modelValue : '/images/blank-photo.jpeg';
+			//this.init();
 		},
 		data() {
 			return {
+				photo: null,
 				croppie: null,
 				editMode: false,
-				preview: null
+				preview: null,
 			}
 		},
 		methods: {
+			init() {
+				this.croppie = new Croppie(this.$refs.croppie, {
+					showZoomer: false,
+					viewport: {
+						width: (document.body.clientWidth < 576) ? Math.round((document.body.clientWidth - 50) * 0.8) * 0.75 : Math.round((466 * 0.8) * 0.75),
+						height: (document.body.clientWidth < 576) ? Math.round((document.body.clientWidth - 50) * 0.8) : Math.round(466 * 0.8),
+					},
+					enableOrientation: true,
+					boundary: {
+						width: (document.body.clientWidth < 576) ? (document.body.clientWidth - 50) : 466,
+						height: (document.body.clientWidth < 576) ? (document.body.clientWidth - 50) : 466,
+					}
+				})
+			},
 			selectImage(event) {
 				let self = this;
 				let file = event.target.files[0];
@@ -95,7 +97,7 @@
 					return;
 				}
 
-				if(file.size > 10*1024*1024) {
+				if(file.size > 100*1024*1024) {
 					alert('Ошибка : Допустимый размер фала до 10 MB');
 					return;
 				}
@@ -133,8 +135,9 @@
 					format: 'jpeg',
 				}
 				self.croppie.result(options).then(function(blob) {
-					console.log(self);
-					self.$refs.photo.value = blob;
+					self.croppie.destroy();
+					self.init();
+					self.photo = blob;
 					self.editMode = false;
 				});
 			},
@@ -146,9 +149,9 @@
 	#photo-cropper {
 		position: relative;
 		img {
-			height: 209px;
+			height: 197px;
 		}
-		a {
+		button {
 			position: absolute;
 			right: 0;
 			bottom: 0;

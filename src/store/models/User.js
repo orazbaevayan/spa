@@ -17,6 +17,7 @@ export default class User extends Model {
 			email: this.attr(''),
 			phone: this.attr(''),
 			iin: this.attr(''),
+			photo: this.attr(null),
 			roles: this.belongsToMany(Role, RoleUser, 'user_id', 'role_id'),
 			group_users: this.hasMany(GroupUser, 'user_id'),
 		}
