@@ -3,13 +3,6 @@
 		<Title class="w-100">{{ $t('pages.Создание пользователя') }}</Title>
 		<div class="p-2">
 			<Photo :value="user.photo"/>
-			<Modal>
-				<template v-slot:modal-open-button>OPEN</template>
-				<template v-slot:modal-body>
-					Body
-				</template>
-			</Modal>
-			<Cropper :value="user.photo"></Cropper>
 		</div>
 		<div class="flex-fill">
 			<div class="p-2 d-flex flex-column">
@@ -28,11 +21,11 @@
 		<div class="flex-fill">
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="iin">{{ $t(`models.user['ИИН']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="iin" name="iin" v-model="user.iin">
+				<input type="text" class="form-control form-control-sm" id="iin" name="iin" v-model="user.iin" maxlength="12">
 			</div>
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="phone">{{ $t(`models.user['Телефон']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="phone" name="phone" v-model="user.phone">
+				<input type="text" class="form-control form-control-sm" id="phone" name="phone" v-model="user.phone" maxlength="11">
 			</div>
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="email">{{ $t(`models.user['E-mail']`) }}</label>
@@ -47,13 +40,11 @@
 
 <script>
 	import User from '@/store/models/User'
-	import Photo from '@/components/PhotoNEW'
-	import Cropper from '@/components/Cropper'
+	import Photo from '@/components/Photo'
 
 	export default {
 		components: {
 			Photo,
-			Cropper
 		},
 		data() {
 			return {
@@ -62,16 +53,18 @@
 		},
 		methods: {
 			storeUser(event) {
-				//let formData = new FormData(event.currentTarget);
-				console.log(event.currentTarget.elements);
-/*				User.api().post('api/users', formData)
+				let formData = new FormData(event.currentTarget);
+/*				for (var value of formData.values()) {
+					console.log(value);
+				}*/
+				User.api().post('api/users', formData)
 				.then(r => {
 					if (r.response.status === 201) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
 						this.$router.push({ name: 'manager-index-users' });
 					}
 				})
-				.catch(e => console.log(e));*/
+				.catch(e => console.log(e));
 			}
 		}
 	}
