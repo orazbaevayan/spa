@@ -29,7 +29,11 @@
 		methods: {
 			search() {
 				this.query().then(() => {
-					this.$router.replace({ query: { ...this.$route.query, search: this.searchText, field: this.searchField } })
+					if (this.searchText) {
+						this.$router.replace({ query: { ...this.$route.query, search: this.searchText, field: this.searchField } })
+					} else {
+						this.$router.replace({ query: {} })
+					}
 				});
 			},
 			query() {
@@ -40,7 +44,7 @@
 						threshold: this.threshold,
 						keys: [this.searchField]
 					}
-					const result = this.searchText !== '' ? new Fuse(User.all(), options).search(this.searchText).map(i => i.item) : User.all()
+					const result = this.searchText !== '' ? new Fuse(User.all(), options).search(this.searchText).map(i => i.item.id) : User.all().map(i => i.id);
 					this.$emit('search', result)
 				});
 			}

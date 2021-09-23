@@ -1,7 +1,7 @@
 <template>
 	<div class="p-2 d-flex flex-column">
 		<Title>{{ $t('pages.Пользователи') }}</Title>
-		<SearchUsers @search="r => users = r" />
+		<SearchUsers @search="r => foundUsers = r" />
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1 my-0 form-check-input">
 			<router-link class="text-primary px-1 py-0" :to="{ name: 'manager-create-user' }">
@@ -37,7 +37,7 @@
 		},
 		data() {
 			return {
-				users: []
+				foundUsers: []
 			}
 		},
 		methods: {
@@ -46,8 +46,13 @@
 			},
 			search(result) {
 				console.log(result);
-			}
+			},
 		},
+		computed: {
+			users() {
+				return User.findIn(this.foundUsers);
+			}
+		}
 	}
 </script>
 
