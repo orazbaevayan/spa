@@ -1,20 +1,18 @@
 <template>
-	<div>
-		<a href="#" @click.prevent="modal.show()">
-			<slot name="modal-open-button" />
-		</a>
-		<div class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header" v-if="header">
-						<slot name="modal-header" />
-					</div>
-					<div class="modal-body">
-						<slot name="modal-body" />
-					</div>
-					<div class="modal-footer" v-if="footer">
-						<slot name="modal-footer" />
-					</div>
+	<button type="button" class="btn btn-link p-0" @click.prevent="modal.show()">
+		<slot name="open-button" />
+	</button>
+	<div ref="modal" class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" v-if="header">
+					<slot name="header" />
+				</div>
+				<div class="modal-body">
+					<slot name="body" />
+				</div>
+				<div class="modal-footer" v-if="footer">
+					<slot name="footer" />
 				</div>
 			</div>
 		</div>
@@ -37,7 +35,7 @@
 			},
 		},
 		mounted() {
-			this.modal = new BootstrapModal(this.$el.querySelector('.modal'));
+			this.modal = new BootstrapModal(this.$refs.modal);
 		},
 		data() {
 			return {
@@ -48,5 +46,10 @@
 </script>
 
 <style lang="scss" scoped>
-
+	button {
+		border: none;
+	}
+	.modal {
+		padding-right: 0 !important;
+	}
 </style>

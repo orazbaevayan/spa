@@ -5,11 +5,6 @@ html, body, #app {
 	min-height: 100vh;
 }
 
-html {
-	overflow: -moz-scrollbars-vertical; 
-	overflow-y: scroll;
-}
-
 #app {
 	align-items: center;
 	background-color: $app-background-color;

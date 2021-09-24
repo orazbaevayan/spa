@@ -14,33 +14,11 @@
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1">
 
-			<!-- Button trigger modal -->
-			<a class="text-primary px-1 py-0" data-bs-toggle="modal" href="#staticBackdrop">
-				<font-awesome-icon :icon="['fa', 'plus-square']" />
-			</a>
-
-			<!-- Modal -->
-			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							...
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary text-white">Understood</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- <router-link class="text-primary px-1 py-0" :to="{ name: 'manager-create-group' }">
-				<font-awesome-icon :icon="['fa', 'plus-square']" />
-			</router-link> -->
+			<Modal>
+				<template v-slot:open-button>
+					<font-awesome-icon class="mx-1 my-0 text-primary" :icon="['fa', 'plus-square']" />
+				</template>
+			</Modal>
 		</div>
 		<Card class="mx-2 my-1" v-for="group_user in group.group_users" :key="group_user.id">
 			<template v-slot:prepend>
@@ -59,34 +37,6 @@
 			</template>
 		</Card>
 	</div>
-	<div class="p-2 d-flex flex-column">
-		<Tabs :tabs="['Обучение', 'Учебные материалы', 'Экзамен']">
-			<template v-slot:0>
-				1
-			</template>
-			<template v-slot:1>
-				2
-			</template>
-			<template v-slot:2>
-				<Card class="mx-2 my-1" v-for="group_user in group.group_users" :key="group_user.id">
-					<template v-slot:prepend>
-						<input type="checkbox" class="mx-1">
-					</template>
-					<template v-slot:header>
-						{{ group_user.user.fullName }}
-					</template>
-					<template v-slot:append>
-						<!-- <router-link class="text-primary px-1 py-0" :to="{ name: 'manager-edit-user', params: { user_id: user.id } }">
-							<font-awesome-icon :icon="['fa', 'eye']" />
-						</router-link>
-						<a href="#" class="text-danger px-1 py-0" @click="deleteGroup(user)">
-							<font-awesome-icon :icon="['fa', 'trash-alt']" />
-						</a> -->
-					</template>
-				</Card>
-			</template>
-		</Tabs>
-	</div>
 </template>
 
 <script>
@@ -97,7 +47,6 @@
 	export default {
 		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
-			//Group.api().fetchById(this.$route.params.group_id);
 			GroupUser.api().fetch();
 		},
 		methods: {
