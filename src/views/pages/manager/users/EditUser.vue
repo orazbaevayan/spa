@@ -1,28 +1,25 @@
 <template>
-	<form class="p-2 w-100" @submit.prevent="updateCourse">
-		<Title>{{ $t('pages.Редактирование курса') }}</Title>
-		<div class="p-2">
-			<label class="form-label" for="name">Название</label>
-			<input type="text" class="form-control form-control-sm" name="name" :value="course.name">
-		</div>
-		<div class="p-2">
-			<input type="submit" class="btn btn-sm btn-warning text-white" :value="$t('ui.Редактировать')">
-		</div>
-	</form>
+	<UserForm :value="user" @submit.prevent="updateUser">
+		<input type="submit" class="btn btn-sm btn-warning text-white" :value="$t('ui.Редактировать')">
+	</UserForm>
 </template>
 
 <script>
-	import Course from '@/store/models/Course'
+	import User from '@/store/models/User'
+	import UserForm from '@/components/forms/User'
 
 	export default {
+		components: {
+			UserForm
+		},
 		created() {
-			Course.api().fetchById(this.$route.params.course_id);
+			User.api().fetchById(this.$route.params.user_id);
 		},
 		methods: {
-			updateCourse(event) {
+			updateUser(event) {
 				let formData = new FormData(event.currentTarget);
 				formData.append('_method', 'PATCH');
-				Course.api().post(`/api/courses/${this.$route.params.course_id}`, formData)
+				User.api().post(`/api/users/${this.$route.params.user_id}`, formData)
 				.then(r => {
 					if (r.response.status === 200) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
@@ -32,8 +29,8 @@
 			}
 		},
 		computed: {
-			course() {
-				return Course.find(this.$route.params.course_id) || new Course;
+			user() {
+				return User.find(this.$route.params.user_id) || new User;
 			}
 		}
 	}

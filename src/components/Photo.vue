@@ -27,7 +27,7 @@
 
 		<div class="text-center edit-container mw-100 mh-100" v-show="!editMode" style="height: 197px; width: 148px; overflow: hidden;">
 				<img :src="imageUrl" ref="photo" class="photo mw-100 mh-100 h-100">
-				<input type="hidden" name="photo" ref="inputphoto" :value="value">
+				<input type="hidden" name="photo" ref="inputphoto">
 				<label class="edit-button btn btn-sm btn-warning lh-100 p-1 m-0 brn" v-if="canEdit">
 					<font-awesome-icon class="text-white" :icon="['fas', 'pencil-alt']" />
 					<input type="file" accept="image/*" class="d-none" @change="selectImage">
@@ -101,13 +101,16 @@
 				let self = this;
 				let options = {
 					type: 'base64',
-					size: 'original',
+					size: {
+						width: 300,
+						height: 400
+					},
+					quality: 1,
 					format: 'jpeg',
 				}
 				self.croppie.result(options).then(function(blob) {
 					self.$refs.photo.src = blob;
 					self.$refs.inputphoto.value = blob;
-					self.$emit('input', blob);
 					self.editMode = false;
 				});
 			},
@@ -126,7 +129,7 @@
 		},
 		computed: {
 			imageUrl() {
-				return this.value ? '/api/photos/' + this.value : '/images/blank-photo.jpeg';
+				return this.value ? process.env.VUE_APP_API_URL + '/api/photos/' + this.value : '/images/blank-photo.jpeg';
 			}
 		}
 	}

@@ -34,6 +34,21 @@ export default [
 	component: () => import('../views/pages/manager/users/CreateUser.vue')
 },
 {
+	name: 'manager-edit-user',
+	path: '/manager/users/:user_id',
+	meta: {
+		title: () => t('pages.Редактирование пользователя'),
+		requiresAuth: true,
+		layout: 'MainLayout',
+		breadcrumbs: [
+		{ name: 'Home' },
+		{ isLink: false, text: () => t('roles.Менеджер') },
+		{ name: 'manager-index-users' },
+		]
+	},
+	component: () => import('../views/pages/manager/users/EditUser.vue')
+},
+{
 	name: 'manager-index-courses',
 	path: '/manager/groups',
 	meta: {

@@ -16,12 +16,12 @@
 				{{ user.fullName }}
 			</template>
 			<template v-slot:append>
-				<!-- <router-link class="text-warning px-1 py-0" :to="{ name: 'admin-edit-user', params: { user_id: user.id } }">
+				<router-link class="text-warning px-1 py-0" :to="{ name: 'manager-edit-user', params: { user_id: user.id } }">
 					<font-awesome-icon :icon="['fa', 'pencil-alt']" />
-				</router-link> -->
-				<a href="#" class="text-danger px-1 py-0" @click="deleteUser(user)">
+				</router-link>
+				<button class="btn btn-link text-danger px-1 py-0" @click.prevent="deleteUser(user)">
 					<font-awesome-icon :icon="['fa', 'trash-alt']" />
-				</a>
+				</button>
 			</template>
 		</Card>
 	</div>
