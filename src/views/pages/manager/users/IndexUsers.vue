@@ -24,7 +24,7 @@
 				</button>
 			</template>
 			<template v-slot:content>
-				<UserForm :can-edit="false" :value="user"/>
+				<UserForm class="p-2" :can-edit="false" :value="user"/>
 			</template>
 		</Card>
 	</div>

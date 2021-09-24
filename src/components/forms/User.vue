@@ -1,5 +1,5 @@
 <template>
-	<form class="p-2 w-100 d-flex flex-row flex-wrap">
+	<form class="w-100 d-flex flex-row flex-wrap">
 		<div class="p-2">
 			<Photo :can-edit="canEdit" :value="value.photo"/>
 		</div>
