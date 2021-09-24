@@ -1,6 +1,6 @@
 <template>
+	<Title class="mt-2">{{ $t('pages.Курсы') }}</Title>
 	<div class="p-2 d-flex flex-column">
-		<Title>{{ $t('pages.Курсы') }}</Title>
 		<Card class="mx-2 my-1" v-for="course in courses" :key="course.id">
 			<template v-slot:header>
 				{{ course.name }}

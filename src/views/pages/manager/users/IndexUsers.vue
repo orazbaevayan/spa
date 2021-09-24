@@ -1,6 +1,6 @@
 <template>
+	<Title class="mt-2">{{ $t('pages.Пользователи') }}</Title>
 	<div class="p-2 d-flex flex-column">
-		<Title>{{ $t('pages.Пользователи') }}</Title>
 		<SearchUsers @search="r => foundUsers = r" />
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1 my-0 form-check-input">
@@ -8,7 +8,7 @@
 				<font-awesome-icon :icon="['fa', 'plus-square']" />
 			</router-link>
 		</div>
-		<Card class="mx-2 my-1" v-for="user in users" :key="user.id">
+		<Card :toggle-on="true" class="mx-2 my-1" v-for="user in users" :key="user.id">
 			<template v-slot:prepend>
 				<input type="checkbox" class="mx-1 my-0 form-check-input">
 			</template>
@@ -23,6 +23,9 @@
 					<font-awesome-icon :icon="['fa', 'trash-alt']" />
 				</button>
 			</template>
+			<template v-slot:content>
+				<UserForm :can-edit="false" :value="user"/>
+			</template>
 		</Card>
 	</div>
 </template>
@@ -30,10 +33,12 @@
 <script>
 	import User from '@/store/models/User'
 	import SearchUsers from '@/components/SearchUsers'
+	import UserForm from '@/components/forms/User'
 
 	export default {
 		components: {
-			SearchUsers
+			SearchUsers,
+			UserForm,
 		},
 		data() {
 			return {

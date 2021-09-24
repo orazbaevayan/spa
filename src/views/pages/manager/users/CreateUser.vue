@@ -1,6 +1,7 @@
 <template>
+	<Title class="mt-2">{{ $t('pages.Создание пользователя') }}</Title>
 	<UserForm @submit.prevent="storeUser">
-		<input type="submit" class="btn btn-sm btn-primary text-white" :value="$t('ui.Создать')">
+		<input type="submit" class="btn btn-sm btn-primary text-white m-2" :value="$t('ui.Создать')">
 	</UserForm>
 </template>
 

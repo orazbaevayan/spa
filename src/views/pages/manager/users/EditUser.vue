@@ -1,6 +1,7 @@
 <template>
+	<Title class="mt-2">{{ $t('pages.Редактирование пользователя') }}</Title>
 	<UserForm :value="user" @submit.prevent="updateUser">
-		<input type="submit" class="btn btn-sm btn-warning text-white" :value="$t('ui.Редактировать')">
+		<input type="submit" class="btn btn-sm btn-warning text-white m-2" :value="$t('ui.Редактировать')">
 	</UserForm>
 </template>
 

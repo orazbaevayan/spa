@@ -14,6 +14,7 @@ export default {
 		'Группы': 'Groups',
 		'Создание курса': 'Create course',
 		'Создание пользователя': 'Create user',
+		'Редактирование пользователя': 'Edit user',
 		'Создание группы': 'Create group',
 		'Редактирование курса': 'Edit course',
 		'Редактирование группы': 'Edit group',

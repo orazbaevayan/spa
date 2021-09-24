@@ -1,6 +1,5 @@
 <template>
 	<form class="p-2 w-100 d-flex flex-row flex-wrap">
-		<Title class="w-100">{{ $t('pages.Создание пользователя') }}</Title>
 		<div class="p-2">
 			<Photo :can-edit="canEdit" :value="value.photo"/>
 		</div>
@@ -32,7 +31,7 @@
 				<input type="text" class="form-control form-control-sm" id="email" name="email" :value="value.email" :readonly="!canEdit">
 			</div>
 		</div>
-		<div class="p-2 w-100 text-center">
+		<div class="w-100 text-center">
 			<slot />
 		</div>
 	</form>

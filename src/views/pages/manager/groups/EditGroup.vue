@@ -1,6 +1,6 @@
 <template>
+	<Title class="mt-2">{{ $t('pages.Редактирование группы') }}</Title>
 	<form class="p-2 w-100" @submit.prevent="updateGroup">
-		<Title>{{ $t('pages.Редактирование группы') }}</Title>
 		<div class="p-2">
 			<label class="form-label" for="name">Название</label>
 			<input type="text" class="form-control form-control-sm" name="name" :value="group.name">
