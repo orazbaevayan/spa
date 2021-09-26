@@ -42,6 +42,11 @@
 			direction: rtl;
 			-ms-overflow-style: none;
 			overflow-x: auto;
+			&::-webkit-scrollbar {
+				display: none;
+			}
+			-ms-overflow-style: none;
+			scrollbar-width: none;
 			.navigation-link {
 				white-space: nowrap;
 				text-decoration: none;

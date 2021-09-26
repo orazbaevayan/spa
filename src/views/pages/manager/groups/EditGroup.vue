@@ -14,9 +14,12 @@
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1">
 
-			<Modal>
+			<Modal :header="true">
 				<template v-slot:open-button>
 					<font-awesome-icon class="mx-1 my-0 text-primary" :icon="['fa', 'plus-square']" />
+				</template>
+				<template v-slot:header>
+					Добавить студента
 				</template>
 				<template v-slot:body>
 					<SearchUsers class="p-2" v-model="foundUsers" />
@@ -59,10 +62,10 @@
 			<template v-slot:append>
 				<!-- <router-link class="text-primary px-1 py-0" :to="{ name: 'manager-edit-user', params: { user_id: user.id } }">
 					<font-awesome-icon :icon="['fa', 'eye']" />
-				</router-link>
-				<a href="#" class="text-danger px-1 py-0" @click="deleteGroup(user)">
-					<font-awesome-icon :icon="['fa', 'trash-alt']" />
-				</a> -->
+				</router-link> -->
+				<DeleteModal @delete="deleteGroupUser(group_user)">
+					Вы действительно хотите удалить запись <span class="fw-bold">{{ group_user.user.fullName }}</span>?
+				</DeleteModal>
 			</template>
 		</Card>
 	</div>
@@ -103,8 +106,14 @@
 				.catch(e => console.log(e));
 			},
 			addUser(user) {
-				console.log(user);
-			}
+				GroupUser.api().post(`/api/group_users`, {
+					group_id: this.$route.params.group_id,
+					user_id: user.id,
+				});
+			},
+			deleteGroupUser(groupUser) {
+				GroupUser.api().deleteById(groupUser.id);
+			},
 		},
 		computed: {
 			group() {

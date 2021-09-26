@@ -4,7 +4,7 @@ import User from '@/store/models/User'
 import Group from '@/store/models/Group'
 
 export default class GroupUser extends Model {
-	static entity = 'groupUser'
+	static entity = 'group_users'
 
 	static fields () {
 		return {

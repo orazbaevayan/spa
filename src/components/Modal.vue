@@ -5,13 +5,14 @@
 	<div ref="modal" class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header" v-if="header">
-					<slot name="header" />
+				<div class="modal-header d-flex justify-content-between p-3" v-if="header">
+					<span class="modal-title fw-bold" style="line-height: 1rem;"><slot name="header" /></span>
+					<button type="button" class="btn-close p-0 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body p-2">
 					<slot name="body" />
 				</div>
-				<div class="modal-footer" v-if="footer">
+				<div class="modal-footer p-2" v-if="footer">
 					<slot name="footer" />
 				</div>
 			</div>
@@ -51,5 +52,8 @@
 	}
 	.modal {
 		padding-right: 0 !important;
+		.modal-header {
+			line-height: 1;
+		}
 	}
 </style>
