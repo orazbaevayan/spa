@@ -8,7 +8,7 @@
 				<div class="modal-header" v-if="header">
 					<slot name="header" />
 				</div>
-				<div class="modal-body">
+				<div class="modal-body p-2">
 					<slot name="body" />
 				</div>
 				<div class="modal-footer" v-if="footer">

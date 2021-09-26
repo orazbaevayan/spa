@@ -1,5 +1,5 @@
 <template>
-	<form class="input-group input-group-sm p-2" @submit.prevent="search">
+	<form class="input-group input-group-sm" @submit.prevent="search">
 		<select v-model="searchField" class="text-start input-group-text bg-white flex-grow-0">
 			<option value="iin">{{ $t('models.user.ИИН') }}</option>
 			<option value="fullName">{{ $t(`models.user['Ф.И.О']`) }}</option>
@@ -17,23 +17,20 @@
 	import Fuse from 'fuse.js'
 
 	export default {
+		props: ['modelValue'],
 		mounted() {
 			this.query()
 		},
 		data() {
 			return {
 				searchText: this.$route.query.search || '',
-				searchField: this.$route.query.field || 'iin'
+				searchField: this.$route.query.field || 'iin',
 			}
 		},
 		methods: {
 			search() {
 				this.query().then(() => {
-					if (this.searchText) {
-						this.$router.replace({ query: { ...this.$route.query, search: this.searchText, field: this.searchField } })
-					} else {
-						this.$router.replace({ query: {} })
-					}
+					this.$router.replace({ query: { ...this.$route.query, search: this.searchText, field: this.searchField, page: 1 } })
 				});
 			},
 			query() {
@@ -45,7 +42,7 @@
 						keys: [this.searchField]
 					}
 					const result = this.searchText !== '' ? new Fuse(User.all(), options).search(this.searchText).map(i => i.item.id) : User.all().map(i => i.id);
-					this.$emit('search', result)
+					this.$emit('update:modelValue', result);
 				});
 			}
 		},

@@ -1,7 +1,7 @@
 <template>
 	<Title class="mt-2">{{ $t('pages.Пользователи') }}</Title>
 	<div class="p-2 d-flex flex-column">
-		<SearchUsers @search="r => foundUsers = r" />
+		<SearchUsers class="p-2" v-model="foundUsers" />
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1 my-0 form-check-input">
 			<router-link class="text-primary px-1 py-0" :to="{ name: 'manager-create-user' }">
@@ -28,12 +28,14 @@
 			</template>
 		</Card>
 	</div>
+	<Pagination :value="foundUsers" class="p-2" v-if="foundUsers.length" />
 </template>
 
 <script>
 	import User from '@/store/models/User'
 	import SearchUsers from '@/components/SearchUsers'
 	import UserForm from '@/components/forms/User'
+	import { mapGetters } from 'vuex'
 
 	export default {
 		components: {
@@ -42,21 +44,24 @@
 		},
 		data() {
 			return {
-				foundUsers: []
+				foundUsers: [],
 			}
 		},
 		methods: {
 			deleteUser(user) {
 				User.api().deleteById(user.id);
 			},
-			search(result) {
-				console.log(result);
-			},
 		},
 		computed: {
+			...mapGetters({
+				'currentPage': 'pagination/currentPage',
+				'range': 'pagination/range',
+				'elements': 'pagination/elements',
+				'currentPageElements': 'pagination/currentPageElements',
+			}),
 			users() {
-				return User.findIn(this.foundUsers);
-			}
+				return this.currentPageElements(User.findIn(this.foundUsers));
+			},
 		}
 	}
 </script>

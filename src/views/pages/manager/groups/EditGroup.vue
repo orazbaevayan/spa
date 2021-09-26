@@ -18,8 +18,37 @@
 				<template v-slot:open-button>
 					<font-awesome-icon class="mx-1 my-0 text-primary" :icon="['fa', 'plus-square']" />
 				</template>
+				<template v-slot:body>
+					<SearchUsers class="p-2" v-model="foundUsers" />
+
+					<Card class="m-2">
+						<template v-slot:header>
+							<span class="w-100 d-flex align-items-center justify-content-center text-primary">
+								<span class="me-2">Создать нового пользователя</span>
+								<font-awesome-icon :icon="['fa', 'plus-square']" />
+							</span>
+						</template>
+					</Card>
+
+					<div class="p-1 d-flex flex-column">
+						<Card :toggle-on="true" class="m-1" v-for="user in users" :key="user.id">
+							<template v-slot:header>
+								{{ user.fullName }}
+							</template>
+							<template v-slot:append>
+								<button class="btn btn-link text-primary px-1 py-0" @click.prevent="addUser(user)">
+									<font-awesome-icon :icon="['fa', 'plus-square']" />
+								</button>
+							</template>
+							<template v-slot:content>
+								<UserForm class="p-2" :can-edit="false" :value="user"/>
+							</template>
+						</Card>
+					</div>
+				</template>
 			</Modal>
 		</div>
+
 		<Card class="mx-2 my-1" v-for="group_user in group.group_users" :key="group_user.id">
 			<template v-slot:prepend>
 				<input type="checkbox" class="mx-1">
@@ -40,14 +69,26 @@
 </template>
 
 <script>
+	import User from '@/store/models/User'
 	import Course from '@/store/models/Course'
 	import Group from '@/store/models/Group'
 	import GroupUser from '@/store/models/GroupUser'
+	import SearchUsers from '@/components/SearchUsers'
+	import UserForm from '@/components/forms/User'
 
 	export default {
 		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
 			GroupUser.api().fetch();
+		},
+		data() {
+			return {
+				foundUsers: []
+			}
+		},
+		components: {
+			SearchUsers,
+			UserForm,
 		},
 		methods: {
 			updateGroup(event) {
@@ -60,11 +101,17 @@
 					}
 				})
 				.catch(e => console.log(e));
+			},
+			addUser(user) {
+				console.log(user);
 			}
 		},
 		computed: {
 			group() {
 				return Group.query().with(['group_users.user']).find(this.$route.params.group_id) || new Group;
+			},
+			users() {
+				return User.findIn(this.foundUsers);
 			}
 		}
 	}
