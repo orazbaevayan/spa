@@ -1,9 +1,9 @@
 <template>
-	<button type="button" class="btn btn-link p-0" @click.prevent="modal.show()">
+	<button type="button" class="btn btn-link p-0" @click.prevent="modal.show()" v-if="openButton">
 		<slot name="open-button" />
 	</button>
-	<div ref="modal" class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
-		<div class="modal-dialog">
+	<div ref="modal" :id="modalId" class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+		<div class="modal-dialog" :class="dialogClass">
 			<div class="modal-content">
 				<div class="modal-header d-flex justify-content-between p-3" v-if="header">
 					<span class="modal-title fw-bold" style="line-height: 1rem;"><slot name="header" /></span>
@@ -34,6 +34,18 @@
 				type: Boolean,
 				default: false
 			},
+			openButton: {
+				type: Boolean,
+				default: true
+			},
+			dialogClass: {
+				type: String,
+				default: ''
+			},
+			modalId: {
+				type: String,
+				default: ''
+			}
 		},
 		mounted() {
 			this.modal = new BootstrapModal(this.$refs.modal);

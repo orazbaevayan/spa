@@ -17,9 +17,15 @@
 	import Fuse from 'fuse.js'
 
 	export default {
-		props: ['modelValue'],
+		props: {
+			'modelValue': {},
+			'initSearch': {
+				type: Boolean,
+				default: true,
+			},
+		},
 		mounted() {
-			this.query()
+			if (this.initSearch) this.query()
 		},
 		data() {
 			return {

@@ -6,6 +6,7 @@
 
 <style lang="scss" scoped>
 #loading {
+	z-index: 10000;
 	position: fixed;
 	left: 0;
 	top: 0;

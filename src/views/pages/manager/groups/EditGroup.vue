@@ -22,25 +22,28 @@
 					Добавить студента
 				</template>
 				<template v-slot:body>
-					<SearchUsers class="p-2" v-model="foundUsers" />
+					<SearchUsers class="p-2" v-model="foundUsers" :init-search="false" />
 
 					<Card class="m-2">
 						<template v-slot:header>
-							<span class="w-100 d-flex align-items-center justify-content-center text-primary">
+							<span class="w-100 d-flex align-items-center justify-content-center text-primary" data-bs-target="#create_user_modal" data-bs-toggle="modal" data-bs-dismiss="modal">
 								<span class="me-2">Создать нового пользователя</span>
 								<font-awesome-icon :icon="['fa', 'plus-square']" />
 							</span>
 						</template>
 					</Card>
 
-					<div class="p-1 d-flex flex-column">
+					<div class="p-1 d-flex flex-column" v-if="users.length">
 						<Card :toggle-on="true" class="m-1" v-for="user in users" :key="user.id">
 							<template v-slot:header>
 								{{ user.fullName }}
 							</template>
 							<template v-slot:append>
-								<button class="btn btn-link text-primary px-1 py-0" @click.prevent="addUser(user)">
-									<font-awesome-icon :icon="['fa', 'plus-square']" />
+								<button type="button" class="btn btn-link text-primary px-1 py-0" v-if="!isUserInGroup(user)" @click.prevent="addUser(user)">
+									<font-awesome-icon :icon="['fa', 'plus-square']"/>
+								</button>
+								<button type="button" class="btn btn-link text-success px-1 py-0" v-if="isUserInGroup(user)">
+									<font-awesome-icon :icon="['fa', 'check-square']"/>
 								</button>
 							</template>
 							<template v-slot:content>
@@ -48,6 +51,21 @@
 							</template>
 						</Card>
 					</div>
+				</template>
+			</Modal>
+
+			<Modal :header="true" :footer="true" :open-button="false" dialog-class="modal-lg" modal-id="create_user_modal">
+				<template v-slot:header>
+					Создать нового пользователя
+				</template>
+				<template v-slot:body>
+					<UserForm id="storeUserForm" @submit.prevent="storeUser">
+						<input type="submit" class="d-none">
+					</UserForm>
+				</template>
+				<template v-slot:footer>
+					<button type="submit" class="m-0 m-2 btn btn-sm btn-primary text-white" data-bs-dismiss="modal" form="storeUserForm">Создать</button>
+					<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
 				</template>
 			</Modal>
 		</div>
@@ -109,11 +127,28 @@
 				GroupUser.api().post(`/api/group_users`, {
 					group_id: this.$route.params.group_id,
 					user_id: user.id,
+				}).then(r => {
+					if (r.response.status === 201) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
+					}
 				});
 			},
 			deleteGroupUser(groupUser) {
 				GroupUser.api().deleteById(groupUser.id);
 			},
+			isUserInGroup(user) {
+				return this.group.group_users.map(gu => gu.user.id).indexOf(user.id) != -1;
+			},
+			storeUser(event) {
+				let formData = new FormData(event.currentTarget);
+				User.api().post('api/users', formData)
+				.then(r => {
+					if (r.response.status === 201) {
+						this.addUser(r.response.data.data);
+					}
+				})
+				.catch(e => console.log(e));
+			}
 		},
 		computed: {
 			group() {
@@ -121,7 +156,7 @@
 			},
 			users() {
 				return User.findIn(this.foundUsers);
-			}
+			},
 		}
 	}
 </script>

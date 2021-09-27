@@ -18,9 +18,12 @@
 				<router-link class="text-primary px-1 py-0" :to="{ name: 'manager-edit-group', params: { group_id: group.id } }">
 					<font-awesome-icon :icon="['fa', 'eye']" />
 				</router-link>
-				<a href="#" class="text-danger px-1 py-0" @click="deleteGroup(group)">
+				<DeleteModal @delete="deleteGroup(group)">
+					Вы действительно хотите удалить запись <span class="fw-bold">{{ group.name }}</span>?
+				</DeleteModal>
+<!-- 				<a href="#" class="text-danger px-1 py-0" @click="deleteGroup(group)">
 					<font-awesome-icon :icon="['fa', 'trash-alt']" />
-				</a>
+				</a> -->
 			</template>
 		</Card>
 	</div>
