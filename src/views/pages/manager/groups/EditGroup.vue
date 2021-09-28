@@ -26,7 +26,7 @@
 
 					<Card class="m-2">
 						<template v-slot:header>
-							<span class="w-100 d-flex align-items-center justify-content-center text-primary" data-bs-target="#create_user_modal" data-bs-toggle="modal" data-bs-dismiss="modal">
+							<span class="w-100 d-flex align-items-center justify-content-center text-primary" data-bs-dismiss="modal" data-bs-target="#create_user_modal" data-bs-toggle="modal">
 								<span class="me-2">Создать нового пользователя</span>
 								<font-awesome-icon :icon="['fa', 'plus-square']" />
 							</span>
