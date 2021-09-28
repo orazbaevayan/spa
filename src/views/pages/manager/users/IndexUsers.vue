@@ -19,9 +19,9 @@
 				<router-link class="text-warning px-1 py-0" :to="{ name: 'manager-edit-user', params: { user_id: user.id } }">
 					<font-awesome-icon :icon="['fa', 'pencil-alt']" />
 				</router-link>
-				<button class="btn btn-link text-danger px-1 py-0" @click.prevent="deleteUser(user)">
-					<font-awesome-icon :icon="['fa', 'trash-alt']" />
-				</button>
+				<DeleteModal @delete="deleteUser(user)">
+					Вы действительно хотите удалить запись <span class="fw-bold">{{ user.fullName }}</span>?
+				</DeleteModal>
 			</template>
 			<template v-slot:content>
 				<UserForm class="p-2" :can-edit="false" :value="user"/>

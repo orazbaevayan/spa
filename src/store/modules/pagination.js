@@ -2,7 +2,7 @@ export default {
 	namespaced: true,
 	state: {
 		range: 5,
-		elements: 2,
+		elements: 10,
 		currentPage: 1
 	},
 	getters: {

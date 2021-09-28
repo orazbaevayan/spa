@@ -7,7 +7,7 @@
 				<font-awesome-icon :icon="['fa', 'plus-square']" />
 			</router-link>
 		</div>
-		<Card class="mx-2 my-1" v-for="group in course.groups" :key="group.id">
+		<Card class="mx-2 my-1" v-for="group in groups" :key="group.id">
 			<template v-slot:prepend>
 				<input type="checkbox" class="mx-1">
 			</template>
@@ -27,11 +27,13 @@
 			</template>
 		</Card>
 	</div>
+	<Pagination :value="course.groups" class="p-2" v-if="course.groups.length" />
 </template>
 
 <script>
 	import Course from '@/store/models/Course'
 	import Group from '@/store/models/Group'
+	import { mapGetters } from 'vuex'
 
 	export default {
 		beforeCreate() {
@@ -45,6 +47,12 @@
 		computed: {
 			course() {
 				return Course.query().with('groups').find(this.$route.params.course_id) || new Course;
+			},
+			...mapGetters({
+				'currentPageElements': 'pagination/currentPageElements',
+			}),
+			groups() {
+				return this.currentPageElements(this.course.groups);
 			},
 		}
 	}
