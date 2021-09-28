@@ -18,9 +18,9 @@
 				<router-link class="text-warning px-1 py-0" :to="{ name: 'admin-edit-course', params: { course_id: course.id } }">
 					<font-awesome-icon :icon="['fa', 'pencil-alt']" />
 				</router-link>
-				<a href="#" class="text-danger px-1 py-0" @click="deleteCourse(course)">
-					<font-awesome-icon :icon="['fa', 'trash-alt']" />
-				</a>
+				<DeleteModal @delete="deleteCourse(course)">
+					Вы действительно хотите удалить запись <span class="fw-bold">{{ course.name }}</span>?
+				</DeleteModal>
 			</template>
 		</Card>
 	</div>
