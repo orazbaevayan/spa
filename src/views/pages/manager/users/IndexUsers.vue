@@ -1,7 +1,7 @@
 <template>
 	<Title class="mt-2">{{ $t('pages.Пользователи') }}</Title>
 	<div class="p-2 d-flex flex-column">
-		<SearchUsers class="p-2" v-model="foundUsers" />
+		<SearchUsers class="p-2" v-model="foundUsers" :use-route-query="true" />
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1 my-0 form-check-input">
 			<router-link class="text-primary px-1 py-0" :to="{ name: 'manager-create-user' }">

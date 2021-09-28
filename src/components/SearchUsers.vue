@@ -23,6 +23,10 @@
 				type: Boolean,
 				default: true,
 			},
+			'useRouteQuery': {
+				type: Boolean,
+				default: false
+			}
 		},
 		mounted() {
 			if (this.initSearch) this.query()
@@ -36,7 +40,7 @@
 		methods: {
 			search() {
 				this.query().then(() => {
-					this.$router.replace({ query: { ...this.$route.query, search: this.searchText, field: this.searchField, page: 1 } })
+					if (this.useRouteQuery) this.$router.replace({ query: { ...this.$route.query, search: this.searchText, field: this.searchField, page: 1 } })
 				});
 			},
 			query() {
