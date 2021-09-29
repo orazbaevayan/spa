@@ -6,7 +6,7 @@
 			<input type="text" class="form-control form-control-sm" name="name" :value="course.name">
 		</div>
 		<div class="p-2">
-			<input type="submit" class="btn btn-sm btn-warning text-white" :value="$t('ui.Редактировать')">
+			<input type="submit" class="btn btn-sm btn-warning text-white" :value="$t('ui.Сохранить')">
 		</div>
 	</form>
 </template>

@@ -7,6 +7,7 @@ export default {
 		'Пароль': 'Password',
 		'Создать': 'Create',
 		'Редактировать': 'Edit',
+		'Сохранить': 'Save',
 	},
 	pages: {
 		'Главная': 'Home',
