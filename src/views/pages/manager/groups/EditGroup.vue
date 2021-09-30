@@ -70,7 +70,7 @@
 			</Modal>
 		</div>
 
-		<Card class="mx-2 my-1" v-for="group_user in group.group_users" :key="group_user.id">
+		<Card :toggle-on="true" class="mx-2 my-1" v-for="group_user in group.group_users" :key="group_user.id">
 			<template v-slot:prepend>
 				<input type="checkbox" class="mx-1">
 			</template>
@@ -78,12 +78,30 @@
 				{{ group_user.user.fullName }}
 			</template>
 			<template v-slot:append>
-				<!-- <router-link class="text-primary px-1 py-0" :to="{ name: 'manager-edit-user', params: { user_id: user.id } }">
-					<font-awesome-icon :icon="['fa', 'eye']" />
-				</router-link> -->
+				<Modal :header="true" :footer="true" dialog-class="modal-lg">
+					<template v-slot:open-button>
+						<font-awesome-icon class="text-warning mx-1" :icon="['fa', 'user']"/>
+					</template>
+					<template v-slot:header>
+						Редактировать пользователя
+					</template>
+					<template v-slot:body>
+						<UserForm :value="group_user.user" :id="`updateUserForm${group_user.user.id}`" @submit.prevent="updateUser($event, group_user.user.id)">
+							<input type="submit" class="d-none">
+						</UserForm>
+					</template>
+					<template v-slot:footer>
+						<button type="submit" class="m-0 m-2 btn btn-sm btn-warning text-white" data-bs-dismiss="modal" :form="`updateUserForm${group_user.user.id}`">Сохранить</button>
+						<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
+					</template>
+				</Modal>
+
 				<DeleteModal @delete="deleteGroupUser(group_user)">
 					Вы действительно хотите удалить запись <span class="fw-bold">{{ group_user.user.fullName }}</span>?
 				</DeleteModal>
+			</template>
+			<template v-slot:content>
+				<UserForm class="p-2" :can-edit="false" :value="group_user.user"/>
 			</template>
 		</Card>
 	</div>
@@ -132,6 +150,17 @@
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
 					}
 				});
+			},
+			updateUser(event, id) {
+				let formData = new FormData(event.currentTarget);
+				formData.append('_method', 'PATCH');
+				User.api().post(`/api/users/${id}`, formData)
+				.then(r => {
+					if (r.response.status === 200) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
+					}
+				})
+				.catch(e => console.log(e));
 			},
 			deleteGroupUser(groupUser) {
 				GroupUser.api().deleteById(groupUser.id);
