@@ -33,6 +33,7 @@
 <style lang="scss" scoped>
 #tabs-wrapper {
 	position: relative;
+	user-select: none;
 	&::before {
 		background-color: $lighten-primary;
 		content: '';
@@ -46,6 +47,11 @@
 		overflow-x: auto;
 		overflow-y: hidden;
 		border: none;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 		.nav-item {
 			flex-shrink: 0;
 			background-color: $app-background-color;
@@ -53,10 +59,10 @@
 				margin-left: -1px;
 			}
 			&:first-child {
-				border-radius: 5px 0 0 0;
+				border-top-left-radius: 5px;
 			}
 			&:last-child {
-				border-radius: 0 5px 0 0;
+				border-top-right-radius: 5px;
 			}
 			&.active {
 				border-width: 1px;
