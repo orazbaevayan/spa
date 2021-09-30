@@ -1,7 +1,7 @@
 <template>
 	<Title>{{ $t('pages.Редактирование курса') }}</Title>
 	<div class="p-2">
-		<Tabs :tabs="['Общие данные', 'Доп. данные', 'Документы']">
+		<Tabs :tabs="['Общие данные', 'Доп. данные', 'Шаблоны']">
 			<template v-slot:0>
 				<form class="w-100" @submit.prevent="updateCourse">
 					<div class="p-2">
