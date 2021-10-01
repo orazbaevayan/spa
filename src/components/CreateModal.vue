@@ -7,9 +7,7 @@
 			Создать
 		</template>
 		<template v-slot:body>
-			<div class="p-2">
-				<slot />
-			</div>
+			<slot />
 		</template>
 		<template v-slot:footer>
 			<button type="submit" class="m-0 m-2 btn btn-sm btn-primary text-white" data-bs-dismiss="modal" @click="$emit('store')" :form="form">Создать</button>

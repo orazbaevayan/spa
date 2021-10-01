@@ -24,12 +24,14 @@
 			<template v-slot:2>
 				<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 					<input type="checkbox" class="mx-1">
-					<CreateModal>
-						
+					<CreateModal dialog-class="modal-md" form="storeTemplateForm">
+						<TemplateForm id="storeTemplateForm" @submit.prevent="storeTemplate" />
 					</CreateModal>
 				</div>
 				<Card class="mx-2 my-1" v-for="template in course.templates" :key="template.id">
-					{{ template.name }}
+					<template v-slot:header>
+						{{ template.name }}
+					</template>
 				</Card>
 			</template>
 		</Tabs>
@@ -38,10 +40,14 @@
 
 <script>
 	import Course from '@/store/models/Course'
+	import TemplateForm from '@/components/forms/Template'
 
 	export default {
 		created() {
 			Course.api().fetchById(this.$route.params.course_id);
+		},
+		components: {
+			TemplateForm
 		},
 		methods: {
 			updateCourse(event) {
@@ -54,11 +60,22 @@
 					}
 				})
 				.catch(e => console.log(e));
+			},
+			storeTemplate(event) {
+				let formData = new FormData(event.currentTarget);
+				Course.api().post('api/templates', formData)
+				.then(r => {
+					console.log(r);
+					if (r.response.status === 201) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
+					}
+				})
+				.catch(e => console.log(e));
 			}
 		},
 		computed: {
 			course() {
-				return Course.query().with(['templates']).find(this.$route.params.course_id) || new Course;
+				return Course.query().with(['groups', 'templates']).find(this.$route.params.course_id) || new Course;
 			}
 		}
 	}
