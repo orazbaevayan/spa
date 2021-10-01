@@ -1,6 +1,6 @@
 <template>
 	<Title>{{ $t('pages.Редактирование курса') }}</Title>
-	<div class="p-2">
+	<div class="p-2 d-flex flex-column">
 		<Tabs :tabs="['Общие данные', 'Доп. данные', 'Шаблоны']">
 
 			<template v-slot:0>
