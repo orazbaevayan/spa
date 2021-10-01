@@ -1,5 +1,5 @@
 <template>
-	<Modal :header="true" :footer="true" dialog-class="modal-lg">
+	<Modal :header="true" :footer="true" :dialog-class="dialogClass">
 		<template v-slot:open-button>
 			<font-awesome-icon class="text-warning mx-1" :icon="['fa', 'pencil-alt']"/>
 		</template>
@@ -7,9 +7,7 @@
 			Редактировать
 		</template>
 		<template v-slot:body>
-			<div class="p-2">
-				<slot />
-			</div>
+			<slot />
 		</template>
 		<template v-slot:footer>
 			<button type="submit" class="m-0 m-2 btn btn-sm btn-warning text-white" data-bs-dismiss="modal" @click="$emit('update')" :form="form">Сохранить</button>
@@ -20,7 +18,15 @@
 
 <script>
 	export default {
-		props: ['form'],
+		props: {
+			form: {
+				type: String
+			},
+			dialogClass: {
+				type: String,
+				default: 'modal-lg'
+			}
+		},
 		emits: ['update']
 	}
 </script>

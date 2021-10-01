@@ -1,5 +1,5 @@
 <template>
-	<div class="card">
+	<div class="card" :class="{ 'control-panel': isControlPanel }">
 		<div class="card-header p-1 d-flex" :style="(cardOpen && toggleOn) ? '' : 'border-bottom: none !important;'">
 			<div class="d-flex align-items-center">
 				<slot name="prepend"/>
@@ -27,6 +27,10 @@
 			toggleOn: {
 				type: Boolean,
 				default: false
+			},
+			isControlPanel: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -44,6 +48,14 @@
 
 <style lang="scss" scoped>
 .card {
+	background-color: transparent;
+	&.control-panel {
+		border-color: transparent;
+		background-color: transparent;
+		.card-header {
+			background-color: transparent;
+		}
+	}
 	.toggle-button {
 		cursor: pointer;
 	}

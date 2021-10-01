@@ -40,9 +40,13 @@
     width: 300px;
     display: flex;
     flex-direction: column;
+    text-align: center;
     label {
       line-height: 1;
       margin-bottom: 4px;
+    }
+    input {
+      text-align: center;
     }
   }
 </style>

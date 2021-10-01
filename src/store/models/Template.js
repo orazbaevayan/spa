@@ -9,7 +9,7 @@ export default class Template extends Model {
 		return {
 			id: this.attr(null),
 			name: this.attr(''),
-			course_id: this.attr(''),
+			course_id: this.attr(null),
 			course: this.belongsTo(Course, 'course_id'),
 		}
 	}

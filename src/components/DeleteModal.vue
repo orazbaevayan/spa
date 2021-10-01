@@ -1,9 +1,7 @@
 <template>
 	<Modal :header="true" :footer="true">
 		<template v-slot:open-button>
-			<button type="button" class="btn btn-link text-danger px-1 py-0">
-				<font-awesome-icon :icon="['fa', 'trash-alt']" />
-			</button>
+			<font-awesome-icon class="text-danger mx-1" :icon="['fa', 'trash-alt']" />
 		</template>
 		<template v-slot:header>
 			Удаление записи

@@ -30,6 +30,9 @@ export default {
 		'Админ': 'Admin',
 	},
 	models: {
+		ALL: {
+			'Название': 'Name',
+		},
 		user: {
 			'Ф.И.О': 'Full Name',
 			'ИИН': 'IIN',

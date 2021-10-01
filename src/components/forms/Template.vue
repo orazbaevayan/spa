@@ -2,7 +2,7 @@
 	<form class="w-100 d-flex flex-row flex-wrap">
 		<input type="hidden" name="course_id" :value="value.course_id || $route.params.course_id">
 		<div class="p-2 d-flex flex-column w-100">
-			<label class="form-label" for="name">{{ $t(`models.user['Название']`) }}</label>
+			<label class="form-label" for="name">{{ $t(`models.ALL['Название']`) }}</label>
 			<input type="text" class="form-control form-control-sm" id="name" name="name" :value="value.name" :readonly="!canEdit">
 		</div>
 		<div class="w-100 text-center">
