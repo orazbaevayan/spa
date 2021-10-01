@@ -78,23 +78,11 @@
 				{{ group_user.user.fullName }}
 			</template>
 			<template v-slot:append>
-				<Modal :header="true" :footer="true" dialog-class="modal-lg">
-					<template v-slot:open-button>
-						<font-awesome-icon class="text-warning mx-1" :icon="['fa', 'user']"/>
-					</template>
-					<template v-slot:header>
-						Редактировать пользователя
-					</template>
-					<template v-slot:body>
-						<UserForm :value="group_user.user" :id="`updateUserForm${group_user.user.id}`" @submit.prevent="updateUser($event, group_user.user.id)">
-							<input type="submit" class="d-none">
-						</UserForm>
-					</template>
-					<template v-slot:footer>
-						<button type="submit" class="m-0 m-2 btn btn-sm btn-warning text-white" data-bs-dismiss="modal" :form="`updateUserForm${group_user.user.id}`">Сохранить</button>
-						<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
-					</template>
-				</Modal>
+				<EditModal :form="`updateUserForm${group_user.user.id}`">
+					<UserForm :value="group_user.user" :id="`updateUserForm${group_user.user.id}`" @submit.prevent="updateUser($event, group_user.user.id)">
+						<input type="submit" class="d-none">
+					</UserForm>
+				</EditModal>
 
 				<DeleteModal @delete="deleteGroupUser(group_user)">
 					Вы действительно хотите удалить запись <span class="fw-bold">{{ group_user.user.fullName }}</span>?

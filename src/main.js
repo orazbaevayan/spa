@@ -32,6 +32,8 @@ app.component('Card', defineAsyncComponent(() => import('./components/Card')))
 app.component('Tabs', defineAsyncComponent(() => import('./components/Tabs')))
 app.component('Modal', defineAsyncComponent(() => import('./components/Modal')))
 app.component('DeleteModal', defineAsyncComponent(() => import('./components/DeleteModal')))
+app.component('EditModal', defineAsyncComponent(() => import('./components/EditModal')))
+app.component('CreateModal', defineAsyncComponent(() => import('./components/CreateModal')))
 app.component('Pagination', defineAsyncComponent(() => import('./components/Pagination')))
 
 

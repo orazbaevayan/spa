@@ -22,9 +22,15 @@
 				</div>
 			</template>
 			<template v-slot:2>
-				<div class="p-2">
-					Документы
+				<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
+					<input type="checkbox" class="mx-1">
+					<CreateModal>
+						
+					</CreateModal>
 				</div>
+				<Card class="mx-2 my-1" v-for="template in course.templates" :key="template.id">
+					{{ template.name }}
+				</Card>
 			</template>
 		</Tabs>
 	</div>
@@ -52,7 +58,7 @@
 		},
 		computed: {
 			course() {
-				return Course.find(this.$route.params.course_id) || new Course;
+				return Course.query().with(['templates']).find(this.$route.params.course_id) || new Course;
 			}
 		}
 	}

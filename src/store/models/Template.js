@@ -1,17 +1,15 @@
 import { Model } from '@vuex-orm/core'
 import store from '@/store'
-import Group from '@/store/models/Group'
-import Template from '@/store/models/Template'
+import Course from '@/store/models/Course'
 
-export default class Course extends Model {
-	static entity = 'courses'
+export default class Template extends Model {
+	static entity = 'templates'
 
 	static fields () {
 		return {
 			id: this.attr(null),
 			name: this.attr(''),
-			groups: this.hasMany(Group, 'course_id'),
-			templates: this.hasMany(Template, 'course_id'),
+			course: this.belongsTo(Course, 'course_id'),
 		}
 	}
 
@@ -19,13 +17,13 @@ export default class Course extends Model {
 		actions: {
 			fetch: {
 				method: 'get',
-				url: '/api/courses'
+				url: '/api/templates'
 			},
-			fetchById (id) {
-				return this.get(`/api/courses/${id}`)
+			fetchById(id) {
+				return this.get(`/api/templates/${id}`);
 			},
 			deleteById(id) {
-				return this.delete(`/api/courses/${id}`, {
+				return this.delete(`/api/templates/${id}`, {
 					delete: id
 				}).then((r) => {
 					if (r.response.data === true) {
