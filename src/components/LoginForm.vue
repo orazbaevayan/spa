@@ -34,7 +34,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   form {
     max-width: 100%;
     width: 300px;
