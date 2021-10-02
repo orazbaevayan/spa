@@ -5,11 +5,14 @@
 			<template v-slot:prepend>
 				<input type="checkbox" class="mx-1">
 			</template>
-			<template v-slot:header>
+<!-- 			<template v-slot:header>
 				<div class="col-md-6">
-					Ф.И.О
+					Группа
 				</div>
-			</template>
+				<div class="col-md-6">
+					Человек
+				</div>
+			</template> -->
 			<template v-slot:append>
 				<router-link class="text-primary px-1 py-0" :to="{ name: 'manager-create-group' }">
 					<font-awesome-icon :icon="['fa', 'plus-square']" />
@@ -24,6 +27,10 @@
 				{{ group.name }}
 			</template>
 			<template v-slot:append>
+				<span class="px-1 d-flex flex-column justify-content-center align-items-center text-secondary" style="line-height: 1;">
+					<font-awesome-icon :icon="['fa', 'users']" style="font-size: 0.6rem;" />
+					<span style="font-size: 0.8rem;">{{ group.usersCount }}</span>
+				</span>
 				<router-link class="text-primary px-1 py-0" :to="{ name: 'manager-edit-group', params: { group_id: group.id } }">
 					<font-awesome-icon :icon="['fa', 'eye']" />
 				</router-link>
@@ -42,11 +49,13 @@
 <script>
 	import Course from '@/store/models/Course'
 	import Group from '@/store/models/Group'
+	import GroupUser from '@/store/models/GroupUser'
 	import { mapGetters } from 'vuex'
 
 	export default {
 		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
+			GroupUser.api().fetch();
 		},
 		methods: {
 			deleteGroup(group) {
@@ -55,7 +64,7 @@
 		},
 		computed: {
 			course() {
-				return Course.query().with('groups').find(this.$route.params.course_id) || new Course;
+				return Course.query().with('groups.group_users').find(this.$route.params.course_id) || new Course;
 			},
 			...mapGetters({
 				'currentPageElements': 'pagination/currentPageElements',

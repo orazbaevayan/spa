@@ -78,7 +78,7 @@
 				{{ group_user.user.fullName }}
 			</template>
 			<template v-slot:append>
-				<EditModal :form="`updateUserForm${group_user.user.id}`">
+				<EditModal fa-icon="user-edit" :form="`updateUserForm${group_user.user.id}`">
 					<UserForm :value="group_user.user" :id="`updateUserForm${group_user.user.id}`" @submit.prevent="updateUser($event, group_user.user.id)">
 						<input type="submit" class="d-none">
 					</UserForm>

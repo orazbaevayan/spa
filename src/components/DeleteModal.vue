@@ -4,7 +4,7 @@
 			<font-awesome-icon class="text-danger mx-1" :icon="['fa', 'trash-alt']" />
 		</template>
 		<template v-slot:header>
-			Удаление записи
+			Удаление
 		</template>
 		<template v-slot:body>
 			<div class="p-2">

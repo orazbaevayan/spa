@@ -36,4 +36,8 @@ export default class Group extends Model {
 			}
 		}
 	}
+
+	get usersCount() {
+		return this.group_users.length || 0;
+	}
 }
