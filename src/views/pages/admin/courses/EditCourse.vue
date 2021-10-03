@@ -30,14 +30,14 @@
 						<input type="checkbox" class="mx-1">
 					</template>
 					<template v-slot:append>
-						<CreateModal dialog-class="modal-md" form="storeTemplateForm">
+						<CreateModal dialog-class="modal-lg" form="storeTemplateForm">
 							<TemplateForm id="storeTemplateForm" @submit.prevent="storeTemplate" />
 						</CreateModal>
 					</template>
 				</Card>
 				<Card class="mx-2 my-1" v-for="template in course.templates" :key="template.id">
 					<template v-slot:append>
-						<EditModal dialog-class="modal-md" :form="`editTemplateForm${template.id}`">
+						<EditModal dialog-class="modal-lg" :form="`editTemplateForm${template.id}`">
 							<TemplateForm :value="template" :id="`editTemplateForm${template.id}`" @submit.prevent="updateTemplate($event, template.id)" />
 						</EditModal>
 						<DeleteModal @delete="deleteTemplate(template)">
