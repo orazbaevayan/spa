@@ -1,6 +1,6 @@
 <template>
 	<form class="w-100 d-flex flex-row flex-wrap">
-		<input type="hidden" name="course_id" v-once :value="courseId">
+		<input type="hidden" :name="templatable" :value="templatableId">
 		<div class="col-12 p-2">
 			<label class="form-label" for="name">{{ $t(`models.ALL['Название']`) }}</label>
 			<input type="text" class="form-control form-control-sm" id="name" name="name" v-once :value="value.name" :readonly="!canEdit">
@@ -17,7 +17,7 @@
 					<optgroup label="Загрузка" v-if="selectedFile == 'upload'">
 						<option value="upload">{{ uploadFileName }}</option>
 					</optgroup>
-					<optgroup :label="template.name" v-for="template in courseTemplates" :key="template.id">
+					<optgroup :label="template.name" v-for="template in templates" :key="template.id">
 						<option :value="template.file">{{ template.file }}</option>
 					</optgroup>
 				</select>
@@ -45,7 +45,19 @@
 			canEdit: {
 				type: Boolean,
 				default: true
-			}
+			},
+			templatableType: {
+				type: String,
+				default: null
+			},
+			templatableId: {
+				type: Number,
+				default: null
+			},
+			templatable: {
+				type: String,
+				default: null
+			},
 		},
 		data() {
 			return {
@@ -60,14 +72,11 @@
 			}
 		},
 		computed: {
-			courseTemplates() {
-				return Template.query().where('course_id', this.courseId).get().sort((a, b) => {
+			templates() {
+				return Template.query().where('templatable_type', this.templatableType).where('templatable_id', this.templatableId).get().sort((a, b) => {
 					return b.id == this.value.id ? 1 : 0;
 				});
 			},
-			courseId() {
-				return this.value.course_id || Number.parseInt(this.$route.params.course_id);
-			}
 		}
 	}
 </script>

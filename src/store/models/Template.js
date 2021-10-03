@@ -1,6 +1,5 @@
 import { Model } from '@vuex-orm/core'
 import store from '@/store'
-import Course from '@/store/models/Course'
 
 export default class Template extends Model {
 	static entity = 'templates'
@@ -13,7 +12,7 @@ export default class Template extends Model {
 			code: this.attr(''),
 			templatable_id: this.attr(null),
 			templatable_type: this.attr(null),
-			course: this.morphMany(Course, 'templatable_id', 'templatable_type'),
+			templatable: this.morphTo('templatable_id', 'templatable_type'),
 		}
 	}
 
