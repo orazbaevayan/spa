@@ -1,10 +1,10 @@
 <template>
 	<Modal :header="true" :footer="true" :dialog-class="dialogClass">
 		<template v-slot:open-button>
-			<font-awesome-icon class="text-primary mx-1" :icon="['fa', 'plus-square']"/>
+			<font-awesome-icon class="text-primary mx-1" :icon="['fa', faIcon]"/>
 		</template>
 		<template v-slot:header>
-			Создать
+			Создание
 		</template>
 		<template v-slot:body>
 			<slot />
@@ -25,6 +25,10 @@
 			dialogClass: {
 				type: String,
 				default: 'modal-lg'
+			},
+			faIcon: {
+				type: String,
+				default: 'plus-square'
 			}
 		},
 		emits: ['store']

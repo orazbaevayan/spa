@@ -41,7 +41,7 @@
 							<TemplateForm :value="template" :id="`editTemplateForm${template.id}`" @submit.prevent="updateTemplate($event, template.id)" />
 						</EditModal>
 						<DeleteModal @delete="deleteTemplate(template)">
-							Вы уверены что хотите удалить запись {{ template.name }}?
+							Вы уверены что хотите удалить запись <b>{{ template.name }}</b>?
 						</DeleteModal>
 					</template>
 					<template v-slot:header>
