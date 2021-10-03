@@ -11,7 +11,7 @@ export default class Course extends Model {
 			id: this.attr(null),
 			name: this.attr(''),
 			groups: this.hasMany(Group, 'course_id'),
-			templates: this.hasMany(Template, 'course_id'),
+			templates: this.morphMany(Template, 'templatable_id', 'templatable_type'),
 		}
 	}
 

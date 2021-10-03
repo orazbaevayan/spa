@@ -11,8 +11,9 @@ export default class Template extends Model {
 			name: this.attr(''),
 			file: this.attr(''),
 			code: this.attr(''),
-			course_id: this.attr(null),
-			course: this.belongsTo(Course, 'course_id'),
+			templatable_id: this.attr(null),
+			templatable_type: this.attr(null),
+			course: this.morphMany(Course, 'templatable_id', 'templatable_type'),
 		}
 	}
 
