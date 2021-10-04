@@ -1,6 +1,7 @@
 <template>
 	<form class="w-100 d-flex flex-row flex-wrap">
-		<input type="hidden" :name="templatable" :value="templatableId">
+		<input type="hidden" name="templatable_id" :value="templatableId">
+		<input type="hidden" name="templatable_type" :value="templatableType">
 		<div class="col-12 p-2">
 			<label class="form-label" for="name">{{ $t(`models.ALL['Название']`) }}</label>
 			<input type="text" class="form-control form-control-sm" id="name" name="name" v-once :value="value.name" :readonly="!canEdit">
@@ -52,10 +53,6 @@
 			},
 			templatableId: {
 				type: Number,
-				default: null
-			},
-			templatable: {
-				type: String,
 				default: null
 			},
 		},
