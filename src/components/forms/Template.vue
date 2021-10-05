@@ -1,5 +1,5 @@
 <template>
-	<form class="w-100 d-flex flex-row flex-wrap">
+	<form class="w-100 d-flex flex-row flex-wrap" @submit="resetSelectedFile">
 		<input type="hidden" name="templatable_id" :value="templatableId">
 		<input type="hidden" name="templatable_type" :value="templatableType">
 		<div class="col-12 p-2">
@@ -66,6 +66,10 @@
 			selectUploadedFile(event) {
 				this.uploadFileName = event.currentTarget.files[0].name;
 				this.selectedFile = 'upload';
+			},
+			resetSelectedFile() {
+				this.uploadFileName = null;
+				this.selectedFile = this.value.file;
 			}
 		},
 		computed: {
