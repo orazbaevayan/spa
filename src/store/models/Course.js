@@ -2,6 +2,7 @@ import { Model } from '@vuex-orm/core'
 import store from '@/store'
 import Group from '@/store/models/Group'
 import Template from '@/store/models/Template'
+import Field from '@/store/models/Field'
 
 export default class Course extends Model {
 	static entity = 'courses'
@@ -12,6 +13,7 @@ export default class Course extends Model {
 			name: this.attr(''),
 			groups: this.hasMany(Group, 'course_id'),
 			templates: this.morphMany(Template, 'templatable_id', 'templatable_type'),
+			fields: this.morphMany(Field, 'fieldable_id', 'fieldable_type'),
 		}
 	}
 

@@ -1,7 +1,7 @@
 <template>
 	<Title>{{ $t('pages.Редактирование курса') }}</Title>
 	<div class="p-2 d-flex flex-column">
-		<Tabs :tabs="['Общие данные', 'Доп. данные', 'Шаблоны']">
+		<Tabs :tabs="['Общие данные', 'Доп. данные', 'Шаблоны', 'Поля']">
 
 			<template v-slot:0>
 				<form class="w-100" @submit.prevent="updateCourse">
@@ -50,6 +50,32 @@
 				</Card>
 			</template>
 
+			<template v-slot:3>
+				<Card class="mx-2 my-1" :is-control-panel="true">
+					<template v-slot:prepend>
+						<input type="checkbox" class="mx-1">
+					</template>
+					<template v-slot:append>
+						<CreateModal dialog-class="modal-lg" form="storeFieldForm">
+							<FieldForm fieldable="course_id" fieldable-type="courses" :fieldable-id="course.id" id="storeFieldForm" @submit.prevent="storeField" />
+						</CreateModal>
+					</template>
+				</Card>
+				<Card class="mx-2 my-1" v-for="field in course.fields" :key="field.id">
+					<template v-slot:append>
+						<EditModal dialog-class="modal-lg" :form="`editFieldForm${field.id}`">
+							<FieldForm fieldable-type="courses" :fieldable-id="course.id" :value="field" :id="`editFieldForm${field.id}`" @submit.prevent="updateField($event, field.id)" />
+						</EditModal>
+						<DeleteModal @delete="deleteField(field)">
+							Вы уверены что хотите удалить запись <b>{{ field.name }}</b>?
+						</DeleteModal>
+					</template>
+					<template v-slot:header>
+						{{ field.name }}
+					</template>
+				</Card>
+			</template>
+
 		</Tabs>
 	</div>
 </template>
@@ -57,14 +83,17 @@
 <script>
 	import Course from '@/store/models/Course'
 	import Template from '@/store/models/Template'
+	import Field from '@/store/models/Field'
 	import TemplateForm from '@/components/forms/Template'
+	import FieldForm from '@/components/forms/Field'
 
 	export default {
 		created() {
 			Course.api().fetchById(this.$route.params.course_id);
 		},
 		components: {
-			TemplateForm
+			TemplateForm,
+			FieldForm,
 		},
 		methods: {
 			updateCourse(event) {
@@ -101,11 +130,36 @@
 			},
 			deleteTemplate(template) {
 				Template.api().deleteById(template.id);
+			},
+
+			storeField(event) {
+				let formData = new FormData(event.currentTarget);
+				Field.api().post('api/fields', formData)
+				.then(r => {
+					if (r.response.status === 201) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
+					}
+				})
+				.catch(e => console.log(e));
+			},
+			updateField(event, id) {
+				let formData = new FormData(event.currentTarget);
+				formData.append('_method', 'PATCH');
+				Field.api().post(`/api/fields/${id}`, formData)
+				.then(r => {
+					if (r.response.status === 200) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
+					}
+				})
+				.catch(e => console.log(e));
+			},
+			deleteField(field) {
+				Field.api().deleteById(field.id);
 			}
 		},
 		computed: {
 			course() {
-				return Course.query().with(['groups', 'templates']).find(this.$route.params.course_id) || new Course;
+				return Course.query().with(['groups', 'templates', 'fields']).find(this.$route.params.course_id) || new Course;
 			}
 		}
 	}

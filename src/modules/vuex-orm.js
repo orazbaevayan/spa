@@ -8,6 +8,7 @@ import Course from '@/store/models/Course'
 import Group from '@/store/models/Group'
 import GroupUser from '@/store/models/GroupUser'
 import Template from '@/store/models/Template'
+import Field from '@/store/models/Field'
 
 VuexORM.use(VuexORMAxios, { axios, dataKey: 'data' })
 
@@ -19,5 +20,6 @@ database.register(Course)
 database.register(Group)
 database.register(GroupUser)
 database.register(Template)
+database.register(Field)
 
 export default database
