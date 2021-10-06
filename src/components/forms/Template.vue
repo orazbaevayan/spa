@@ -11,12 +11,12 @@
 			<div class="d-flex">
 				<label id="input-file" class="btn btn-sm btn-primary">
 					<font-awesome-icon :icon="['fa', 'upload']" />
-					<input class="form-control form-control-sm d-none" :name="selectedFile == 'upload' ? 'file' : ''" type="file" :readonly="!canEdit" @change="selectUploadedFile">
+					<input class="form-control form-control-sm d-none" :name="uploadFileSelected ? 'file' : ''" type="file" :readonly="!canEdit" @change="selectUploadedFile">
 				</label>
-				<select id="select-file" class="form-select form-select-sm" :name="selectedFile ? 'file' : ''" v-model="selectedFile" :readonly="!canEdit">
+				<select id="select-file" class="form-select form-select-sm" :name="!uploadFileSelected ? 'file' : ''" :value="file" :readonly="!canEdit">
 					<option></option>
-					<optgroup label="Загрузка" v-if="selectedFile == 'upload'">
-						<option value="upload">{{ uploadFileName }}</option>
+					<optgroup label="Загрузка" v-if="uploadFileSelected">
+						<option :value="uploadFileName">{{ uploadFileName }}</option>
 					</optgroup>
 					<optgroup :label="template.name" v-for="template in templates" :key="template.id">
 						<option :value="template.file">{{ template.file }}</option>
@@ -58,26 +58,29 @@
 		},
 		data() {
 			return {
+				uploadFileSelected: false,
 				uploadFileName: null,
-				selectedFile: this.value.file,
 			}
 		},
 		methods: {
 			selectUploadedFile(event) {
 				this.uploadFileName = event.currentTarget.files[0].name;
-				this.selectedFile = 'upload';
+				this.uploadFileSelected = true;
 			},
 			resetSelectedFile() {
 				this.uploadFileName = null;
-				this.selectedFile = this.value.file;
+				this.uploadFileSelected = false;
 			}
 		},
 		computed: {
 			templates() {
 				return Template.query().where('templatable_type', this.templatableType).where('templatable_id', this.templatableId).get().sort((a, b) => {
 					return b.id == this.value.id ? 1 : 0;
-				});
+				}).filter(i => i.file);
 			},
+			file() {
+				return this.uploadFileSelected ? this.uploadFileName : this.value.file;
+			}
 		}
 	}
 </script>
