@@ -1,5 +1,5 @@
 <template>
-	<button type="button" class="btn btn-link p-0" @click.prevent="modal.show()" v-if="openButton">
+	<button type="button" class="btn btn-link p-0" data-bs-dismiss="modal" @click.prevent="modal.show()" v-if="openButton">
 		<slot name="open-button" />
 	</button>
 	<div ref="modal" :id="modalId" class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">

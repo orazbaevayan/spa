@@ -51,29 +51,7 @@
 			</template>
 
 			<template v-slot:3>
-				<Card class="mx-2 my-1" :is-control-panel="true">
-					<template v-slot:prepend>
-						<input type="checkbox" class="mx-1">
-					</template>
-					<template v-slot:append>
-						<CreateModal dialog-class="modal-lg" form="storeFieldForm">
-							<FieldForm fieldable="course_id" fieldable-type="courses" :fieldable-id="course.id" id="storeFieldForm" @submit.prevent="storeField" />
-						</CreateModal>
-					</template>
-				</Card>
-				<Card class="mx-2 my-1" v-for="field in course.fields" :key="field.id">
-					<template v-slot:append>
-						<EditModal dialog-class="modal-lg" :form="`editFieldForm${field.id}`">
-							<FieldForm fieldable-type="courses" :fieldable-id="course.id" :value="field" :id="`editFieldForm${field.id}`" @submit.prevent="updateField($event, field.id)" />
-						</EditModal>
-						<DeleteModal @delete="deleteField(field)">
-							Вы уверены что хотите удалить запись <b>{{ field.name }}</b>?
-						</DeleteModal>
-					</template>
-					<template v-slot:header>
-						{{ field.name }}
-					</template>
-				</Card>
+				<FieldsTab />
 			</template>
 
 		</Tabs>
@@ -85,7 +63,8 @@
 	import Template from '@/store/models/Template'
 	import Field from '@/store/models/Field'
 	import TemplateForm from '@/components/forms/Template'
-	import FieldForm from '@/components/forms/Field'
+
+	import FieldsTab from '@/views/pages/admin/courses/Tabs/Fields'
 
 	export default {
 		created() {
@@ -93,7 +72,7 @@
 		},
 		components: {
 			TemplateForm,
-			FieldForm,
+			FieldsTab,
 		},
 		methods: {
 			updateCourse(event) {
