@@ -10,6 +10,9 @@
 		</template>
 	</Card>
 	<Card class="mx-2 my-1" :toggle-on="true" v-for="field in course.fields" :key="field.id">
+		<template v-slot:header>
+			{{ field.name }}
+		</template>
 		<template v-slot:append>
 			<EditModal dialog-class="modal-md" :form="`editFieldForm${field.id}`">
 				<FieldForm fieldable-type="courses" :fieldable-id="course.id" :value="field" :id="`editFieldForm${field.id}`" @submit.prevent="updateField($event, field.id)" />
@@ -30,13 +33,13 @@
 						</CreateModal>
 					</template>
 				</Card>
-				<Card class="mx-2 my-1">
+				<Card class="mx-2 my-1" v-for="option in options" :key="option.id">
+					<template v-slot:header>
+						{{ option }}
+					</template>
 					
 				</Card>
 			</div>
-		</template>
-		<template v-slot:header>
-			{{ field.name }}
 		</template>
 	</Card>
 </template>
@@ -109,6 +112,9 @@
 		computed: {
 			course() {
 				return Course.query().with(['groups', 'templates', 'fields']).find(this.$route.params.course_id) || new Course;
+			},
+			options() {
+				return Option.all();
 			}
 		}
 	}
