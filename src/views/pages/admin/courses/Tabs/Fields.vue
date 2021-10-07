@@ -25,8 +25,8 @@
 						<input type="checkbox" class="mx-1">
 					</template>
 					<template v-slot:append>
-						<CreateModal dialog-class="modal-md" form="storeFieldForm">
-							<OptionForm id="storeFieldForm" @submit.prevent="storeField" />
+						<CreateModal dialog-class="modal-md" form="storeOptionForm">
+							<OptionForm id="storeOptionForm" @submit.prevent="storeField" />
 						</CreateModal>
 					</template>
 				</Card>
@@ -39,12 +39,30 @@
 			{{ field.name }}
 		</template>
 	</Card>
+
+	<Modal :header="true" :footer="true">
+		<template v-slot:open-button>
+			<font-awesome-icon class="text-primary mx-1" :icon="['fa', 'user']"/>
+		</template>
+		<template v-slot:header>
+			Тест
+		</template>
+		<template v-slot:body>
+			
+		</template>
+		<template v-slot:footer>
+			<button type="submit" class="m-0 m-2 btn btn-sm btn-primary text-white" data-bs-dismiss="modal">Создать</button>
+			<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
+		</template>
+	</Modal>
+
 </template>
 
 <script>
 	import FieldForm from '@/components/forms/Field'
 	import Option from '@/store/models/Option'
 	import Course from '@/store/models/Course'
+	import Field from '@/store/models/Field'
 	import OptionForm from '@/components/forms/Option'
 
 	export default {
@@ -54,6 +72,32 @@
 		components: {
 			FieldForm,
 			OptionForm,
+		},
+		methods: {
+			storeField(event) {
+				let formData = new FormData(event.currentTarget);
+				Field.api().post('api/fields', formData)
+				.then(r => {
+					if (r.response.status === 201) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
+					}
+				})
+				.catch(e => console.log(e));
+			},
+			updateField(event, id) {
+				let formData = new FormData(event.currentTarget);
+				formData.append('_method', 'PATCH');
+				Field.api().post(`/api/fields/${id}`, formData)
+				.then(r => {
+					if (r.response.status === 200) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
+					}
+				})
+				.catch(e => console.log(e));
+			},
+			deleteField(field) {
+				Field.api().deleteById(field.id);
+			}
 		},
 		computed: {
 			course() {

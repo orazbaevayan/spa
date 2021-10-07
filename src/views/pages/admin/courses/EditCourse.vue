@@ -61,9 +61,7 @@
 <script>
 	import Course from '@/store/models/Course'
 	import Template from '@/store/models/Template'
-	import Field from '@/store/models/Field'
 	import TemplateForm from '@/components/forms/Template'
-
 	import FieldsTab from '@/views/pages/admin/courses/Tabs/Fields'
 
 	export default {
@@ -110,31 +108,6 @@
 			deleteTemplate(template) {
 				Template.api().deleteById(template.id);
 			},
-
-			storeField(event) {
-				let formData = new FormData(event.currentTarget);
-				Field.api().post('api/fields', formData)
-				.then(r => {
-					if (r.response.status === 201) {
-						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
-					}
-				})
-				.catch(e => console.log(e));
-			},
-			updateField(event, id) {
-				let formData = new FormData(event.currentTarget);
-				formData.append('_method', 'PATCH');
-				Field.api().post(`/api/fields/${id}`, formData)
-				.then(r => {
-					if (r.response.status === 200) {
-						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
-					}
-				})
-				.catch(e => console.log(e));
-			},
-			deleteField(field) {
-				Field.api().deleteById(field.id);
-			}
 		},
 		computed: {
 			course() {

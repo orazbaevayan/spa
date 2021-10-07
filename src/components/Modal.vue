@@ -1,19 +1,21 @@
 <template>
-	<button type="button" class="btn btn-link p-0" data-bs-dismiss="modal" @click.prevent="modal.show()" v-if="openButton">
-		<slot name="open-button" />
-	</button>
-	<div ref="modal" :id="modalId" class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
-		<div class="modal-dialog" :class="dialogClass">
-			<div class="modal-content">
-				<div class="modal-header d-flex justify-content-between p-3" v-if="header">
-					<span class="modal-title fw-bold" style="line-height: 1rem;"><slot name="header" /></span>
-					<button type="button" class="btn-close p-0 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body p-2">
-					<slot name="body" />
-				</div>
-				<div class="modal-footer p-2" v-if="footer">
-					<slot name="footer" />
+	<div class="d-flex">
+		<button type="button" class="btn btn-link p-0" data-bs-dismiss="modal" @click.prevent="modal.show()" v-if="openButton">
+			<slot name="open-button" />
+		</button>
+		<div :id="modalId" class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+			<div class="modal-dialog" :class="dialogClass">
+				<div class="modal-content">
+					<div class="modal-header d-flex justify-content-between p-3" v-if="header">
+						<span class="modal-title fw-bold" style="line-height: 1rem;"><slot name="header" /></span>
+						<button type="button" class="btn-close p-0 m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body p-2">
+						<slot name="body" />
+					</div>
+					<div class="modal-footer p-2" v-if="footer">
+						<slot name="footer" />
+					</div>
 				</div>
 			</div>
 		</div>
@@ -48,7 +50,7 @@
 			}
 		},
 		mounted() {
-			this.modal = new BootstrapModal(this.$refs.modal);
+			this.modal = new BootstrapModal(this.$el.querySelector('.modal'));
 		},
 		data() {
 			return {
