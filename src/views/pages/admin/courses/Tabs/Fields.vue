@@ -26,7 +26,7 @@
 					</template>
 					<template v-slot:append>
 						<CreateModal dialog-class="modal-md" form="storeOptionForm">
-							<OptionForm id="storeOptionForm" @submit.prevent="storeField" />
+							<OptionForm id="storeOptionForm" @submit.prevent="storeOption" />
 						</CreateModal>
 					</template>
 				</Card>
@@ -39,23 +39,6 @@
 			{{ field.name }}
 		</template>
 	</Card>
-
-	<Modal :header="true" :footer="true">
-		<template v-slot:open-button>
-			<font-awesome-icon class="text-primary mx-1" :icon="['fa', 'user']"/>
-		</template>
-		<template v-slot:header>
-			Тест
-		</template>
-		<template v-slot:body>
-			
-		</template>
-		<template v-slot:footer>
-			<button type="submit" class="m-0 m-2 btn btn-sm btn-primary text-white" data-bs-dismiss="modal">Создать</button>
-			<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
-		</template>
-	</Modal>
-
 </template>
 
 <script>
@@ -97,7 +80,31 @@
 			},
 			deleteField(field) {
 				Field.api().deleteById(field.id);
-			}
+			},
+			storeOption(event) {
+				let formData = new FormData(event.currentTarget);
+				Option.api().post('api/options', formData)
+				.then(r => {
+					if (r.response.status === 201) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
+					}
+				})
+				.catch(e => console.log(e));
+			},
+			updateOption(event, id) {
+				let formData = new FormData(event.currentTarget);
+				formData.append('_method', 'PATCH');
+				Option.api().post(`/api/options/${id}`, formData)
+				.then(r => {
+					if (r.response.status === 200) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
+					}
+				})
+				.catch(e => console.log(e));
+			},
+			deleteOption(option) {
+				Option.api().deleteById(option.id);
+			},
 		},
 		computed: {
 			course() {

@@ -29,7 +29,7 @@
 		},
 		methods: {
 			...mapActions({
-				'setFocus': 'ui/setFocus'
+				'activateFocus': 'ui/activateFocus'
 			}),
 			touchstart(event) {
 				this.lastTouch.identifier = event.changedTouches.item(0).identifier;
@@ -80,7 +80,7 @@
 					if (left < -(event.currentTarget.offsetWidth / 2) || (this.speedX < -0.1  && (Math.abs(this.speedX) > Math.abs(this.speedY)))) {
 						this.clearFocus(this.$options.name);
 					} else {
-						this.setFocus(this.$options.name);
+						this.activateFocus(this.$options.name);
 					}
 					if (!event.targetTouches.length) {
 						event.currentTarget.style.left = '';

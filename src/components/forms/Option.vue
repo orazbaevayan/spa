@@ -5,8 +5,8 @@
 			<input type="text" class="form-control form-control-sm" id="name" name="name" v-once :value="value.name" :readonly="!canEdit">
 		</div>
 		<div class="col-12 p-2">
-			<label class="form-label" for="value">{{ $t(`models.ALL['Значение']`) }}</label>
-			<input type="text" class="form-control form-control-sm" id="value" name="value" v-once :value="value.value" :readonly="!canEdit">
+			<label for="value" class="form-label">{{ $t(`models.ALL['Значение']`) }}</label>
+			<textarea class="form-control" name="value" id="value" rows="3" v-once :value="value.code" :readonly="!canEdit"></textarea>
 		</div>
 		<div class="w-100 text-center">
 			<slot />
