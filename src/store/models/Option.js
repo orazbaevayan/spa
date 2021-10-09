@@ -4,7 +4,7 @@ import store from '@/store'
 export default class Option extends Model {
 	static entity = 'options'
 
-	static options () {
+	static fields () {
 		return {
 			id: this.attr(null),
 			name: this.attr(''),

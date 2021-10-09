@@ -33,11 +33,15 @@
 						</CreateModal>
 					</template>
 				</Card>
-				<Card class="mx-2 my-1" v-for="option in options" :key="option.id">
+				<Card class="mx-2 my-1" :toggle-on="true" v-for="option in options" :key="option.id">
 					<template v-slot:header>
-						{{ option }}
+						{{ option.name }}
 					</template>
-					
+					<template v-slot:content>
+						<div class="p-2">
+							{{ option.value }}
+						</div>
+					</template>
 				</Card>
 			</div>
 		</template>
