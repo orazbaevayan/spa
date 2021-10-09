@@ -1,18 +1,18 @@
 import { Model } from '@vuex-orm/core'
 import store from '@/store'
 import Field from '@/store/models/Field'
-import FieldOption from '@/store/models/FieldOption'
+import Option from '@/store/models/Option'
 
-export default class Option extends Model {
-	static entity = 'options'
+export default class FieldOption extends Model {
+	static entity = 'field_options'
 
 	static fields () {
 		return {
 			id: this.attr(null),
-			name: this.attr(''),
-			value: this.attr(''),
-			field_options: this.hasMany(FieldOption, 'option_id'),
-			fields: this.belongsToMany(Field, FieldOption, 'user_id', 'field_id'),
+			field_id: this.attr(null),
+			option_id: this.attr(null),
+			field: this.belongsTo(Field, 'field_id'),
+			option: this.belongsTo(Option, 'option_id'),
 		}
 	}
 
@@ -20,13 +20,13 @@ export default class Option extends Model {
 		actions: {
 			fetch: {
 				method: 'get',
-				url: '/api/options'
+				url: '/api/field_options'
 			},
 			fetchById(id) {
-				return this.get(`/api/options/${id}`);
+				return this.get(`/api/field_options/${id}`);
 			},
 			deleteById(id) {
-				return this.delete(`/api/options/${id}`, {
+				return this.delete(`/api/field_options/${id}`, {
 					delete: id
 				}).then((r) => {
 					if (r.response.data === true) {

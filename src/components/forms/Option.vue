@@ -6,7 +6,7 @@
 		</div>
 		<div class="col-12 p-2">
 			<label for="value" class="form-label">{{ $t(`models.ALL['Значение']`) }}</label>
-			<textarea class="form-control" name="value" id="value" rows="3" v-once :value="value.code" :readonly="!canEdit"></textarea>
+			<textarea class="form-control" name="value" id="value" rows="3" v-once :value="value.value" :readonly="!canEdit"></textarea>
 		</div>
 		<div class="w-100 text-center">
 			<slot />

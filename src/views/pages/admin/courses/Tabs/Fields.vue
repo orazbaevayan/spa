@@ -22,28 +22,36 @@
 			</DeleteModal>
 		</template>
 		<template v-slot:content>
-			<div class="p-2">
-				<Card class="mx-2 my-1" :is-control-panel="true">
-					<template v-slot:prepend>
-						<input type="checkbox" class="mx-1">
-					</template>
-					<template v-slot:append>
-						<CreateModal dialog-class="modal-md" form="storeOptionForm">
-							<OptionForm id="storeOptionForm" @submit.prevent="storeOption" />
-						</CreateModal>
-					</template>
-				</Card>
-				<Card class="mx-2 my-1" :toggle-on="true" v-for="option in options" :key="option.id">
-					<template v-slot:header>
-						{{ option.name }}
-					</template>
-					<template v-slot:content>
-						<div class="p-2">
-							{{ option.value }}
-						</div>
-					</template>
-				</Card>
-			</div>
+				<div class="p-1 d-flex flex-column">
+					<Card class="m-1" :is-control-panel="true">
+						<template v-slot:prepend>
+							<input type="checkbox" class="mx-1">
+						</template>
+						<template v-slot:append>
+							<CreateModal dialog-class="modal-md" form="storeOptionForm">
+								<OptionForm id="storeOptionForm" @submit.prevent="storeOptionToField($event, field)" />
+							</CreateModal>
+						</template>
+					</Card>
+					<Card class="m-1" :toggle-on="true" v-for="option in field.options" :key="option.id">
+						<template v-slot:header>
+							{{ option.name }}
+						</template>
+						<template v-slot:append>
+							<EditModal dialog-class="modal-md" :form="`editOptionForm${option.id}`">
+								<OptionForm :value="option" :id="`editOptionForm${option.id}`" @submit.prevent="updateOption($event, option)" />
+							</EditModal>
+							<DeleteModal @delete="deleteOption(option)">
+								Вы уверены что хотите удалить запись <b>{{ option.name }}</b>?
+							</DeleteModal>
+						</template>
+						<template v-slot:content>
+							<div class="p-2">
+								{{ option.value }}
+							</div>
+						</template>
+					</Card>
+				</div>
 		</template>
 	</Card>
 </template>
@@ -53,6 +61,7 @@
 	import Option from '@/store/models/Option'
 	import Course from '@/store/models/Course'
 	import Field from '@/store/models/Field'
+	import FieldOption from '@/store/models/FieldOption'
 	import OptionForm from '@/components/forms/Option'
 
 	export default {
@@ -88,20 +97,24 @@
 			deleteField(field) {
 				Field.api().deleteById(field.id);
 			},
-			storeOption(event) {
+			storeOptionToField(event, field) {
 				let formData = new FormData(event.currentTarget);
 				Option.api().post('api/options', formData)
 				.then(r => {
 					if (r.response.status === 201) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
+						FieldOption.api().post('api/field_options', {
+							option_id: r.response.data.data.id,
+							field_id: field.id,
+						});
 					}
 				})
 				.catch(e => console.log(e));
 			},
-			updateOption(event, id) {
+			updateOption(event, option) {
 				let formData = new FormData(event.currentTarget);
 				formData.append('_method', 'PATCH');
-				Option.api().post(`/api/options/${id}`, formData)
+				Option.api().post(`/api/options/${option.id}`, formData)
 				.then(r => {
 					if (r.response.status === 200) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
@@ -115,10 +128,10 @@
 		},
 		computed: {
 			course() {
-				return Course.query().with(['groups', 'templates', 'fields']).find(this.$route.params.course_id) || new Course;
+				return Course.query().with(['groups', 'templates', 'fields.options']).find(this.$route.params.course_id) || new Course;
 			},
 			options() {
-				return Option.all();
+				return Option.query().with(['field_options']).get();
 			}
 		}
 	}
