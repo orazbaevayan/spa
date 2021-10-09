@@ -128,7 +128,7 @@
 		},
 		computed: {
 			course() {
-				return Course.query().with(['groups', 'templates', 'fields.options']).find(this.$route.params.course_id) || new Course;
+				return Course.query().with(['fields.options']).find(this.$route.params.course_id) || new Course;
 			},
 			options() {
 				return Option.query().with(['field_options']).get();

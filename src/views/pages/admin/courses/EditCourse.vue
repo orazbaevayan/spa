@@ -4,15 +4,11 @@
 		<Tabs :tabs="['Общие данные', 'Доп. данные', 'Шаблоны', 'Поля']">
 
 			<template v-slot:0>
-				<form class="w-100" @submit.prevent="updateCourse">
-					<div class="p-2">
-						<label class="form-label" for="name">Название</label>
-						<input type="text" class="form-control form-control-sm" name="name" :value="course.name">
-					</div>
-					<div class="p-2">
+				<CourseForm :value="course" @submit.prevent="updateCourse">
+					<div class="p-2 text-start">
 						<input type="submit" class="btn btn-sm btn-warning text-white" :value="$t('ui.Сохранить')">
 					</div>
-				</form>
+				</CourseForm>
 			</template>
 
 			<template v-slot:1>
@@ -25,29 +21,7 @@
 			</template>
 
 			<template v-slot:2>
-				<Card class="mx-2 my-1" :is-control-panel="true">
-					<template v-slot:prepend>
-						<input type="checkbox" class="mx-1">
-					</template>
-					<template v-slot:append>
-						<CreateModal dialog-class="modal-lg" form="storeTemplateForm">
-							<TemplateForm templatable="course_id" templatable-type="courses" :templatable-id="course.id" id="storeTemplateForm" @submit.prevent="storeTemplate" />
-						</CreateModal>
-					</template>
-				</Card>
-				<Card class="mx-2 my-1" v-for="template in course.templates" :key="template.id">
-					<template v-slot:append>
-						<EditModal dialog-class="modal-lg" :form="`editTemplateForm${template.id}`">
-							<TemplateForm templatable="course_id" templatable-type="courses" :templatable-id="course.id" :value="template" :id="`editTemplateForm${template.id}`" @submit.prevent="updateTemplate($event, template.id)" />
-						</EditModal>
-						<DeleteModal @delete="deleteTemplate(template)">
-							Вы уверены что хотите удалить запись <b>{{ template.name }}</b>?
-						</DeleteModal>
-					</template>
-					<template v-slot:header>
-						{{ template.name }}
-					</template>
-				</Card>
+				<TemplatesTab />
 			</template>
 
 			<template v-slot:3>
@@ -60,17 +34,18 @@
 
 <script>
 	import Course from '@/store/models/Course'
-	import Template from '@/store/models/Template'
-	import TemplateForm from '@/components/forms/Template'
-	import FieldsTab from '@/views/pages/admin/courses/Tabs/Fields'
+	import CourseForm from '@/components/forms/Course'
+	import FieldsTab from '@/views/pages/admin/courses/EditCourse/FieldsTab'
+	import TemplatesTab from '@/views/pages/admin/courses/EditCourse/TemplatesTab'
 
 	export default {
 		created() {
 			Course.api().fetchById(this.$route.params.course_id);
 		},
 		components: {
-			TemplateForm,
+			CourseForm,
 			FieldsTab,
+			TemplatesTab,
 		},
 		methods: {
 			updateCourse(event) {
@@ -83,30 +58,6 @@
 					}
 				})
 				.catch(e => console.log(e));
-			},
-			storeTemplate(event) {
-				let formData = new FormData(event.currentTarget);
-				Template.api().post('api/templates', formData)
-				.then(r => {
-					if (r.response.status === 201) {
-						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
-					}
-				})
-				.catch(e => console.log(e));
-			},
-			updateTemplate(event, id) {
-				let formData = new FormData(event.currentTarget);
-				formData.append('_method', 'PATCH');
-				Template.api().post(`/api/templates/${id}`, formData)
-				.then(r => {
-					if (r.response.status === 200) {
-						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
-					}
-				})
-				.catch(e => console.log(e));
-			},
-			deleteTemplate(template) {
-				Template.api().deleteById(template.id);
 			},
 		},
 		computed: {
