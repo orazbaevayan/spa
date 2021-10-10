@@ -31,7 +31,7 @@
 				<input type="text" class="form-control form-control-sm" id="email" name="email" :value="value.email" :readonly="!canEdit">
 			</div>
 		</div>
-		<div class="w-100 text-center">
+		<div class="w-100 d-flex flex-row flex-wrap">
 			<slot />
 		</div>
 	</form>

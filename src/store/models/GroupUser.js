@@ -2,6 +2,7 @@ import { Model } from '@vuex-orm/core'
 import store from '@/store'
 import User from '@/store/models/User'
 import Group from '@/store/models/Group'
+import Field from '@/store/models/Field'
 
 export default class GroupUser extends Model {
 	static entity = 'group_users'
@@ -13,6 +14,7 @@ export default class GroupUser extends Model {
 			user_id: this.attr(null),
 			user: this.belongsTo(User, 'user_id'),
 			group: this.belongsTo(Group, 'group_id'),
+			fields: this.morphMany(Field, 'fieldable_id', 'fieldable_type'),
 		}
 	}
 

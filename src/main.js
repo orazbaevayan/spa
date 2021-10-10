@@ -36,6 +36,10 @@ app.component('EditModal', defineAsyncComponent(() => import('./components/EditM
 app.component('CreateModal', defineAsyncComponent(() => import('./components/CreateModal')))
 app.component('Pagination', defineAsyncComponent(() => import('./components/Pagination')))
 
+// Fields
+app.component('TextField', defineAsyncComponent(() => import('./components/fields/TextField')))
+app.component('SelectField', defineAsyncComponent(() => import('./components/fields/SelectField')))
+
 
 app.directive('closable', {
 	beforeMount(el, binding) {

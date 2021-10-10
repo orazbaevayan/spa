@@ -80,6 +80,7 @@
 			<template v-slot:append>
 				<EditModal fa-icon="user-edit" :form="`updateUserForm${group_user.user.id}`">
 					<UserForm :value="group_user.user" :id="`updateUserForm${group_user.user.id}`" @submit.prevent="updateUser($event, group_user.user.id)">
+						<!-- <component class="p-2 col-6" :is="`${field.type}Field`" :value="field" v-for="field in group_user.fields" :key="field.id" /> -->
 						<input type="submit" class="d-none">
 					</UserForm>
 				</EditModal>
@@ -89,7 +90,11 @@
 				</DeleteModal>
 			</template>
 			<template v-slot:content>
-				<UserForm class="p-2" :can-edit="false" :value="group_user.user"/>
+				<form class="d-flex flex-wrap p-2" @submit.prevent="updateGroupUser($event, group_user)">
+					<component class="p-2 col-6" :is="`${field.type}Field`" :value="field" v-for="field in group_user.fields" :key="field.id" />
+					<input type="submit" value="Сохранить" class="btn btn-sm btn-warning text-white m-2">
+				</form>
+				<!-- <UserForm class="p-2" :can-edit="false" :value="group_user.user"/> -->
 			</template>
 		</Card>
 	</div>
@@ -99,6 +104,7 @@
 	import User from '@/store/models/User'
 	import Course from '@/store/models/Course'
 	import Group from '@/store/models/Group'
+	import Option from '@/store/models/Option'
 	import GroupUser from '@/store/models/GroupUser'
 	import SearchUsers from '@/components/SearchUsers'
 	import UserForm from '@/components/forms/User'
@@ -107,6 +113,7 @@
 		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
 			GroupUser.api().fetch();
+			Option.api().fetch();
 		},
 		data() {
 			return {
@@ -165,11 +172,23 @@
 					}
 				})
 				.catch(e => console.log(e));
-			}
+			},
+			updateGroupUser(event, groupUser) {
+				let formData = new FormData(event.currentTarget);
+				formData.append('_method', 'PATCH');
+				GroupUser.api().post(`/api/group_users/${groupUser.id}`, formData)
+				.then(r => {
+					console.log(r);
+					if (r.response.status === 200) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
+					}
+				})
+				.catch(e => console.log(e));
+			},
 		},
 		computed: {
 			group() {
-				return Group.query().with(['group_users.user']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
 				return User.findIn(this.foundUsers);
