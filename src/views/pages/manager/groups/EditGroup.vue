@@ -150,6 +150,7 @@
 					user_id: user.id,
 				}).then(r => {
 					if (r.response.status === 201) {
+						Option.api().fetch();
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
 					}
 				});
