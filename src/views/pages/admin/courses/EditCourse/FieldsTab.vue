@@ -9,7 +9,7 @@
 			</CreateModal>
 		</template>
 	</Card>
-	<Card class="mx-2 my-1" :toggle-on="true" v-for="field in course.fields" :key="field.id">
+	<Card class="mx-2 my-1" :toggle-on="field.type == 'Select' ? true : false" v-for="field in course.fields" :key="field.id">
 		<template v-slot:header>
 			{{ field.name }}
 		</template>
@@ -25,7 +25,7 @@
 				<div class="p-1 d-flex flex-column">
 					<Card class="m-1" :is-control-panel="true">
 						<template v-slot:prepend>
-							<input type="checkbox" class="mx-1">
+							<span class="fw-bold px-1">Опции</span>
 						</template>
 						<template v-slot:append>
 							<CreateModal dialog-class="modal-md" form="storeOptionForm">
