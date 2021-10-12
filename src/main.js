@@ -39,6 +39,7 @@ app.component('Pagination', defineAsyncComponent(() => import('./components/Pagi
 // Fields
 app.component('TextField', defineAsyncComponent(() => import('./components/fields/TextField')))
 app.component('SelectField', defineAsyncComponent(() => import('./components/fields/SelectField')))
+app.component('TextSelectField', defineAsyncComponent(() => import('./components/fields/TextSelectField')))
 
 
 app.directive('closable', {

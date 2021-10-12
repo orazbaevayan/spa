@@ -3,7 +3,7 @@
 		<div class="p-2">
 			<Photo :can-edit="canEdit" :value="value.photo"/>
 		</div>
-		<div class="input-block">
+		<div class="flex-fill">
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="last_name">{{ $t(`models.user['Фамилия']`) }}</label>
 				<input type="text" class="form-control form-control-sm" id="last_name" name="last_name" :value="value.last_name" :readonly="!canEdit">
@@ -17,7 +17,7 @@
 				<input type="text" class="form-control form-control-sm" id="middle_name" name="middle_name" :value="value.middle_name" :readonly="!canEdit">
 			</div>
 		</div>
-		<div class="input-block">
+		<div class="flex-fill">
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="iin">{{ $t(`models.user['ИИН']`) }}</label>
 				<input type="text" class="form-control form-control-sm" id="iin" name="iin" :value="value.iin" maxlength="12" :readonly="!canEdit">
@@ -59,7 +59,5 @@
 </script>
 
 <style lang="scss">
-	.input-block {
-		flex: 1 0 170px;
-	}
+
 </style>

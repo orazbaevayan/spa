@@ -7,7 +7,7 @@
 			<select class="form-select form-select-sm" name="type" id="type" :value="value.type" :readonly="!canEdit">
 				<option value="Text">Текст</option>
 				<option value="Select">Выбор</option>
-				<option value="Date">Дата</option>
+				<option value="TextSelect">Текст и Выбор</option>
 			</select>
 		</div>
 		<div class="col-12 p-2">
