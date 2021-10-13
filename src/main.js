@@ -40,6 +40,7 @@ app.component('Pagination', defineAsyncComponent(() => import('./components/Pagi
 app.component('TextField', defineAsyncComponent(() => import('./components/fields/TextField')))
 app.component('SelectField', defineAsyncComponent(() => import('./components/fields/SelectField')))
 app.component('TextSelectField', defineAsyncComponent(() => import('./components/fields/TextSelectField')))
+app.component('TextAutocompleteField', defineAsyncComponent(() => import('./components/fields/TextAutocompleteField')))
 
 
 app.directive('closable', {

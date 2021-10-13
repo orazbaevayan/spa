@@ -7,15 +7,12 @@
 				<span class="visually-hidden">Toggle Dropdown</span>
 			</button>
 			<ul class="dropdown-menu">
-				<div class="px-3 py-2 position-relative">
-					<input type="search" class="form-control form-control-sm mw-100" placeholder="Фильтр" v-model="search">
-				</div>
 				<div class="results">
 					<p class="m-0 text-center px-3 py-1 text-muted" v-if="!options.length">
 						Нет вариантов
 					</p>
-					<li class="dropdown-item" v-for="option in options" :key="option.id" v-else @click="text = option.name">
-						<span v-if="option.name != option.value"><b>{{ option.name }}</b> - </span>{{ option.value }}
+					<li class="dropdown-item" v-for="(option, index) in options" :key="index" @click="text = option">
+						<span>{{ option }}</span>
 					</li>
 				</div>
 			</ul>
@@ -24,7 +21,7 @@
 </template>
 
 <script>
-	import Fuse from 'fuse.js'
+	import Group from '@/store/models/Group'
 
 	export default {
 		props: {
@@ -37,6 +34,10 @@
 					}
 				}
 			},
+			group: {
+				type: Object,
+				default: new Group,
+			},
 			name: {
 				type: String,
 				default: ''
@@ -48,19 +49,18 @@
 		data() {
 			return {
 				text: '',
-				search: '',
 			}
 		},
 		computed: {
 			options() {
-				const options = {
-					includeScore: true,
-					ignoreLocation: true,
-					threshold: 0.0,
-					keys: ['name', 'value']
+				const options = [];
+				options.push(...this.value.options.map(i => i.value));
+				for (var i = 0; i < this.group.group_users.length; i++) {
+					for (var j = 0; j < this.group.group_users[i].fields.length; j++) {
+						if (this.group.group_users[i].fields[j].name == this.value.name && !!this.group.group_users[i].fields[j].value) options.push(this.group.group_users[i].fields[j].value);
+					}
 				}
-				const result = [...(this.search ? new Fuse(this.value.options, options).search(this.search).map(i => i.item) : this.value.options)];
-				return [...new Set(result)];
+				return [...new Set(options)];
 			}
 		}
 	}
