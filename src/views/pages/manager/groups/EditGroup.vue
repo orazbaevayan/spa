@@ -11,6 +11,11 @@
 	</form>
 	<div class="p-2 d-flex flex-column">
 		<Title>{{ group.name }}</Title>
+
+		<div class="d-flex">
+			<button type="button" class="btn btn-sm btn-outline-primary m-2" v-for="template in group.templates" :key="template.id" @click.prevent="print(template)">{{ template.name }}</button>
+		</div>
+
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1">
 
@@ -116,10 +121,13 @@
 	import GroupUser from '@/store/models/GroupUser'
 	import SearchUsers from '@/components/SearchUsers'
 	import UserForm from '@/components/forms/User'
+	import FileSaver from 'file-saver';
+	import { v4 as uuidv4 } from 'uuid';
 
 	export default {
 		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
+			Group.api().fetch();
 			GroupUser.api().fetch();
 			Option.api().fetch();
 		},
@@ -191,10 +199,22 @@
 				})
 				.catch(e => console.log(e));
 			},
+			print(template) {
+				this.$axios({
+					url: `/api/templates/${template.id}/print`,
+					method: 'GET',
+					responseType: 'blob'
+				}).then(r => {
+					console.log(r);
+					FileSaver.saveAs(r.data, `${uuidv4()}.docx`);
+				}).catch(e => {
+					console.log(e)
+				});
+			},
 		},
 		computed: {
 			group() {
-				return Group.query().with(['group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['templates', 'group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
 				return User.findIn(this.foundUsers);
