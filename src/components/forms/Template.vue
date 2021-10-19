@@ -2,11 +2,11 @@
 	<form class="w-100 d-flex flex-row flex-wrap" @submit="resetSelectedFile">
 		<input type="hidden" name="templatable_id" :value="templatableId">
 		<input type="hidden" name="templatable_type" :value="templatableType">
-		<div class="col-12 p-2">
+		<div class="col-12 col-lg-6 p-2">
 			<label class="form-label" for="name">{{ $t(`models.ALL['Название']`) }}</label>
 			<input type="text" class="form-control form-control-sm" id="name" name="name" v-once :value="value.name" :readonly="!canEdit">
 		</div>
-		<div class="col-12 p-2">
+		<div class="col-12 col-lg-6 p-2">
 			<label class="form-label">Файл</label>
 			<div class="d-flex">
 				<label id="input-file" class="btn btn-sm btn-primary">
@@ -26,7 +26,7 @@
 		</div>
 		<div class="p-2 d-flex flex-column w-100">
 			<label for="code" class="form-label">Код</label>
-			<textarea class="form-control" name="code" id="code" rows="3" v-once :value="value.code" :readonly="!canEdit"></textarea>
+			<textarea class="form-control" name="code" id="code" rows="12" v-once :value="value.code" :readonly="!canEdit"></textarea>
 		</div>
 		<div class="w-100 text-center">
 			<slot />

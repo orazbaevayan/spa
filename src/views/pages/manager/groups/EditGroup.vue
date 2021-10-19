@@ -205,7 +205,6 @@
 					method: 'GET',
 					responseType: 'blob'
 				}).then(r => {
-					console.log(r);
 					FileSaver.saveAs(r.data, `${uuidv4()}.docx`);
 				}).catch(e => {
 					console.log(e)
