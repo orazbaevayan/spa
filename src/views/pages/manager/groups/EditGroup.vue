@@ -146,7 +146,7 @@
 	export default {
 		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
-			Group.api().fetchById(this.$route.params.group_id);
+			//Group.api().fetchById(this.$route.params.group_id);
 			GroupUser.api().fetch();
 			Option.api().fetch();
 		},
