@@ -1,19 +1,37 @@
 <template>
-	<Title class="mt-2">{{ $t('pages.Редактирование группы') }}</Title>
-	<form class="p-2 w-100" @submit.prevent="updateGroup">
-		<div class="p-2">
-			<label class="form-label" for="name">Название</label>
-			<input type="text" class="form-control form-control-sm" name="name" :value="group.name">
-		</div>
-		<div class="p-2">
-			<input type="submit" class="btn btn-sm btn-warning text-white" :value="$t('ui.Сохранить')">
-		</div>
-	</form>
 	<div class="p-2 d-flex flex-column">
 		<Title>{{ group.name }}</Title>
 
-		<div class="d-flex">
-			<button type="button" class="btn btn-sm btn-outline-primary m-2" v-for="template in group.templates" :key="template.id" @click.prevent="print(template)">{{ template.name }}</button>
+		<div class="d-flex justify-content-between align-items-center">
+			<div class="dropdown m-2">
+				<a class="btn btn-sm btn-outline-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+					Печать
+				</a>
+
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<li><a class="dropdown-item" href="#" v-for="template in group.templates" :key="template.id" @click.prevent="print(template)">{{ template.name }}</a></li>
+				</ul>
+			</div>
+			
+			<div class="p-2">
+				<Modal :header="true" :footer="true" dialog-class="modal-lg">
+					<template v-slot:open-button>
+						<button class="btn btn-sm btn-outline-primary">
+							<font-awesome-icon :icon="['fa', 'cog']" />
+						</button>
+					</template>
+					<template v-slot:header>
+						Редактирование
+					</template>
+					<template v-slot:body>
+						<GroupForm :value="group" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup"></GroupForm>
+					</template>
+					<template v-slot:footer>
+						<button type="submit" class="m-0 m-2 btn btn-sm btn-warning text-white" data-bs-dismiss="modal" :form="`updateGroup${group.id}`">Сохранить</button>
+						<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
+					</template>
+				</Modal>
+			</div>
 		</div>
 
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
@@ -121,13 +139,14 @@
 	import GroupUser from '@/store/models/GroupUser'
 	import SearchUsers from '@/components/SearchUsers'
 	import UserForm from '@/components/forms/User'
+	import GroupForm from '@/components/forms/Group'
 	import FileSaver from 'file-saver';
 	import { v4 as uuidv4 } from 'uuid';
 
 	export default {
 		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
-			Group.api().fetch();
+			Group.api().fetchById(this.$route.params.group_id);
 			GroupUser.api().fetch();
 			Option.api().fetch();
 		},
@@ -138,6 +157,7 @@
 		},
 		components: {
 			SearchUsers,
+			GroupForm,
 			UserForm,
 		},
 		methods: {
