@@ -133,7 +133,7 @@
 
 <script>
 	import User from '@/store/models/User'
-	import Course from '@/store/models/Course'
+	//import Course from '@/store/models/Course'
 	import Group from '@/store/models/Group'
 	import Option from '@/store/models/Option'
 	import GroupUser from '@/store/models/GroupUser'
@@ -145,9 +145,7 @@
 
 	export default {
 		beforeCreate() {
-			Course.api().fetchById(this.$route.params.course_id);
-			//Group.api().fetchById(this.$route.params.group_id);
-			GroupUser.api().fetch();
+			Group.api().fetchById(this.$route.params.group_id);
 			Option.api().fetch();
 		},
 		data() {

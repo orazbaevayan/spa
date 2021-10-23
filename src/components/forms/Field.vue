@@ -8,6 +8,7 @@
 				<option value="Text">Текст</option>
 				<option value="Select">Выбор</option>
 				<option value="TextSelect">Текст и Выбор</option>
+				<option value="TextAutocomplete">Текст и Автозаполнение</option>
 			</select>
 		</div>
 		<div class="col-12 p-2">
