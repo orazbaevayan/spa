@@ -145,9 +145,11 @@
 
 	export default {
 		beforeCreate() {
-			User.api().fetch();
-			Group.api().fetchById(this.$route.params.group_id);
-			Option.api().fetch();
+			this.$axios.all([
+				GroupUser.api().fetch(),
+				Group.api().fetchById(this.$route.params.group_id),
+				Option.api().fetch()
+			]);
 		},
 		data() {
 			return {
