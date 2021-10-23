@@ -82,6 +82,7 @@
 		.results {
 			max-height: 250px;
 			overflow-y: scroll;
+			overscroll-behavior: contain;
 		}
 		li {
 			line-height: 1.25;

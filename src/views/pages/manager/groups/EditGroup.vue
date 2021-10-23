@@ -145,6 +145,7 @@
 
 	export default {
 		beforeCreate() {
+			User.api().fetch();
 			Group.api().fetchById(this.$route.params.group_id);
 			Option.api().fetch();
 		},
@@ -231,7 +232,7 @@
 		},
 		computed: {
 			group() {
-				return Group.query().with(['templates', 'group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['course', 'templates', 'group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
 				return User.findIn(this.foundUsers);
