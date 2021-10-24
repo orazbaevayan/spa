@@ -21,8 +21,6 @@
 </template>
 
 <script>
-	import Group from '@/store/models/Group'
-
 	export default {
 		props: {
 			value: {
@@ -34,9 +32,9 @@
 					}
 				}
 			},
-			group: {
+			autocomplete: {
 				type: Object,
-				default: new Group,
+				default: () => {},
 			},
 			name: {
 				type: String,
@@ -55,9 +53,9 @@
 			options() {
 				const options = [];
 				options.push(...this.value.options.map(i => i.value));
-				for (var i = 0; i < this.group.group_users.length; i++) {
-					for (var j = 0; j < this.group.group_users[i].fields.length; j++) {
-						if (this.group.group_users[i].fields[j].name == this.value.name && !!this.group.group_users[i].fields[j].value) options.push(this.group.group_users[i].fields[j].value);
+				for (var i = 0; i < this.autocomplete.length; i++) {
+					for (var j = 0; j < this.autocomplete[i].fields.length; j++) {
+						if (this.autocomplete[i].fields[j].name == this.value.name && !!this.autocomplete[i].fields[j].value) options.push(this.autocomplete[i].fields[j].value);
 					}
 				}
 				return [...new Set(options)];

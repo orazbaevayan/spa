@@ -103,7 +103,7 @@
 			<template v-slot:append>
 				<EditModal fa-icon="user-edit" :form="`updateUserForm${group_user.user?.id}`">
 					<UserForm :value="group_user.user" :id="`updateUserForm${group_user.user?.id}`" @submit.prevent="updateUser($event, group_user)">
-						<component class="p-2 col-12 col-md-6" :is="`${field.type}Field`" :group="group" :value="field" v-for="field in group_user.fields" :key="field.id" />
+						<component class="p-2 col-12 col-md-6" :is="`${field.type}Field`" :autocomplete="group.group_users" :value="field" v-for="field in group_user.fields" :key="field.id" />
 						<input type="submit" class="d-none">
 					</UserForm>
 				</EditModal>
