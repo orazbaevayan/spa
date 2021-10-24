@@ -6,6 +6,7 @@
 			<label class="form-label" for="type">{{ $t(`models.ALL['Тип']`) }}</label>
 			<select class="form-select form-select-sm" name="type" id="type" :value="value.type" :readonly="!canEdit">
 				<option value="Text">Текст</option>
+				<option value="Date">Дата</option>
 				<option value="Select">Выбор</option>
 				<option value="TextSelect">Текст и Выбор</option>
 				<option value="TextAutocomplete">Текст и Автозаполнение</option>

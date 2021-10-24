@@ -1,6 +1,13 @@
 <template>
 	<div class="p-2 d-flex flex-column">
-		<Title>{{ group.name }}</Title>
+		<Title class="d-flex align-items-center justify-content-center">
+			<span>{{ group.name }}</span>
+			<EditModal dialog-class="modal-md" :form="`updateGroup${group.id}Fields`">
+				<form class="d-flex flex-wrap text-start" :id="`updateGroup${group.id}Fields`" @submit.prevent="updateGroup">
+					<component class="p-2 col-12" :is="`${field.type}Field`" :autocomplete="group" :value="field" v-for="field in group.fields" :key="field.id" />
+				</form>
+			</EditModal>
+		</Title>
 
 		<div class="d-flex justify-content-between align-items-center">
 			<div class="dropdown m-2">
@@ -232,7 +239,7 @@
 		},
 		computed: {
 			group() {
-				return Group.query().with(['course', 'templates', 'group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['fields', 'course', 'templates', 'group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
 				return User.findIn(this.foundUsers);
