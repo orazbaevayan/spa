@@ -3,6 +3,7 @@ import store from '@/store'
 import GroupUser from '@/store/models/GroupUser'
 import Course from '@/store/models/Course'
 import Template from '@/store/models/Template'
+import Field from '@/store/models/Field'
 
 export default class Group extends Model {
 	static entity = 'groups'
@@ -15,6 +16,7 @@ export default class Group extends Model {
 			course: this.belongsTo(Course, 'course_id'),
 			group_users: this.hasMany(GroupUser, 'group_id'),
 			templates: this.morphMany(Template, 'templatable_id', 'templatable_type'),
+			fields: this.morphMany(Field, 'fieldable_id', 'fieldable_type'),
 		}
 	}
 

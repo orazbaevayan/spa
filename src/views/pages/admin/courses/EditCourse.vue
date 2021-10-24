@@ -12,12 +12,13 @@
 			</template>
 
 			<template v-slot:1>
-				<div class="p-2">
+				<GroupFieldsTab />
+				<!-- <div class="p-2">
 					<div class="form-check form-switch">
 						<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
 						<label class="form-check-label" for="flexSwitchCheckDefault">Использовать генерацию названия</label>
 					</div>
-				</div>
+				</div> -->
 			</template>
 
 			<template v-slot:2>
@@ -25,7 +26,7 @@
 			</template>
 
 			<template v-slot:3>
-				<FieldsTab />
+				<GroupUserFieldsTab />
 			</template>
 
 		</Tabs>
@@ -33,18 +34,26 @@
 </template>
 
 <script>
+	import Group from '@/store/models/Group'
 	import Course from '@/store/models/Course'
+	import Option from '@/store/models/Option'
+	import GroupUser from '@/store/models/GroupUser'
 	import CourseForm from '@/components/forms/Course'
-	import FieldsTab from '@/views/pages/admin/courses/EditCourse/FieldsTab'
+	import GroupUserFieldsTab from '@/views/pages/admin/courses/EditCourse/GroupUserFieldsTab'
+	import GroupFieldsTab from '@/views/pages/admin/courses/EditCourse/GroupFieldsTab'
 	import TemplatesTab from '@/views/pages/admin/courses/EditCourse/TemplatesTab'
 
 	export default {
 		created() {
+			Option.api().fetch();
+			Group.api().fetch();
 			Course.api().fetchById(this.$route.params.course_id);
+			GroupUser.api().fetch();
 		},
 		components: {
 			CourseForm,
-			FieldsTab,
+			GroupFieldsTab,
+			GroupUserFieldsTab,
 			TemplatesTab,
 		},
 		methods: {

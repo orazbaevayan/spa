@@ -98,18 +98,18 @@
 				<input type="checkbox" class="mx-1">
 			</template>
 			<template v-slot:header>
-				{{ group_user.user.fullName }}
+				{{ group_user.user?.fullName }}
 			</template>
 			<template v-slot:append>
-				<EditModal fa-icon="user-edit" :form="`updateUserForm${group_user.user.id}`">
-					<UserForm :value="group_user.user" :id="`updateUserForm${group_user.user.id}`" @submit.prevent="updateUser($event, group_user)">
+				<EditModal fa-icon="user-edit" :form="`updateUserForm${group_user.user?.id}`">
+					<UserForm :value="group_user.user" :id="`updateUserForm${group_user.user?.id}`" @submit.prevent="updateUser($event, group_user)">
 						<component class="p-2 col-12 col-md-6" :is="`${field.type}Field`" :group="group" :value="field" v-for="field in group_user.fields" :key="field.id" />
 						<input type="submit" class="d-none">
 					</UserForm>
 				</EditModal>
 
 				<DeleteModal @delete="deleteGroupUser(group_user)">
-					Вы действительно хотите удалить запись <span class="fw-bold">{{ group_user.user.fullName }}</span>?
+					Вы действительно хотите удалить запись <span class="fw-bold">{{ group_user.user?.fullName }}</span>?
 				</DeleteModal>
 			</template>
 			<template v-slot:content>
@@ -145,11 +145,9 @@
 
 	export default {
 		beforeCreate() {
-			this.$axios.all([
-				GroupUser.api().fetch(),
-				Group.api().fetchById(this.$route.params.group_id),
-				Option.api().fetch()
-			]);
+			GroupUser.api().fetch()
+			Group.api().fetchById(this.$route.params.group_id)
+			Option.api().fetch()
 		},
 		data() {
 			return {

@@ -5,17 +5,17 @@
 		</template>
 		<template v-slot:append>
 			<CreateModal dialog-class="modal-lg" form="storeFieldForm">
-				<FieldForm fieldable="course_id" fieldable-type="courses" :fieldable-id="course.id" id="storeFieldForm" @submit.prevent="storeField" />
+				<FieldForm fieldable-type="group_users" :fieldable-id="group_user?.id" id="storeFieldForm" @submit.prevent="storeField" />
 			</CreateModal>
 		</template>
 	</Card>
-	<Card class="mx-2 my-1" :toggle-on="['Select', 'TextSelect'].includes(field.type) ? true : false" v-for="field in course.fields" :key="field.id">
+	<Card class="mx-2 my-1" :toggle-on="['Select', 'TextSelect'].includes(field.type) ? true : false" v-for="field in fields" :key="field.id">
 		<template v-slot:header>
 			{{ field.name }}
 		</template>
 		<template v-slot:append>
 			<EditModal dialog-class="modal-md" :form="`editFieldForm${field.id}`">
-				<FieldForm fieldable-type="courses" :fieldable-id="course.id" :value="field" :id="`editFieldForm${field.id}`" @submit.prevent="updateField($event, field.id)" />
+				<FieldForm fieldable-type="group_users" :fieldable-id="group_user?.id" :value="field" :id="`editFieldForm${field.id}`" @submit.prevent="updateField($event, field.id)" />
 			</EditModal>
 			<DeleteModal @delete="deleteField(field)">
 				Вы уверены что хотите удалить запись <b>{{ field.name }}</b>?
@@ -66,7 +66,7 @@
 
 	export default {
 		created() {
-			Option.api().fetch();
+			
 		},
 		components: {
 			FieldForm,
@@ -128,10 +128,16 @@
 		},
 		computed: {
 			course() {
-				return Course.query().with(['fields.options']).find(this.$route.params.course_id) || new Course;
+				return Course.query().with(['group.group_users.fields.options']).find(this.$route.params.course_id) || new Course;
 			},
 			options() {
 				return Option.query().with(['field_options']).get();
+			},
+			group_user() {
+				return this.course?.group?.group_users[0];
+			},
+			fields() {
+				return this.course?.group?.group_users[0]?.fields;
 			}
 		}
 	}
