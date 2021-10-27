@@ -97,7 +97,7 @@ export default [
 	name: 'manager-edit-group',
 	path: '/manager/course/:course_id/groups/:group_id',
 	meta: {
-		title: (route) => Group.find(route.params.group_id)?.name,
+		title: (route) => Group.find(route.params.group_id)?.group_name,
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [

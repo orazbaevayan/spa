@@ -1,5 +1,5 @@
 <template>
-	<Title class="mt-2">{{ $t('pages.Группы') }}</Title>
+	<Title class="mt-2">{{ course.name }}</Title>
 	<div class="p-2 d-flex flex-column">
 		<Card class="mx-2 my-1" :is-control-panel="true">
 			<template v-slot:prepend>
@@ -39,9 +39,6 @@
 				<DeleteModal @delete="deleteGroup(group)">
 					Вы действительно хотите удалить запись <span class="fw-bold">{{ group.group_name }}</span>?
 				</DeleteModal>
-<!-- 				<a href="#" class="text-danger px-1 py-0" @click="deleteGroup(group)">
-					<font-awesome-icon :icon="['fa', 'trash-alt']" />
-				</a> -->
 			</template>
 		</Card>
 	</div>
