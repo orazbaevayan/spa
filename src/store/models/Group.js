@@ -18,7 +18,7 @@ export default class Group extends Model {
 			course_id: this.attr(null),
 			course: this.belongsTo(Course, 'course_id'),
 			group_users: this.hasMany(GroupUser, 'group_id'),
-			templates: this.morphMany(Template, 'templatable_id', 'templatable_type'),
+			templates: this.hasMany(Template, 'group_id'),
 			fields: this.morphMany(Field, 'fieldable_id', 'fieldable_type'),
 		}
 	}

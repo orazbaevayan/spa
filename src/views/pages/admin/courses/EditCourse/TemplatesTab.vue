@@ -9,7 +9,7 @@
 			</CreateModal>
 		</template>
 	</Card>
-	<Card class="mx-2 my-1" v-for="template in course.templates" :key="template.id">
+	<Card class="mx-2 my-1" v-for="template in course.group?.templates" :key="template.id">
 		<template v-slot:append>
 			<EditModal dialog-class="modal-xl" :form="`editTemplateForm${template.id}`">
 				<TemplateForm templatable="course_id" templatable-type="courses" :templatable-id="course.id" :value="template" :id="`editTemplateForm${template.id}`" @submit.prevent="updateTemplate($event, template.id)" />
@@ -64,7 +64,7 @@
 		},
 		computed: {
 			course() {
-				return Course.query().with(['templates']).find(this.$route.params.course_id) || new Course;
+				return Course.query().with(['group.templates']).find(this.$route.params.course_id) || new Course;
 			},
 		}
 	}

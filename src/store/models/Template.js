@@ -1,5 +1,6 @@
 import { Model } from '@vuex-orm/core'
 import store from '@/store'
+import Group from '@/store/models/Group'
 
 export default class Template extends Model {
 	static entity = 'templates'
@@ -10,9 +11,8 @@ export default class Template extends Model {
 			name: this.attr(''),
 			file: this.attr(''),
 			code: this.attr(''),
-			templatable_id: this.attr(null),
-			templatable_type: this.attr(null),
-			templatable: this.morphTo('templatable_id', 'templatable_type'),
+			group_id: this.attr(null),
+			group: this.belongsTo(Group, 'group_id'),
 		}
 	}
 
