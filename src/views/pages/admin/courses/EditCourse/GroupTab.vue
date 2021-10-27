@@ -1,10 +1,13 @@
 <template>
+	<GroupForm :value="group" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup($event, group.id)">
+		<button type="submit" class="m-0 m-2 btn btn-sm btn-warning text-white" :form="`updateGroup${group.id}`">Сохранить</button>
+	</GroupForm>
 	<Card class="mx-2 my-1" :is-control-panel="true">
 		<template v-slot:prepend>
 			<input type="checkbox" class="mx-1">
 		</template>
 		<template v-slot:append>
-			<CreateModal dialog-class="modal-lg" form="storeFieldForm">
+			<CreateModal dialog-class="modal-md" form="storeFieldForm">
 				<FieldForm fieldable-type="groups" :fieldable-id="group?.id" id="storeFieldForm" @submit.prevent="storeField" />
 			</CreateModal>
 		</template>
@@ -61,8 +64,10 @@
 	import Option from '@/store/models/Option'
 	import Course from '@/store/models/Course'
 	import Field from '@/store/models/Field'
+	import Group from '@/store/models/Group'
 	import FieldOption from '@/store/models/FieldOption'
 	import OptionForm from '@/components/forms/Option'
+	import GroupForm from '@/components/forms/Group'
 
 	export default {
 		created() {
@@ -71,8 +76,20 @@
 		components: {
 			FieldForm,
 			OptionForm,
+			GroupForm,
 		},
 		methods: {
+			updateGroup(event, id) {
+				let formData = new FormData(event.currentTarget);
+				formData.append('_method', 'PATCH');
+				Group.api().post('/api/groups/' + id, formData)
+				.then(r => {
+					if (r.response.status === 200) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
+					}
+				})
+				.catch(e => console.log(e));
+			},
 			storeField(event) {
 				let formData = new FormData(event.currentTarget);
 				Field.api().post('api/fields', formData)
@@ -134,7 +151,7 @@
 				return Option.query().with(['field_options']).get();
 			},
 			group() {
-				return this.course?.group;
+				return this.course?.group || new Group;
 			},
 			fields() {
 				return this.course?.group?.fields;

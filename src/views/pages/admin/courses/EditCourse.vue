@@ -1,7 +1,7 @@
 <template>
 	<Title>{{ $t('pages.Редактирование курса') }}</Title>
 	<div class="p-2 d-flex flex-column">
-		<Tabs :tabs="['Общие данные', 'Доп. данные', 'Шаблоны', 'Поля']">
+		<Tabs :tabs="['Общие данные', 'Шаблоны', 'Группа', 'Студент']">
 
 			<template v-slot:0>
 				<CourseForm :value="course" @submit.prevent="updateCourse">
@@ -12,17 +12,11 @@
 			</template>
 
 			<template v-slot:1>
-				<GroupFieldsTab />
-				<!-- <div class="p-2">
-					<div class="form-check form-switch">
-						<input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-						<label class="form-check-label" for="flexSwitchCheckDefault">Использовать генерацию названия</label>
-					</div>
-				</div> -->
+				<TemplatesTab />
 			</template>
 
 			<template v-slot:2>
-				<TemplatesTab />
+				<GroupTab />
 			</template>
 
 			<template v-slot:3>
@@ -40,7 +34,7 @@
 	import GroupUser from '@/store/models/GroupUser'
 	import CourseForm from '@/components/forms/Course'
 	import GroupUserFieldsTab from '@/views/pages/admin/courses/EditCourse/GroupUserFieldsTab'
-	import GroupFieldsTab from '@/views/pages/admin/courses/EditCourse/GroupFieldsTab'
+	import GroupTab from '@/views/pages/admin/courses/EditCourse/GroupTab'
 	import TemplatesTab from '@/views/pages/admin/courses/EditCourse/TemplatesTab'
 
 	export default {
@@ -52,7 +46,7 @@
 		},
 		components: {
 			CourseForm,
-			GroupFieldsTab,
+			GroupTab,
 			GroupUserFieldsTab,
 			TemplatesTab,
 		},

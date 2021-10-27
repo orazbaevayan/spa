@@ -5,18 +5,20 @@
 			<template v-slot:prepend>
 				<input type="checkbox" class="mx-1">
 			</template>
-<!-- 			<template v-slot:header>
-				<div class="col-md-6">
-					Группа
-				</div>
-				<div class="col-md-6">
-					Человек
-				</div>
-			</template> -->
 			<template v-slot:append>
-				<router-link class="text-primary px-1 py-0" :to="{ name: 'manager-create-group' }">
-					<font-awesome-icon :icon="['fa', 'plus-square']" />
-				</router-link>
+				<CreateModal dialog-class="modal-md" :form="`storeGroup`">
+					<form action="d-flex flex-wrap text-start" :id="`storeGroup`" @submit.prevent="storeGroup" v-if="!group.generate_name">
+						<div class="col-12 p-2 text-start">
+							<label class="form-label" for="name">Название</label>
+							<input type="text" class="form-control form-control-sm" name="name">
+							<input type="hidden" name="course_id" :value="$route.params.course_id">
+						</div>
+					</form>
+					<form class="d-flex flex-wrap text-start" :id="`storeGroup`" @submit.prevent="storeGroup" v-if="group.generate_name">
+						<component class="p-2 col-12" :is="`${field.type}Field`" :autocomplete="group" :value="field" v-for="field in group.fields" :key="field.id" />
+						<input type="hidden" name="course_id" :value="$route.params.course_id">
+					</form>
+				</CreateModal>
 			</template>
 		</Card>
 		<Card class="mx-2 my-1" v-for="group in groups" :key="group.id">
@@ -24,7 +26,7 @@
 				<input type="checkbox" class="mx-1">
 			</template>
 			<template v-slot:header>
-				{{ group.name }}
+				{{ group.group_name }}
 			</template>
 			<template v-slot:append>
 				<span class="px-1 d-flex flex-column justify-content-center align-items-center text-secondary" style="line-height: 1;">
@@ -35,7 +37,7 @@
 					<font-awesome-icon :icon="['fa', 'eye']" />
 				</router-link>
 				<DeleteModal @delete="deleteGroup(group)">
-					Вы действительно хотите удалить запись <span class="fw-bold">{{ group.name }}</span>?
+					Вы действительно хотите удалить запись <span class="fw-bold">{{ group.group_name }}</span>?
 				</DeleteModal>
 <!-- 				<a href="#" class="text-danger px-1 py-0" @click="deleteGroup(group)">
 					<font-awesome-icon :icon="['fa', 'trash-alt']" />
@@ -49,6 +51,7 @@
 <script>
 	import Course from '@/store/models/Course'
 	import Group from '@/store/models/Group'
+	import Field from '@/store/models/Field'
 	import GroupUser from '@/store/models/GroupUser'
 	import { mapGetters } from 'vuex'
 
@@ -56,15 +59,31 @@
 		beforeCreate() {
 			Course.api().fetchById(this.$route.params.course_id);
 			GroupUser.api().fetch();
+			Field.api().fetch();
 		},
 		methods: {
+			storeGroup(event) {
+				let formData = new FormData(event.currentTarget);
+				Group.api().post('api/groups', formData)
+				.then(r => {
+					console.log(r.response.data);
+					if (r.response.status === 201) {
+						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
+						this.$router.push({ name: 'manager-index-groups' });
+					}
+				})
+				.catch(e => console.log(e));
+			},
 			deleteGroup(group) {
 				Group.api().deleteById(group.id);
 			},
 		},
 		computed: {
 			course() {
-				return Course.query().with('groups.group_users').find(this.$route.params.course_id) || new Course;
+				return Course.query().with(['groups.group_users', 'group.fields']).find(this.$route.params.course_id) || new Course;
+			},
+			group() {
+				return this.course.group || new Group;
 			},
 			...mapGetters({
 				'currentPageElements': 'pagination/currentPageElements',

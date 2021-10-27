@@ -1,11 +1,18 @@
 <template>
 	<div class="p-2 d-flex flex-column">
 		<Title class="d-flex align-items-center justify-content-center">
-			<span>{{ group.name }}</span>
-			<EditModal dialog-class="modal-md" :form="`updateGroup${group.id}Fields`">
-				<form class="d-flex flex-wrap text-start" :id="`updateGroup${group.id}Fields`" @submit.prevent="updateGroup">
+			<span>{{ group.group_name }}</span>
+			<EditModal dialog-class="modal-md" :form="`updateGroup${group.id}`">
+				<form action="d-flex flex-wrap text-start" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup" v-if="!group.generate_name">
+					<div class="col-12 p-2 text-start">
+						<label class="form-label" for="name">Название</label>
+						<input type="text" class="form-control form-control-sm" name="name" :value="group.name">
+					</div>
+				</form>
+				<form class="d-flex flex-wrap text-start" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup" v-if="group.generate_name">
 					<component class="p-2 col-12" :is="`${field.type}Field`" :autocomplete="group" :value="field" v-for="field in group.fields" :key="field.id" />
 				</form>
+				<!-- <GroupForm class="text-start" :value="group" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup" v-if="!group.generate_name"></GroupForm> -->
 			</EditModal>
 		</Title>
 
@@ -21,7 +28,7 @@
 			</div>
 			
 			<div class="p-2">
-				<Modal :header="true" :footer="true" dialog-class="modal-lg">
+				<Modal :header="true" :footer="true" dialog-class="modal-md">
 					<template v-slot:open-button>
 						<button class="btn btn-sm btn-outline-primary">
 							<font-awesome-icon :icon="['fa', 'cog']" />
@@ -31,10 +38,12 @@
 						Редактирование
 					</template>
 					<template v-slot:body>
-						<GroupForm :value="group" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup"></GroupForm>
+						<GroupForm :value="group" :id="`updateGroup${group.id}Settings`" @submit.prevent="updateGroup">
+							<component class="p-2 col-12 text-start" :is="`${field.type}Field`" :autocomplete="group" :value="field" v-for="field in group.fields" :key="field.id" />
+						</GroupForm>
 					</template>
 					<template v-slot:footer>
-						<button type="submit" class="m-0 m-2 btn btn-sm btn-warning text-white" data-bs-dismiss="modal" :form="`updateGroup${group.id}`">Сохранить</button>
+						<button type="submit" class="m-0 m-2 btn btn-sm btn-warning text-white" data-bs-dismiss="modal" :form="`updateGroup${group.id}Settings`">Сохранить</button>
 						<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
 					</template>
 				</Modal>

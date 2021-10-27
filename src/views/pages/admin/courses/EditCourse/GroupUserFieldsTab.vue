@@ -4,7 +4,7 @@
 			<input type="checkbox" class="mx-1">
 		</template>
 		<template v-slot:append>
-			<CreateModal dialog-class="modal-lg" form="storeFieldForm">
+			<CreateModal dialog-class="modal-md" form="storeFieldForm">
 				<FieldForm fieldable-type="group_users" :fieldable-id="group_user?.id" id="storeFieldForm" @submit.prevent="storeField" />
 			</CreateModal>
 		</template>
