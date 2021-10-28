@@ -85,7 +85,17 @@
 				'currentPageElements': 'pagination/currentPageElements',
 			}),
 			groups() {
-				return this.currentPageElements(this.course.groups);
+				let groups = this.course.groups;
+				groups.sort((a, b) => {
+					if (a.order > b.order) {
+						return -1;
+					} else if (a.order < b.order) {
+						return 1;
+					} else {
+						return 0;
+					}
+				});
+				return this.currentPageElements(groups);
 			},
 		}
 	}

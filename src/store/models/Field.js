@@ -12,6 +12,8 @@ export default class Field extends Model {
 			name: this.attr(''),
 			value: this.attr(''),
 			type: this.attr(''),
+			required: this.attr(0),
+			validation: this.attr(''),
 			category: this.attr(''),
 			fieldable_id: this.attr(null),
 			fieldable_type: this.attr(null),

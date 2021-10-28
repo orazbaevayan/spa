@@ -13,6 +13,7 @@ export default class Group extends Model {
 		return {
 			id: this.attr(null),
 			name: this.attr(''),
+			order: this.attr(''),
 			group_name: this.attr(''),
 			generate_name: this.attr(0),
 			course_id: this.attr(null),
