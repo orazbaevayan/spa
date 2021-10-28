@@ -1,7 +1,6 @@
 <template>
 	<form class="w-100 d-flex flex-row flex-wrap" @submit="resetSelectedFile">
-		<input type="hidden" name="templatable_id" :value="templatableId">
-		<input type="hidden" name="templatable_type" :value="templatableType">
+		<input type="hidden" name="group_id" :value="value.group_id">
 		<div class="col-12 col-lg-6 p-2">
 			<label class="form-label" for="name">{{ $t(`models.ALL['Название']`) }}</label>
 			<input type="text" class="form-control form-control-sm" id="name" name="name" v-once :value="value.name" :readonly="!canEdit">
@@ -47,14 +46,6 @@
 				type: Boolean,
 				default: true
 			},
-			templatableType: {
-				type: String,
-				default: null
-			},
-			templatableId: {
-				type: Number,
-				default: null
-			},
 		},
 		data() {
 			return {
@@ -74,7 +65,7 @@
 		},
 		computed: {
 			templates() {
-				return Template.query().where('templatable_type', this.templatableType).where('templatable_id', this.templatableId).get().sort((a, b) => {
+				return Template.query().where('group_id', this.value.group_id).get().sort((a, b) => {
 					return b.id == this.value.id ? 1 : 0;
 				}).filter(i => i.file);
 			},

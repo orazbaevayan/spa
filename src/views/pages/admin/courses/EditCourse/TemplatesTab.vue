@@ -5,14 +5,14 @@
 		</template>
 		<template v-slot:append>
 			<CreateModal dialog-class="modal-lg" form="storeTemplateForm">
-				<TemplateForm templatable="course_id" templatable-type="courses" :templatable-id="course.id" id="storeTemplateForm" @submit.prevent="storeTemplate" />
+				<TemplateForm :value="newTemplate" id="storeTemplateForm" @submit.prevent="storeTemplate" />
 			</CreateModal>
 		</template>
 	</Card>
 	<Card class="mx-2 my-1" v-for="template in course.group?.templates" :key="template.id">
 		<template v-slot:append>
 			<EditModal dialog-class="modal-xl" :form="`editTemplateForm${template.id}`">
-				<TemplateForm templatable="course_id" templatable-type="courses" :templatable-id="course.id" :value="template" :id="`editTemplateForm${template.id}`" @submit.prevent="updateTemplate($event, template.id)" />
+				<TemplateForm :value="template" :id="`editTemplateForm${template.id}`" @submit.prevent="updateTemplate($event, template.id)" />
 			</EditModal>
 			<DeleteModal @delete="deleteTemplate(template)">
 				Вы уверены что хотите удалить запись <b>{{ template.name }}</b>?
@@ -66,6 +66,9 @@
 			course() {
 				return Course.query().with(['group.templates']).find(this.$route.params.course_id) || new Course;
 			},
+			newTemplate() {
+				return new Template({ group_id: 1 });
+			}
 		}
 	}
 </script>
