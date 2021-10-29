@@ -21,13 +21,6 @@
 			<input type="text" class="form-control form-control-sm" id="value" name="value" v-once :value="value.value" :readonly="!canEdit">
 		</div>
 		<div class="col-12 p-2">
-			<div class="form-check form-switch m-0">
-				<input type="hidden" name="required" value="0">
-				<input class="form-check-input" type="checkbox" name="required" id="required" value="1" :checked="value.required">
-				<label class="form-check-label" for="required">Обязательное поле</label>
-			</div>
-		</div>
-		<div class="col-12 p-2">
 			<label class="form-label" for="value">Валидация</label>
 			<input type="text" class="form-control form-control-sm" id="validation" name="validation" :value="value.validation" :readonly="!canEdit">
 		</div>

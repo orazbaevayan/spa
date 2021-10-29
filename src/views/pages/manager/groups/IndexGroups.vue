@@ -63,6 +63,7 @@
 				let formData = new FormData(event.currentTarget);
 				Group.api().post('api/groups', formData)
 				.then(r => {
+					console.log(r.response);
 					if (r.response.status === 201) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
 						this.$router.push({ name: 'manager-index-groups' });
