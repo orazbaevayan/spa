@@ -63,7 +63,6 @@
 				let formData = new FormData(event.currentTarget);
 				Group.api().post('api/groups', formData)
 				.then(r => {
-					console.log(r.response);
 					if (r.response.status === 201) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
 						this.$router.push({ name: 'manager-index-groups' });
@@ -87,15 +86,7 @@
 			}),
 			groups() {
 				let groups = this.course.groups;
-				groups.sort((a, b) => {
-					if (a.order > b.order) {
-						return -1;
-					} else if (a.order < b.order) {
-						return 1;
-					} else {
-						return 0;
-					}
-				});
+				groups.sort((a, b) => a.order.localeCompare(b.order, undefined, { numeric: true, sensitivity: 'base' })).reverse();
 				return this.currentPageElements(groups);
 			},
 		}

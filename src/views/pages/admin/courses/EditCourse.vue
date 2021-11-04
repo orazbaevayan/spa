@@ -65,7 +65,7 @@
 		},
 		computed: {
 			course() {
-				return Course.query().with(['groups', 'templates', 'fields']).find(this.$route.params.course_id) || new Course;
+				return Course.query().with(['groups', 'templates', 'group.fields']).find(this.$route.params.course_id) || new Course;
 			}
 		}
 	}
