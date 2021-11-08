@@ -149,7 +149,6 @@
 
 <script>
 	import User from '@/store/models/User'
-	//import Course from '@/store/models/Course'
 	import Group from '@/store/models/Group'
 	import Option from '@/store/models/Option'
 	import GroupUser from '@/store/models/GroupUser'
@@ -161,13 +160,15 @@
 
 	export default {
 		beforeCreate() {
-			GroupUser.api().fetch()
-			Group.api().fetchById(this.$route.params.group_id)
-			Option.api().fetch()
+			this.$fetchApiData([
+				GroupUser.api().fetch(),
+				Group.api().fetchById(this.$route.params.group_id),
+				Option.api().fetch(),
+			]);
 		},
 		data() {
 			return {
-				foundUsers: []
+				foundUsers: [],
 			}
 		},
 		components: {
@@ -177,15 +178,7 @@
 		},
 		methods: {
 			updateGroup(event) {
-				let formData = new FormData(event.currentTarget);
-				formData.append('_method', 'PATCH');
-				Group.api().post('/api/groups/' + this.$route.params.group_id, formData)
-				.then(r => {
-					if (r.response.status === 200) {
-						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
-					}
-				})
-				.catch(e => console.log(e));
+				Group.api().update(event, this.$route.params.group_id);
 			},
 			addUser(user) {
 				GroupUser.api().post(`/api/group_users`, {
@@ -199,15 +192,8 @@
 				});
 			},
 			updateUser(event, groupUser) {
-				let formData = new FormData(event.currentTarget);
-				formData.append('_method', 'PATCH');
-				User.api().post(`/api/users/${groupUser.user.id}`, formData)
-				.then(r => {
-					if (r.response.status === 200) {
-						this.updateGroupUser(formData, groupUser);
-					}
-				})
-				.catch(e => console.log(e));
+				User.api().update(event, groupUser.user.id);
+				GroupUser.api().update(event, groupUser.id);
 			},
 			deleteGroupUser(groupUser) {
 				GroupUser.api().deleteById(groupUser.id);
@@ -221,15 +207,6 @@
 				.then(r => {
 					if (r.response.status === 201) {
 						this.addUser(r.response.data.data);
-					}
-				})
-				.catch(e => console.log(e));
-			},
-			updateGroupUser(formData, groupUser) {
-				GroupUser.api().post(`/api/group_users/${groupUser.id}`, formData)
-				.then(r => {
-					if (r.response.status === 200) {
-						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
 					}
 				})
 				.catch(e => console.log(e));

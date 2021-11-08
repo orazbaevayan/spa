@@ -19,7 +19,9 @@
 
 	export default {
 		created() {
-			Course.api().get('api/courses');
+			this.$fetchApiData([
+				Course.api().fetch(),
+			]);
 		},
 		computed: {
 			courses() {

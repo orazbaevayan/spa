@@ -1,10 +1,11 @@
-import { Model } from '@vuex-orm/core'
-import store from '@/store'
+import CustomModel from '@/store/models/CustomModel'
+/*import { Model } from '@vuex-orm/core'*/
+/*import store from '@/store'*/
 import RoleUser from '@/store/models/RoleUser'
 import Role from '@/store/models/Role'
 import GroupUser from '@/store/models/GroupUser'
 
-export default class User extends Model {
+export default class User extends CustomModel {
 	static entity = 'users'
 
 	static fields () {
@@ -23,7 +24,7 @@ export default class User extends Model {
 		}
 	}
 
-	static apiConfig = {
+/*	static apiConfig = {
 		actions: {
 			fetch: {
 				method: 'get',
@@ -42,7 +43,7 @@ export default class User extends Model {
 				});
 			}
 		}
-	}
+	}*/
 
 	get fullName() {
 		return this.last_name + ' ' + this.first_name + (this.middle_name ? ' ' + this.middle_name : '');

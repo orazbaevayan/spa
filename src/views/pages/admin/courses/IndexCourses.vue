@@ -30,8 +30,10 @@
 	import Course from '@/store/models/Course'
 
 	export default {
-		created() {
-			Course.api().fetch();
+		beforeCreate() {
+			this.$fetchApiData([
+				Course.api().fetch(),
+			]);
 		},
 		methods: {
 			deleteCourse(course) {

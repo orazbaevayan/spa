@@ -39,10 +39,12 @@
 
 	export default {
 		created() {
-			Option.api().fetch();
-			Group.api().fetch();
-			Course.api().fetchById(this.$route.params.course_id);
-			GroupUser.api().fetch();
+			this.$fetchApiData([
+				Option.api().fetch(),
+				Group.api().fetch(),
+				Course.api().fetchById(this.$route.params.course_id),
+				GroupUser.api().fetch(),
+			]);
 		},
 		components: {
 			CourseForm,

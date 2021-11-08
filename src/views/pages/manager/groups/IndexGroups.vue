@@ -54,9 +54,11 @@
 
 	export default {
 		beforeCreate() {
-			Course.api().fetchById(this.$route.params.course_id);
-			GroupUser.api().fetch();
-			Field.api().fetch();
+			this.$fetchApiData([
+				Course.api().fetchById(this.$route.params.course_id),
+				GroupUser.api().fetch(),
+				Field.api().fetch(),
+			]);
 		},
 		methods: {
 			storeGroup(event) {

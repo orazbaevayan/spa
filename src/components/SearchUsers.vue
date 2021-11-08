@@ -44,7 +44,7 @@
 				});
 			},
 			query() {
-				return User.api().fetch().then(() => {
+				return User.api().fetch({ save: true }).then(() => {
 					const options = {
 						includeScore: true,
 						ignoreLocation: true,

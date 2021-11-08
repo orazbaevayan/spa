@@ -1,10 +1,11 @@
-import { Model } from '@vuex-orm/core'
-import store from '@/store'
+import CustomModel from '@/store/models/CustomModel'
+/*import { Model } from '@vuex-orm/core'*/
+/*import store from '@/store'*/
 import User from '@/store/models/User'
 import Group from '@/store/models/Group'
 import Field from '@/store/models/Field'
 
-export default class GroupUser extends Model {
+export default class GroupUser extends CustomModel {
 	static entity = 'group_users'
 
 	static fields () {
@@ -18,7 +19,7 @@ export default class GroupUser extends Model {
 		}
 	}
 
-	static apiConfig = {
+/*	static apiConfig = {
 		actions: {
 			fetch: {
 				method: 'get',
@@ -37,5 +38,5 @@ export default class GroupUser extends Model {
 				});
 			}
 		}
-	}
+	}*/
 }

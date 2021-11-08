@@ -17,7 +17,9 @@
 
 	export default {
 		created() {
-			Course.api().fetchById(this.$route.params.course_id);
+			this.$fetchApiData([
+				Course.api().fetchById(this.$route.params.course_id),
+			]);
 		},
 		data() {
 			return {

@@ -1,9 +1,9 @@
-import { Model } from '@vuex-orm/core'
-import store from '@/store'
+import CustomModel from '@/store/models/CustomModel'
+/*import store from '@/store'*/
 import Option from '@/store/models/Option'
 import FieldOption from '@/store/models/FieldOption'
 
-export default class Field extends Model {
+export default class Field extends CustomModel {
 	static entity = 'fields'
 
 	static fields () {
@@ -22,7 +22,7 @@ export default class Field extends Model {
 		}
 	}
 
-	static apiConfig = {
+/*	static apiConfig = {
 		actions: {
 			fetch: {
 				method: 'get',
@@ -41,5 +41,5 @@ export default class Field extends Model {
 				});
 			}
 		}
-	}
+	}*/
 }

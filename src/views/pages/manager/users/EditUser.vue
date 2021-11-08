@@ -14,7 +14,9 @@
 			UserForm
 		},
 		created() {
-			User.api().fetchById(this.$route.params.user_id);
+			this.$fetchApiData([
+				User.api().fetchById(this.$route.params.user_id),
+			]);
 		},
 		methods: {
 			updateUser(event) {

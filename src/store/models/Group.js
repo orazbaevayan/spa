@@ -1,12 +1,12 @@
-import { Model } from '@vuex-orm/core'
-import store from '@/store'
-import router from '@/router'
+import CustomModel from '@/store/models/CustomModel'
+/*import store from '@/store'
+import router from '@/router'*/
 import GroupUser from '@/store/models/GroupUser'
 import Course from '@/store/models/Course'
 import Template from '@/store/models/Template'
 import Field from '@/store/models/Field'
 
-export default class Group extends Model {
+export default class Group extends CustomModel {
 	static entity = 'groups'
 
 	static fields () {
@@ -24,7 +24,7 @@ export default class Group extends Model {
 		}
 	}
 
-	static apiConfig = {
+/*	static apiConfig = {
 		actions: {
 			fetch: {
 				method: 'get',
@@ -54,7 +54,7 @@ export default class Group extends Model {
 				.catch(e => console.log(e));
 			},
 		}
-	}
+	}*/
 
 	get usersCount() {
 		return this.group_users.length || 0;

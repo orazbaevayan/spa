@@ -71,3 +71,13 @@ app.directive('closable', {
 app.mount('#app')
 
 app.config.globalProperties.$axios = axios
+
+app.config.globalProperties.$fetchApiData = (queries) => {
+	axios.all(queries).then(r => {
+		for (var i = 0; i < r.length; i++) {
+			if (r[i].response.status == 200) {
+				r[i].save();
+			}
+		}
+	});
+}
