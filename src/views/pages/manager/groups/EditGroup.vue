@@ -150,7 +150,7 @@
 <script>
 	import User from '@/store/models/User'
 	import Group from '@/store/models/Group'
-	import Option from '@/store/models/Option'
+	/*import Field from '@/store/models/Field'*/
 	import GroupUser from '@/store/models/GroupUser'
 	import SearchUsers from '@/components/SearchUsers'
 	import UserForm from '@/components/forms/User'
@@ -160,11 +160,7 @@
 
 	export default {
 		beforeCreate() {
-			this.$fetchApiData([
-				GroupUser.api().fetch(),
-				Group.api().fetchById(this.$route.params.group_id),
-				Option.api().fetch(),
-			]);
+			Group.api().fetchById(this.$route.params.group_id, '?include=fields,course,templates,group_users.user,group_users.fields.options,group_users.fields.field_options');
 		},
 		data() {
 			return {
@@ -181,19 +177,18 @@
 				Group.api().update(event, this.$route.params.group_id);
 			},
 			addUser(user) {
-				GroupUser.api().post(`/api/group_users`, {
+				GroupUser.api().post(`/api/group_users?include=user,fields.options,fields.field_options`, {
 					group_id: this.$route.params.group_id,
 					user_id: user.id,
 				}).then(r => {
 					if (r.response.status === 201) {
-						Option.api().fetch();
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
 					}
 				});
 			},
 			updateUser(event, groupUser) {
 				User.api().update(event, groupUser.user.id);
-				GroupUser.api().update(event, groupUser.id);
+				GroupUser.api().update(event, groupUser.id, '?include=fields.options,fields.field_options');
 			},
 			deleteGroupUser(groupUser) {
 				GroupUser.api().deleteById(groupUser.id);
@@ -202,14 +197,19 @@
 				return this.group.group_users.map(gu => gu.user.id).indexOf(user.id) != -1;
 			},
 			storeUser(event) {
-				let formData = new FormData(event.currentTarget);
+				User.api().store(event).then(r => {
+					if (r.response.status === 201) {
+						this.addUser(r.response.data.data);
+					}
+				});
+/*				let formData = new FormData(event.currentTarget);
 				User.api().post('api/users', formData)
 				.then(r => {
 					if (r.response.status === 201) {
 						this.addUser(r.response.data.data);
 					}
 				})
-				.catch(e => console.log(e));
+				.catch(e => console.log(e));*/
 			},
 			print(template) {
 				this.$axios({
