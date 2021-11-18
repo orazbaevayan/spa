@@ -48,17 +48,18 @@
 <script>
 	import Course from '@/store/models/Course'
 	import Group from '@/store/models/Group'
-	import Field from '@/store/models/Field'
-	import GroupUser from '@/store/models/GroupUser'
+	//import Field from '@/store/models/Field'
+	//import GroupUser from '@/store/models/GroupUser'
 	import { mapGetters } from 'vuex'
 
 	export default {
 		beforeCreate() {
-			this.$fetchApiData([
+			Course.api().fetchById(this.$route.params.course_id, '?includes=groups.group_users,groups.fields');
+			/*this.$fetchApiData([
 				Course.api().fetchById(this.$route.params.course_id),
 				GroupUser.api().fetch(),
 				Field.api().fetch(),
-			]);
+			]);*/
 		},
 		methods: {
 			storeGroup(event) {
