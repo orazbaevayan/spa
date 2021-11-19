@@ -9,7 +9,7 @@ export default {
 	},
 	getters: {
 		user: state => {
-			return User.query().with(['roles', 'groups']).find(state.user) || null;
+			return User.query().with(['roles']).find(state.user) || null;
 		},
 		check: state => {
 			return state.user != null;
@@ -25,7 +25,7 @@ export default {
 			return axios.get('sanctum/csrf-cookie');
 		},
 		getUser(context) {
-			return User.api().get('/api/user').then(response => {
+			return User.api().get('/api/user?includes=roles').then(response => {
 				if (response.response.status === 200) {
 					context.commit('SET_USER', response.response.data.data.id);
 				}

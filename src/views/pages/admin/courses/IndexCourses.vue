@@ -31,9 +31,7 @@
 
 	export default {
 		beforeCreate() {
-			this.$fetchApiData([
-				Course.api().fetch(),
-			]);
+			Course.api().fetch()
 		},
 		methods: {
 			deleteCourse(course) {

@@ -28,10 +28,10 @@
 </template>
 
 <script>
-	import Group from '@/store/models/Group'
+	//import Group from '@/store/models/Group'
 	import Course from '@/store/models/Course'
-	import Option from '@/store/models/Option'
-	import GroupUser from '@/store/models/GroupUser'
+	//import Option from '@/store/models/Option'
+	//import GroupUser from '@/store/models/GroupUser'
 	import CourseForm from '@/components/forms/Course'
 	import GroupUserFieldsTab from '@/views/pages/admin/courses/EditCourse/GroupUserFieldsTab'
 	import GroupTab from '@/views/pages/admin/courses/EditCourse/GroupTab'
@@ -39,12 +39,14 @@
 
 	export default {
 		created() {
-			this.$fetchApiData([
+			Course.api().fetchById(this.$route.params.course_id, '?includes=group.templates,group.fields.field_options.option,group.group_users.fields.field_options.option');
+
+/*			this.$fetchApiData([
 				Option.api().fetch(),
 				Group.api().fetch(),
 				Course.api().fetchById(this.$route.params.course_id),
 				GroupUser.api().fetch(),
-			]);
+			]);*/
 		},
 		components: {
 			CourseForm,
