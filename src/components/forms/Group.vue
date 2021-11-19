@@ -1,5 +1,5 @@
 <template>
-	<form class="w-100 d-flex flex-row flex-wrap">
+	<form class="w-100 d-flex flex-row flex-wrap" v-if="value">
 		<div class="col-12 p-2">
 			<label class="form-label" for="name">Название</label>
 			<input type="text" class="form-control form-control-sm" name="name" :value="value.name">

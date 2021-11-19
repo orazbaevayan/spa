@@ -1,5 +1,5 @@
 <template>
-	<form class="w-100 d-flex flex-row flex-wrap">
+	<form class="w-100 d-flex flex-row flex-wrap" v-if="value">
 		<input type="hidden" name="fieldable_id" :value="fieldableId">
 		<input type="hidden" name="fieldable_type" :value="fieldableType">
 		<div class="col-12 p-2">

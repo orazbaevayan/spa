@@ -9,7 +9,7 @@
 			</CreateModal>
 		</template>
 	</Card>
-	<Card class="mx-2 my-1" :toggle-on="['Select', 'TextSelect'].includes(field.type) ? true : false" v-for="field in fields" :key="field.id">
+	<Card class="mx-2 my-1" :toggle-on="['Select', 'TextSelect', 'TextAutocomplete'].includes(field.type) ? true : false" v-for="field in fields" :key="field.id">
 		<template v-slot:header>
 			{{ field.name }}
 		</template>

@@ -54,7 +54,7 @@
 
 	export default {
 		beforeCreate() {
-			Course.api().fetchById(this.$route.params.course_id, '?includes=groups.group_users,groups.fields');
+			Course.api().fetchById(this.$route.params.course_id, '?includes=group.fields,groups.group_users');
 			/*this.$fetchApiData([
 				Course.api().fetchById(this.$route.params.course_id),
 				GroupUser.api().fetch(),
