@@ -39,7 +39,7 @@
 
 	export default {
 		created() {
-			Course.api().fetchById(this.$route.params.course_id, '?includes=group.templates,group.fields.field_options.option,group.group_users.fields.field_options.option');
+			Course.api().fetchById(this.$route.params.course_id, '?includes=group.templates,group.fields.options,group.group_users.fields.options');
 
 /*			this.$fetchApiData([
 				Option.api().fetch(),
