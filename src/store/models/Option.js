@@ -10,7 +10,7 @@ export default class Option extends CustomModel {
 	static fields () {
 		return {
 			id: this.attr(null),
-			name: this.attr(''),
+			key: this.attr(''),
 			value: this.attr(''),
 			field_options: this.hasMany(FieldOption, 'option_id'),
 			fields: this.belongsToMany(Field, FieldOption, 'user_id', 'field_id'),

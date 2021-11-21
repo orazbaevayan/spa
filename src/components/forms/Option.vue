@@ -1,8 +1,8 @@
 <template>
 	<form class="w-100 d-flex flex-row flex-wrap" v-if="value">
 		<div class="col-12 p-2">
-			<label class="form-label" for="name">{{ $t(`models.ALL['Название']`) }}</label>
-			<input type="text" class="form-control form-control-sm" id="name" name="name" v-once :value="value.name" :readonly="!canEdit">
+			<label class="form-label" for="key">{{ $t(`models.ALL['Название']`) }}</label>
+			<input type="text" class="form-control form-control-sm" id="key" name="key" v-once :value="value.key" :readonly="!canEdit">
 		</div>
 		<div class="col-12 p-2">
 			<label for="value" class="form-label">{{ $t(`models.ALL['Значение']`) }}</label>

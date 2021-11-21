@@ -14,8 +14,8 @@
 					<p class="m-0 text-center px-3 py-1 text-muted" v-if="!options.length">
 						Нет вариантов
 					</p>
-					<li class="dropdown-item" v-for="option in options" :key="option.id" v-else @click="text = option.name">
-						<span v-if="option.name != option.value"><b>{{ option.name }}</b> - </span>{{ option.value }}
+					<li class="dropdown-item" v-for="option in options" :key="option.id" v-else @click="text = option.key">
+						<span v-if="option.key != option.value"><b>{{ option.key }}</b> - </span>{{ option.value }}
 					</li>
 				</div>
 			</ul>

@@ -35,14 +35,14 @@
 					</Card>
 					<Card class="m-1" :toggle-on="true" v-for="option in field.options" :key="option.id">
 						<template v-slot:header>
-							{{ option.name }}
+							{{ option.key }}
 						</template>
 						<template v-slot:append>
 							<EditModal dialog-class="modal-md" :form="`editOptionForm${option.id}`">
 								<OptionForm :value="option" :id="`editOptionForm${option.id}`" @submit.prevent="updateOption($event, option)" />
 							</EditModal>
 							<DeleteModal @delete="deleteOption(option)">
-								Вы уверены что хотите удалить запись <b>{{ option.name }}</b>?
+								Вы уверены что хотите удалить запись <b>{{ option.key }}</b>?
 							</DeleteModal>
 						</template>
 						<template v-slot:content>
