@@ -1,19 +1,18 @@
 import CustomModel from '@/store/models/CustomModel'
 /*import { Model } from '@vuex-orm/core'*/
 /*import store from '@/store'*/
-import Field from '@/store/models/Field'
-import Option from '@/store/models/Option'
+/*import Field from '@/store/models/Field'
+import Option from '@/store/models/Option'*/
 
 export default class FieldOption extends CustomModel {
-	static entity = 'field_options'
+	static entity = 'field_option'
+
+	static primaryKey = ['field_id', 'option_id']
 
 	static fields () {
 		return {
-			id: this.attr(null),
 			field_id: this.attr(null),
 			option_id: this.attr(null),
-			field: this.belongsTo(Field, 'field_id'),
-			option: this.belongsTo(Option, 'option_id'),
 		}
 	}
 

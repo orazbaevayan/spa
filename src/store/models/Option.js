@@ -12,8 +12,8 @@ export default class Option extends CustomModel {
 			id: this.attr(null),
 			key: this.attr(''),
 			value: this.attr(''),
-			field_options: this.hasMany(FieldOption, 'option_id'),
-			fields: this.belongsToMany(Field, FieldOption, 'user_id', 'field_id'),
+			/*field_options: this.hasMany(FieldOption, 'option_id'),*/
+			fields: this.belongsToMany(Field, FieldOption, 'option_id', 'field_id'),
 		}
 	}
 

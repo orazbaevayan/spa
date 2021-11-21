@@ -17,7 +17,7 @@ export default class Field extends CustomModel {
 			fieldable_id: this.attr(null),
 			fieldable_type: this.attr(null),
 			fieldable: this.morphTo('fieldable_id', 'fieldable_type'),
-			field_options: this.hasMany(FieldOption, 'field_id'),
+			/*field_options: this.hasMany(FieldOption, 'field_id'),*/
 			options: this.belongsToMany(Option, FieldOption, 'field_id', 'option_id'),
 		}
 	}
