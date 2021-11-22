@@ -174,7 +174,7 @@
 		},
 		methods: {
 			updateGroup(event) {
-				Group.api().update(event, this.$route.params.group_id);
+				Group.api().update(event, this.$route.params.group_id, '?includes=fields');
 			},
 			addUser(user) {
 				GroupUser.api().post(`/api/group_users?includes=user,fields.options`, {
