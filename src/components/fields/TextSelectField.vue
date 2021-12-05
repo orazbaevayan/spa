@@ -57,7 +57,7 @@
 					includeScore: true,
 					ignoreLocation: true,
 					threshold: 0.0,
-					keys: ['name', 'value']
+					keys: ['key', 'value']
 				}
 				const result = [...(this.search ? new Fuse(this.value.options, options).search(this.search).map(i => i.item) : this.value.options)];
 				return [...new Set(result)];
