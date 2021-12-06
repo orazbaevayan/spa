@@ -54,7 +54,7 @@
 
 	export default {
 		beforeCreate() {
-			Course.api().fetchById(this.$route.params.course_id, '?includes=group.fields,groups.group_users');
+			Course.api().fetchById(this.$route.params.course_id, '?includes=group.fields.options,groups.group_users');
 			/*this.$fetchApiData([
 				Course.api().fetchById(this.$route.params.course_id),
 				GroupUser.api().fetch(),
@@ -79,7 +79,7 @@
 		},
 		computed: {
 			course() {
-				return Course.query().with(['groups.group_users', 'group.fields']).find(this.$route.params.course_id) || new Course;
+				return Course.query().with(['groups.group_users', 'group.fields.options']).find(this.$route.params.course_id) || new Course;
 			},
 			group() {
 				return this.course.group || new Group;

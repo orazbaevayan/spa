@@ -10,7 +10,6 @@ import GroupUser from '@/store/models/GroupUser'
 import Template from '@/store/models/Template'
 import Field from '@/store/models/Field'
 import Option from '@/store/models/Option'
-import FieldOption from '@/store/models/FieldOption'
 
 VuexORM.use(VuexORMAxios, { axios, dataKey: 'data' })
 
@@ -24,6 +23,5 @@ database.register(GroupUser)
 database.register(Template)
 database.register(Field)
 database.register(Option)
-database.register(FieldOption)
 
 export default database

@@ -2,7 +2,6 @@ import CustomModel from '@/store/models/CustomModel'
 /*import { Model } from '@vuex-orm/core'*/
 /*import store from '@/store'*/
 import Field from '@/store/models/Field'
-import FieldOption from '@/store/models/FieldOption'
 
 export default class Option extends CustomModel {
 	static entity = 'options'
@@ -13,7 +12,8 @@ export default class Option extends CustomModel {
 			key: this.attr(''),
 			value: this.attr(''),
 			/*field_options: this.hasMany(FieldOption, 'option_id'),*/
-			fields: this.belongsToMany(Field, FieldOption, 'option_id', 'field_id'),
+			field_id: this.attr(null),
+			field: this.belongsTo(Field, 'field_id'),
 		}
 	}
 

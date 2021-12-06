@@ -61,7 +61,7 @@
 	import Option from '@/store/models/Option'
 	import Course from '@/store/models/Course'
 	import Field from '@/store/models/Field'
-	import FieldOption from '@/store/models/FieldOption'
+	/*import FieldOption from '@/store/models/FieldOption'*/
 	import OptionForm from '@/components/forms/Option'
 
 	export default {
@@ -99,14 +99,15 @@
 			},
 			storeOptionToField(event, field) {
 				let formData = new FormData(event.currentTarget);
+				formData.append('field_id', field.id);
 				Option.api().post('api/options', formData)
 				.then(r => {
 					if (r.response.status === 201) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
-						FieldOption.api().post('api/field_options', {
+						/*FieldOption.api().post('api/field_options', {
 							option_id: r.response.data.data.id,
 							field_id: field.id,
-						});
+						});*/
 					}
 				})
 				.catch(e => console.log(e));

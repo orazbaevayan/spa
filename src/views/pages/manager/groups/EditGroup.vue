@@ -160,7 +160,7 @@
 
 	export default {
 		beforeCreate() {
-			Group.api().fetchById(this.$route.params.group_id, '?includes=fields,course,templates,group_users.user,group_users.fields.options');
+			Group.api().fetchById(this.$route.params.group_id, '?includes=fields.options,course,templates,group_users.user,group_users.fields.options');
 		},
 		data() {
 			return {
@@ -174,7 +174,7 @@
 		},
 		methods: {
 			updateGroup(event) {
-				Group.api().update(event, this.$route.params.group_id, '?includes=fields');
+				Group.api().update(event, this.$route.params.group_id, '?includes=fields.options');
 			},
 			addUser(user) {
 				GroupUser.api().post(`/api/group_users?includes=user,fields.options`, {
@@ -225,7 +225,7 @@
 		},
 		computed: {
 			group() {
-				return Group.query().with(['fields', 'course', 'templates', 'group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['fields.options', 'course', 'templates', 'group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
 				return User.findIn(this.foundUsers);

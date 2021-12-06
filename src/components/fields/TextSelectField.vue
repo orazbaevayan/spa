@@ -7,9 +7,9 @@
 				<span class="visually-hidden">Toggle Dropdown</span>
 			</button>
 			<ul class="dropdown-menu">
-				<div class="px-3 py-2 position-relative">
+				<!-- <div class="px-3 py-2 position-relative">
 					<input type="search" class="form-control form-control-sm mw-100" placeholder="Фильтр" v-model="search">
-				</div>
+				</div> -->
 				<div class="results">
 					<p class="m-0 text-center px-3 py-1 text-muted" v-if="!options.length">
 						Нет вариантов
@@ -48,7 +48,7 @@
 		data() {
 			return {
 				text: '',
-				search: '',
+				/*search: '',*/
 			}
 		},
 		computed: {
@@ -59,7 +59,7 @@
 					threshold: 0.0,
 					keys: ['key', 'value']
 				}
-				const result = [...(this.search ? new Fuse(this.value.options, options).search(this.search).map(i => i.item) : this.value.options)];
+				const result = [...(this.text ? new Fuse(this.value.options, options).search(this.text).map(i => i.item) : this.value.options)];
 				return [...new Set(result)];
 			}
 		}

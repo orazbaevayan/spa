@@ -1,7 +1,6 @@
 import CustomModel from '@/store/models/CustomModel'
 /*import store from '@/store'*/
 import Option from '@/store/models/Option'
-import FieldOption from '@/store/models/FieldOption'
 
 export default class Field extends CustomModel {
 	static entity = 'fields'
@@ -18,7 +17,7 @@ export default class Field extends CustomModel {
 			fieldable_type: this.attr(null),
 			fieldable: this.morphTo('fieldable_id', 'fieldable_type'),
 			/*field_options: this.hasMany(FieldOption, 'field_id'),*/
-			options: this.belongsToMany(Option, FieldOption, 'field_id', 'option_id'),
+			options: this.hasMany(Option, 'field_id'),
 		}
 	}
 
