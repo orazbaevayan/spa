@@ -11,12 +11,20 @@ export default class GroupUser extends CustomModel {
 	static fields () {
 		return {
 			id: this.attr(null),
+			first_name: this.attr(''),
+			last_name: this.attr(''),
+			middle_name: this.attr(''),
+			photo: this.attr(null),
 			group_id: this.attr(null),
 			user_id: this.attr(null),
 			user: this.belongsTo(User, 'user_id'),
 			group: this.belongsTo(Group, 'group_id'),
 			fields: this.morphMany(Field, 'fieldable_id', 'fieldable_type'),
 		}
+	}
+
+	get fullName() {
+		return this.last_name + ' ' + this.first_name + (this.middle_name ? ' ' + this.middle_name : '');
 	}
 
 /*	static apiConfig = {

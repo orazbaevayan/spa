@@ -114,18 +114,17 @@
 				<input type="checkbox" class="mx-1">
 			</template>
 			<template v-slot:header>
-				{{ group_user.user?.fullName }}
+				{{ group_user.fullName }}
 			</template>
 			<template v-slot:append>
-				<EditModal fa-icon="user-edit" :form="`updateUserForm${group_user.user?.id}`">
-					<UserForm :value="group_user.user" :id="`updateUserForm${group_user.user?.id}`" @submit.prevent="updateUser($event, group_user)">
-						<component class="p-2 col-12 col-md-6" :is="`${field.type}Field`" :autocomplete="group.group_users" :value="field" v-for="field in group_user.fields" :key="field.id" />
+				<EditModal fa-icon="user-edit" :form="`updateGroupUserForm${group_user.user?.id}`">
+					<GroupUserForm :value="group_user" :id="`updateGroupUserForm${group_user.user?.id}`" @submit.prevent="updateGroupUser($event, group_user)">
 						<input type="submit" class="d-none">
-					</UserForm>
+					</GroupUserForm>
 				</EditModal>
 
 				<DeleteModal @delete="deleteGroupUser(group_user)">
-					Вы действительно хотите удалить запись <span class="fw-bold">{{ group_user.user?.fullName }}</span>?
+					Вы действительно хотите удалить запись <span class="fw-bold">{{ group_user.fullName }}</span>?
 				</DeleteModal>
 			</template>
 			<template v-slot:content>
@@ -154,6 +153,7 @@
 	import GroupUser from '@/store/models/GroupUser'
 	import SearchUsers from '@/components/SearchUsers'
 	import UserForm from '@/components/forms/User'
+	import GroupUserForm from '@/components/forms/GroupUser'
 	import GroupForm from '@/components/forms/Group'
 	import FileSaver from 'file-saver';
 	import { v4 as uuidv4 } from 'uuid';
@@ -171,6 +171,7 @@
 			SearchUsers,
 			GroupForm,
 			UserForm,
+			GroupUserForm,
 		},
 		methods: {
 			updateGroup(event) {
@@ -186,8 +187,8 @@
 					}
 				});
 			},
-			updateUser(event, groupUser) {
-				User.api().update(event, groupUser.user.id);
+			updateGroupUser(event, groupUser) {
+				//User.api().update(event, groupUser.user.id);
 				GroupUser.api().update(event, groupUser.id, '?includes=user,fields.options');
 			},
 			deleteGroupUser(groupUser) {
