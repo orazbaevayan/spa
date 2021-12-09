@@ -20,15 +20,15 @@
 		<div class="flex-fill">
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="iin">{{ $t(`models.user['ИИН']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="iin" :value="value.user.iin" maxlength="12" :readonly="true">
+				<input type="text" class="form-control form-control-sm" id="iin" :value="value.user?.iin" maxlength="12" :readonly="true">
 			</div>
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="phone">{{ $t(`models.user['Телефон']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="phone" :value="value.user.phone" maxlength="11" :readonly="true">
+				<input type="text" class="form-control form-control-sm" id="phone" :value="value.user?.phone" maxlength="11" :readonly="true">
 			</div>
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="email">{{ $t(`models.user['E-mail']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="email" :value="value.user.email" :readonly="true">
+				<input type="text" class="form-control form-control-sm" id="email" :value="value.user?.email" :readonly="true">
 			</div>
 		</div>
 		<div class="w-100 d-flex flex-row flex-wrap">
