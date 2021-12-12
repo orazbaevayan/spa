@@ -5,10 +5,8 @@
 			<input type="text" class="form-control form-control-sm" name="name" :value="value.name">
 		</div>
 		<div class="col-12 p-2">
-			<label class="form-label" for="type">Сортировка групп по</label>
-			<select class="form-select form-select-sm" name="order_groups_by" id="order_groups_by" :value="value.order_groups_by" :readonly="!canEdit">
-				<option :value="field.name" v-for="field in value.group?.fields" :key="field.id">{{ field.name }}</option>
-			</select>
+			<label class="form-label" for="order_groups_by">Сортировка групп по</label>
+			<input type="text" class="form-control form-control-sm" id="order_groups_by" name="order_groups_by" :value="value.order_groups_by">
 		</div>
 		<div class="w-100 text-center">
 			<slot />
