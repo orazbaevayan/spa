@@ -22,7 +22,7 @@
 			updateUser(event) {
 				let formData = new FormData(event.currentTarget);
 				formData.append('_method', 'PATCH');
-				User.api().post(`/api/users/${this.$route.params.user_id}`, formData)
+				User.api().post(`/api/users/${this.$route.params.user_id}?include=roles`, formData)
 				.then(r => {
 					if (r.response.status === 200) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });

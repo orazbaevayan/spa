@@ -178,11 +178,11 @@
 				Group.api().update(event, this.$route.params.group_id, '?includes=fields.options');
 			},
 			addUser(user) {
-				GroupUser.api().post(`/api/group_users?includes=user,fields.options`, {
+				GroupUser.api().post(`/api/group_users?include=user,fields.options`, {
 					group_id: this.$route.params.group_id,
 					user_id: user.id,
 				}).then(r => {
-					if (r.response.status === 201) {
+					if (r.response.status === 200) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
 					}
 				});
@@ -199,7 +199,7 @@
 			},
 			storeUser(event) {
 				User.api().store(event).then(r => {
-					if (r.response.status === 201) {
+					if (r.response.status === 200) {
 						this.addUser(r.response.data.data);
 					}
 				});
