@@ -53,6 +53,23 @@
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1">
 
+			<Modal v-for="user in users" :key="user.id" :header="true" :footer="true" :open-button="false" dialog-class="modal-xl" :modal-id="`create_user_modal${user.id}`">
+				<template v-slot:header>
+					Создать нового пользователя
+				</template>
+				<template v-slot:body>
+					<GroupUserForm :autocomplete="group.group_users" :fields="group.course?.group.group_users[0].fields" :value="{ ...user, user: user }" :id="`storeGroupUserForm${user.id}`" @submit.prevent="storeGroupUser">
+						<input type="hidden" name="group_id" :value="group.id">
+						<input type="hidden" name="user_id" :value="user.id">
+						<input type="submit" class="d-none">
+					</GroupUserForm>
+				</template>
+				<template v-slot:footer>
+					<button type="submit" class="m-0 m-2 btn btn-sm btn-primary text-white" data-bs-dismiss="modal" :form="`storeGroupUserForm${user.id}`">Создать</button>
+					<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
+				</template>
+			</Modal>
+
 			<Modal :header="true">
 				<template v-slot:open-button>
 					<font-awesome-icon class="mx-1 my-0 text-primary" :icon="['fa', 'plus-square']" />
@@ -78,9 +95,10 @@
 								{{ user.fullName }}
 							</template>
 							<template v-slot:append>
-								<button type="button" class="btn btn-link text-primary px-1 py-0" v-if="!isUserInGroup(user)" @click.prevent="addUser(user)">
-									<font-awesome-icon :icon="['fa', 'plus-square']"/>
-								</button>
+								<span class="btn btn-link text-primary px-1 py-0" data-bs-dismiss="modal" :data-bs-target="`#create_user_modal${user.id}`" data-bs-toggle="modal" v-if="!isUserInGroup(user)">
+									<font-awesome-icon :icon="['fa', 'plus-square']" />
+								</span>
+
 								<button type="button" class="btn btn-link text-success px-1 py-0" v-if="isUserInGroup(user)">
 									<font-awesome-icon :icon="['fa', 'check-square']"/>
 								</button>
@@ -93,14 +111,15 @@
 				</template>
 			</Modal>
 
-			<Modal :header="true" :footer="true" :open-button="false" dialog-class="modal-lg" modal-id="create_user_modal">
+			<Modal :header="true" :footer="true" :open-button="false" dialog-class="modal-xl" modal-id="create_user_modal">
 				<template v-slot:header>
 					Создать нового пользователя
 				</template>
 				<template v-slot:body>
-					<UserForm id="storeUserForm" @submit.prevent="storeUser">
+					<GroupUserForm :autocomplete="group.group_users" :fields="group.course?.group.group_users[0].fields" id="storeUserForm" @submit.prevent="storeGroupUser">
+						<input type="hidden" name="group_id" :value="group.id">
 						<input type="submit" class="d-none">
-					</UserForm>
+					</GroupUserForm>
 				</template>
 				<template v-slot:footer>
 					<button type="submit" class="m-0 m-2 btn btn-sm btn-primary text-white" data-bs-dismiss="modal" form="storeUserForm">Создать</button>
@@ -117,8 +136,8 @@
 				{{ group_user.fullName }}
 			</template>
 			<template v-slot:append>
-				<EditModal fa-icon="user-edit" :form="`updateGroupUserForm${group_user.user?.id}`">
-					<GroupUserForm :value="group_user" :id="`updateGroupUserForm${group_user.user?.id}`" @submit.prevent="updateGroupUser($event, group_user)">
+				<EditModal dialog-class="modal-xl" fa-icon="user-edit" :form="`updateGroupUserForm${group_user.id}`">
+					<GroupUserForm :autocomplete="group.group_users" :fields="group_user.fields" :value="group_user" :id="`updateGroupUserForm${group_user.id}`" @submit.prevent="updateGroupUser($event, group_user)">
 						<input type="submit" class="d-none">
 					</GroupUserForm>
 				</EditModal>
@@ -160,7 +179,7 @@
 
 	export default {
 		beforeCreate() {
-			Group.api().fetchById(this.$route.params.group_id, '?includes=fields.options,course,templates,group_users.user,group_users.fields.options');
+			Group.api().fetchById(this.$route.params.group_id, '?include=fields.options,course.group.group_users.fields.options,templates,group_users.user,group_users.fields.options');
 		},
 		data() {
 			return {
@@ -195,22 +214,21 @@
 				GroupUser.api().deleteById(groupUser.id);
 			},
 			isUserInGroup(user) {
-				return this.group.group_users.map(gu => gu.user.id).indexOf(user.id) != -1;
+				return this.group.group_users.map(gu => gu.user?.id).indexOf(user.id) != -1;
 			},
 			storeUser(event) {
-				User.api().store(event).then(r => {
-					if (r.response.status === 200) {
-						this.addUser(r.response.data.data);
-					}
-				});
-/*				let formData = new FormData(event.currentTarget);
-				User.api().post('api/users', formData)
-				.then(r => {
-					if (r.response.status === 201) {
-						this.addUser(r.response.data.data);
-					}
-				})
-				.catch(e => console.log(e));*/
+				if (event.currentTarget.elements['iin'].value) {
+					User.api().store(event).then(r => {
+						if (r.response.status === 200) {
+							this.addUser(r.response.data.data);
+						}
+					});
+				} else {
+					this.storeGroupUser(event);
+				}
+			},
+			storeGroupUser(event) {
+				GroupUser.api().store(event, '?include=user,fields.options');
 			},
 			print(template) {
 				this.$axios({
@@ -226,7 +244,7 @@
 		},
 		computed: {
 			group() {
-				return Group.query().with(['fields.options', 'course', 'templates', 'group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['fields.options', 'course.group.group_users.fields.options', 'templates', 'group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
 				return User.findIn(this.foundUsers);

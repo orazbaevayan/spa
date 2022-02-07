@@ -19,6 +19,20 @@
 		</div>
 		<div class="flex-fill">
 			<div class="p-2 d-flex flex-column">
+				<label class="form-label" for="last_name_to">{{ $t(`models.user['Фамилия (Кому?)']`) }}</label>
+				<input type="text" class="form-control form-control-sm" id="last_name_to" name="last_name_to" :value="value.last_name_to" :readonly="!canEdit">
+			</div>
+			<div class="p-2 d-flex flex-column">
+				<label class="form-label" for="first_name_to">{{ $t(`models.user['Имя (Кому?)']`) }}</label>
+				<input type="text" class="form-control form-control-sm" id="first_name_to" name="first_name_to" :value="value.first_name_to" :readonly="!canEdit">
+			</div>
+			<div class="p-2 d-flex flex-column">
+				<label class="form-label" for="middle_name_to">{{ $t(`models.user['Отчество (Кому?)']`) }}</label>
+				<input type="text" class="form-control form-control-sm" id="middle_name_to" name="middle_name_to" :value="value.middle_name_to" :readonly="!canEdit">
+			</div>
+		</div>
+		<div class="flex-fill">
+			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="iin">{{ $t(`models.user['ИИН']`) }}</label>
 				<input type="text" class="form-control form-control-sm" id="iin" name="iin" :value="value.iin" maxlength="12" :readonly="!canEdit">
 			</div>

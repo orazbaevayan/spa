@@ -19,21 +19,38 @@
 		</div>
 		<div class="flex-fill">
 			<div class="p-2 d-flex flex-column">
+				<label class="form-label" for="last_name_to">{{ $t(`models.user['Фамилия (Кому?)']`) }}</label>
+				<input type="text" class="form-control form-control-sm" id="last_name_to" name="last_name_to" :value="value.last_name_to" :readonly="!canEdit">
+			</div>
+			<div class="p-2 d-flex flex-column">
+				<label class="form-label" for="first_name_to">{{ $t(`models.user['Имя (Кому?)']`) }}</label>
+				<input type="text" class="form-control form-control-sm" id="first_name_to" name="first_name_to" :value="value.first_name_to" :readonly="!canEdit">
+			</div>
+			<div class="p-2 d-flex flex-column">
+				<label class="form-label" for="middle_name_to">{{ $t(`models.user['Отчество (Кому?)']`) }}</label>
+				<input type="text" class="form-control form-control-sm" id="middle_name_to" name="middle_name_to" :value="value.middle_name_to" :readonly="!canEdit">
+			</div>
+		</div>
+		<div class="flex-fill">
+			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="iin">{{ $t(`models.user['ИИН']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="iin" :value="value.user?.iin" maxlength="12" :readonly="true">
+				<input type="text" class="form-control form-control-sm" name="iin" id="iin" :value="value.user?.iin" maxlength="12" :readonly="value.user">
 			</div>
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="phone">{{ $t(`models.user['Телефон']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="phone" :value="value.user?.phone" maxlength="11" :readonly="true">
+				<input type="text" class="form-control form-control-sm" name="phone" id="phone" :value="value.user?.phone" maxlength="11" :readonly="value.user">
 			</div>
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="email">{{ $t(`models.user['E-mail']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="email" :value="value.user?.email" :readonly="true">
+				<input type="text" class="form-control form-control-sm" name="email" id="email" :value="value.user?.email" :readonly="value.user">
 			</div>
 		</div>
 		<div class="w-100 d-flex flex-row flex-wrap">
-			<component class="p-2 col-12 col-md-6" :is="`${field.type}Field`" :autocomplete="group.group_users" :value="field" v-for="field in value.fields" :key="field.id" />
+			<component class="p-2 col-12 col-md-6" :is="`${field.type}Field`" :autocomplete="autocomplete" :value="field" v-for="field in fields" :key="field.id" />
 			<input type="submit" class="d-none">
+		</div>
+		<div class="w-100 d-flex flex-row flex-wrap">
+			<slot />
 		</div>
 	</form>
 </template>
@@ -41,7 +58,6 @@
 <script>
 	import Photo from '@/components/Photo'
 	import GroupUser from '@/store/models/GroupUser'
-	import Group from '@/store/models/Group'
 
 	export default {
 		props: {
@@ -52,15 +68,18 @@
 			canEdit: {
 				type: Boolean,
 				default: true
+			},
+			fields: {
+				type: Object,
+				default: null
+			},
+			autocomplete: {
+				type: Object,
+				default: null
 			}
 		},
 		components: {
 			Photo
-		},
-		computed: {
-			group() {
-				return Group.query().with('group_users.fields').where(this.value.group_id).first();
-			}
 		}
 	}
 </script>
