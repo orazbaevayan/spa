@@ -116,7 +116,7 @@
 					Создать нового пользователя
 				</template>
 				<template v-slot:body>
-					<GroupUserForm :autocomplete="group.group_users" :fields="group.course?.group.group_users[0].fields" id="storeUserForm" @submit.prevent="storeGroupUser">
+					<GroupUserForm :autocomplete="group.group_users" :fields="group.course?.group.group_users[0]?.fields" id="storeUserForm" @submit.prevent="storeGroupUser">
 						<input type="hidden" name="group_id" :value="group.id">
 						<input type="submit" class="d-none">
 					</GroupUserForm>
