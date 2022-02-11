@@ -6,29 +6,29 @@
 		<div class="flex-fill">
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="last_name">{{ $t(`models.user['Фамилия']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="last_name" name="last_name" :value="value.last_name" :readonly="!canEdit">
+				<input type="text" class="form-control form-control-sm" id="last_name" name="last_name" :value="value.last_name" :readonly="!canEdit" @input="updateField('last_name_to', $event)">
 			</div>
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="first_name">{{ $t(`models.user['Имя']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="first_name" name="first_name" :value="value.first_name" :readonly="!canEdit">
+				<input type="text" class="form-control form-control-sm" id="first_name" name="first_name" :value="value.first_name" :readonly="!canEdit" @input="updateField('first_name_to', $event)">
 			</div>
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="middle_name">{{ $t(`models.user['Отчество']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="middle_name" name="middle_name" :value="value.middle_name" :readonly="!canEdit">
+				<input type="text" class="form-control form-control-sm" id="middle_name" name="middle_name" :value="value.middle_name" :readonly="!canEdit" @input="updateField('middle_name_to', $event)">
 			</div>
 		</div>
 		<div class="flex-fill">
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="last_name_to">{{ $t(`models.user['Фамилия (Кому?)']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="last_name_to" name="last_name_to" :value="value.last_name_to" :readonly="!canEdit">
+				<input type="text" class="form-control form-control-sm" id="last_name_to" name="last_name_to" :value="value.last_name_to" :readonly="!canEdit" ref="last_name_to">
 			</div>
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="first_name_to">{{ $t(`models.user['Имя (Кому?)']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="first_name_to" name="first_name_to" :value="value.first_name_to" :readonly="!canEdit">
+				<input type="text" class="form-control form-control-sm" id="first_name_to" name="first_name_to" :value="value.first_name_to" :readonly="!canEdit" ref="first_name_to">
 			</div>
 			<div class="p-2 d-flex flex-column">
 				<label class="form-label" for="middle_name_to">{{ $t(`models.user['Отчество (Кому?)']`) }}</label>
-				<input type="text" class="form-control form-control-sm" id="middle_name_to" name="middle_name_to" :value="value.middle_name_to" :readonly="!canEdit">
+				<input type="text" class="form-control form-control-sm" id="middle_name_to" name="middle_name_to" :value="value.middle_name_to" :readonly="!canEdit" ref="middle_name_to">
 			</div>
 		</div>
 		<div class="flex-fill">
@@ -80,6 +80,11 @@
 		},
 		components: {
 			Photo
+		},
+		methods: {
+			updateField(field, event) {
+				this.$refs[field].value = event.currentTarget.value;
+			}
 		}
 	}
 </script>

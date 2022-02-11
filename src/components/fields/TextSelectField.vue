@@ -3,13 +3,10 @@
 		<label class="form-label">{{ value.name }}</label>
 		<div class="d-flex position-relative">
 			<input type="text" :name="`fields[${value.id}]`" class="form-control form-control-sm" v-model="text" autocomplete="off">
-			<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false">
+			<button tabindex="-1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false">
 				<span class="visually-hidden">Toggle Dropdown</span>
 			</button>
 			<ul class="dropdown-menu">
-				<!-- <div class="px-3 py-2 position-relative">
-					<input type="search" class="form-control form-control-sm mw-100" placeholder="Фильтр" v-model="search">
-				</div> -->
 				<div class="results">
 					<p class="m-0 text-center px-3 py-1 text-muted" v-if="!options.length">
 						Нет вариантов

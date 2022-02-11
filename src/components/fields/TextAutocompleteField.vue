@@ -3,7 +3,7 @@
 		<label class="form-label">{{ value.name }}</label>
 		<div class="d-flex position-relative">
 			<input type="text" :name="`fields[${value.id}]`" class="form-control form-control-sm" v-model="text" autocomplete="off">
-			<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false">
+			<button tabindex="-1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false">
 				<span class="visually-hidden">Toggle Dropdown</span>
 			</button>
 			<ul class="dropdown-menu">
