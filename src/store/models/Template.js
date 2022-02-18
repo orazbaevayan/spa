@@ -13,6 +13,7 @@ export default class Template extends CustomModel {
 			file: this.attr(''),
 			code: this.attr(''),
 			group_id: this.attr(null),
+			selection_required: this.attr(false),
 			group: this.belongsTo(Group, 'group_id'),
 		}
 	}

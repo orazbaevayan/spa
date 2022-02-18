@@ -23,7 +23,7 @@
 				</a>
 
 				<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-					<li><a class="dropdown-item" href="#" v-for="template in group.templates" :key="template.id" @click.prevent="print(template)">{{ template.name }}</a></li>
+					<li><a class="dropdown-item" :class="{ disabled: template.selection_required && !selectedGroupUsers.length }" href="#" v-for="template in group.templates" :key="template.id" @click.prevent="print(template)">{{ template.name }}</a></li>
 				</ul>
 			</div>
 			
@@ -130,7 +130,7 @@
 
 		<Card :toggle-on="true" class="mx-2 my-1" v-for="group_user in group.group_users" :key="group_user.id">
 			<template v-slot:prepend>
-				<input type="checkbox" class="mx-1" :value="group_user.id" v-model="checkedStudents">
+				<input type="checkbox" class="mx-1" :value="group_user.id" v-model="selectedGroupUsers">
 			</template>
 			<template v-slot:header>
 				{{ group_user.fullName }}
@@ -184,7 +184,7 @@
 		data() {
 			return {
 				foundUsers: [],
-				checkedStudents: [],
+				selectedGroupUsers: [],
 				allChecked: false
 			}
 		},
@@ -198,13 +198,13 @@
 			toggleCheckboxes() {
 				if (!this.allChecked) {
 					this.allChecked = true;
-					this.checkedStudents = [];
+					this.selectedGroupUsers = [];
 					for (let group_user in this.group.group_users) {
-						this.checkedStudents.push(this.group.group_users[group_user].id);
+						this.selectedGroupUsers.push(this.group.group_users[group_user].id);
 					}
 				} else {
 					this.allChecked = false;
-					this.checkedStudents = [];
+					this.selectedGroupUsers = [];
 				}
 			},
 			updateGroup(event) {
@@ -248,6 +248,9 @@
 				this.$axios({
 					url: `/api/templates/${template.id}/print`,
 					method: 'POST',
+					data: {
+						selected: this.selectedGroupUsers
+					},
 					responseType: 'blob'
 				}).then(r => {
 					FileSaver.saveAs(r.data, `${uuidv4()}.docx`);

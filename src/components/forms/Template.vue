@@ -23,6 +23,15 @@
 				</select>
 			</div>
 		</div>
+
+		<div class="col-12 p-2">
+			<div class="form-check form-switch m-0">
+				<input type="hidden" name="selection_required" value="0">
+				<input class="form-check-input" type="checkbox" name="selection_required" id="selection_required" value="1" :checked="value.selection_required">
+				<label class="form-check-label" for="selection_required">Необходим выбор</label>
+			</div>
+		</div>
+
 		<div class="p-2 d-flex flex-column w-100">
 			<label for="code" class="form-label">Код</label>
 			<textarea class="form-control" name="code" id="code" rows="12" v-once :value="value.code" :readonly="!canEdit"></textarea>
