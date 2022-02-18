@@ -51,7 +51,7 @@
 		</div>
 
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
-			<input type="checkbox" class="mx-1">
+			<input type="checkbox" class="mx-1" @click="toggleCheckboxes">
 
 			<Modal v-for="user in users" :key="user.id" :header="true" :footer="true" :open-button="false" dialog-class="modal-xl" :modal-id="`create_user_modal${user.id}`">
 				<template v-slot:header>
@@ -130,7 +130,7 @@
 
 		<Card :toggle-on="true" class="mx-2 my-1" v-for="group_user in group.group_users" :key="group_user.id">
 			<template v-slot:prepend>
-				<input type="checkbox" class="mx-1">
+				<input type="checkbox" class="mx-1" :value="group_user.id" v-model="checkedStudents">
 			</template>
 			<template v-slot:header>
 				{{ group_user.fullName }}
@@ -184,6 +184,8 @@
 		data() {
 			return {
 				foundUsers: [],
+				checkedStudents: [],
+				allChecked: false
 			}
 		},
 		components: {
@@ -193,6 +195,18 @@
 			GroupUserForm,
 		},
 		methods: {
+			toggleCheckboxes() {
+				if (!this.allChecked) {
+					this.allChecked = true;
+					this.checkedStudents = [];
+					for (let group_user in this.group.group_users) {
+						this.checkedStudents.push(this.group.group_users[group_user].id);
+					}
+				} else {
+					this.allChecked = false;
+					this.checkedStudents = [];
+				}
+			},
 			updateGroup(event) {
 				Group.api().update(event, this.$route.params.group_id, '?includes=fields.options');
 			},
@@ -233,7 +247,7 @@
 			print(template) {
 				this.$axios({
 					url: `/api/templates/${template.id}/print`,
-					method: 'GET',
+					method: 'POST',
 					responseType: 'blob'
 				}).then(r => {
 					FileSaver.saveAs(r.data, `${uuidv4()}.docx`);
