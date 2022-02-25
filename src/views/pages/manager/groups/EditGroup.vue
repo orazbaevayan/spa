@@ -27,7 +27,7 @@
 				</ul>
 			</div>
 			
-			<div class="p-2">
+<!-- 			<div class="p-2">
 				<Modal :header="true" :footer="true" dialog-class="modal-md">
 					<template v-slot:open-button>
 						<button class="btn btn-sm btn-outline-primary">
@@ -47,7 +47,8 @@
 						<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
 					</template>
 				</Modal>
-			</div>
+			</div> -->
+			
 		</div>
 
 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">

@@ -24,7 +24,7 @@
 			storeCourse() {
 				Course.api().post('api/courses', this.course)
 				.then(r => {
-					if (r.response.status === 201) {
+					if (r.response.status === 200) {
 						this.$store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
 						this.$router.push({ name: 'admin-index-courses' });
 					}
