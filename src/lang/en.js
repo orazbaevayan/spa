@@ -22,12 +22,14 @@ export default {
 		'Авторизация': 'Login',
 		'Страница не найдена': 'Page not found',
 		'Пользователи': 'Users',
+		'Экзамены': 'Exams',
 	},
 	roles: {
 		'Студент': 'Student',
 		'Преподаватель': 'Teacher',
 		'Менеджер': 'Manager',
 		'Админ': 'Admin',
+		'Пользователь': 'User',
 	},
 	models: {
 		ALL: {
