@@ -5,7 +5,7 @@
 	<div id="user" class="role" v-if="user?.roles.filter(e => e.name === 'user').length > 0">
 		<h6 class="title">{{ $t('roles.Студент') }}</h6>
 		<router-link class="link" active-class="active" :exact="true" :to="{ name: 'Home' }">{{ $t('pages.Главная') }}</router-link>
-		<router-link class="link" active-class="active" :to="{ name: 'user-index-exams' }">{{ $t('pages.Экзамены') }}</router-link>
+		<router-link class="link" active-class="active" :to="{ name: 'user-my-courses' }">{{ $t('pages.Мои курсы') }}</router-link>
 	</div>
 	<div id="teacher" class="role"  v-if="user?.roles.filter(e => e.name === 'teacher').length > 0">
 		<h6 class="title">{{ $t('roles.Преподаватель') }}</h6>

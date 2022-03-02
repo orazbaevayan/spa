@@ -26,7 +26,9 @@
 				<input type="checkbox" class="mx-1">
 			</template>
 			<template v-slot:header>
-				{{ group.group_name }}
+				<span class="px-1">
+					{{ group.group_name }}
+				</span>
 			</template>
 			<template v-slot:append>
 				<span class="px-1 d-flex flex-column justify-content-center align-items-center text-secondary" style="line-height: 1;">

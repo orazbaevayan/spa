@@ -11,7 +11,9 @@
 	</Card>
 	<Card class="mx-2 my-1" :toggle-on="['Select', 'TextSelect', 'TextAutocomplete'].includes(field.type) ? true : false" v-for="field in fields" :key="field.id">
 		<template v-slot:header>
-			{{ field.name }}
+			<span class="px-1">
+				{{ field.name }}
+			</span>
 		</template>
 		<template v-slot:append>
 			<EditModal dialog-class="modal-md" :form="`editFieldForm${field.id}`">
@@ -35,7 +37,9 @@
 					</Card>
 					<Card class="m-1" :toggle-on="true" v-for="option in field.options" :key="option.id">
 						<template v-slot:header>
-							{{ option.key }}
+							<span class="px-1">
+								{{ option.key }}
+							</span>
 						</template>
 						<template v-slot:append>
 							<EditModal dialog-class="modal-md" :form="`editOptionForm${option.id}`">

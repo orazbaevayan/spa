@@ -13,7 +13,9 @@
 				<input type="checkbox" class="mx-1 my-0 form-check-input">
 			</template>
 			<template v-slot:header>
-				{{ user.fullName }}
+				<span class="px-1">
+					{{ user.fullName }}
+				</span>
 			</template>
 			<template v-slot:append>
 				<router-link class="text-warning px-1 py-0" :to="{ name: 'manager-edit-user', params: { user_id: user.id } }">

@@ -19,7 +19,9 @@
 			</DeleteModal>
 		</template>
 		<template v-slot:header>
-			{{ template.name }}
+			<span class="px-1">
+				{{ template.name }}
+			</span>
 		</template>
 	</Card>
 </template>

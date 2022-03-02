@@ -23,6 +23,8 @@ export default {
 		'Страница не найдена': 'Page not found',
 		'Пользователи': 'Users',
 		'Экзамены': 'Exams',
+		'Мои курсы': 'My courses',
+		'Мой курс': 'My course',
 	},
 	roles: {
 		'Студент': 'Student',

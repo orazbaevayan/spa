@@ -12,7 +12,9 @@
 				<input type="checkbox" class="mx-1">
 			</template>
 			<template v-slot:header>
-				{{ course.name }}
+				<span class="px-1">
+					{{ course.name }}
+				</span>
 			</template>
 			<template v-slot:append>
 				<router-link class="text-warning px-1 py-0" :to="{ name: 'admin-edit-course', params: { course_id: course.id } }">

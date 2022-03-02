@@ -3,7 +3,9 @@
 	<div class="p-2 d-flex flex-column">
 		<Card class="mx-2 my-1" v-for="course in courses" :key="course.id">
 			<template v-slot:header>
-				{{ course.name }}
+				<span class="px-1">
+					{{ course.name }}
+				</span>
 			</template>
 			<template v-slot:append>
 				<router-link class="text-primary px-1 py-0" :to="{ name: 'manager-index-groups', params: { course_id: course.id } }">

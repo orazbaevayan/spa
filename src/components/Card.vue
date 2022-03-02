@@ -4,7 +4,7 @@
 			<div class="d-flex align-items-center">
 				<slot name="prepend"/>
 			</div>
-			<div class="card-header-text d-flex px-1 cursor-pointer flex-fill align-items-center">
+			<div class="card-header-text d-flex cursor-pointer flex-fill align-items-center">
 				<slot name="header"/>
 			</div>
 			<div class="toggle-button d-flex px-2 align-items-center" v-if="toggleOn" @click.prevent="toggleCard()">

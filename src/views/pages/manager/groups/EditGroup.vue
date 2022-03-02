@@ -93,7 +93,9 @@
 					<div class="p-1 d-flex flex-column" v-if="users.length">
 						<Card :toggle-on="true" class="m-1" v-for="user in users" :key="user.id">
 							<template v-slot:header>
-								{{ user.fullName }}
+								<span class="px-1">
+									{{ user.fullName }}
+								</span>
 							</template>
 							<template v-slot:append>
 								<span class="btn btn-link text-primary px-1 py-0" data-bs-dismiss="modal" :data-bs-target="`#create_user_modal${user.id}`" data-bs-toggle="modal" v-if="!isUserInGroup(user)">
@@ -134,7 +136,9 @@
 				<input type="checkbox" class="mx-1" :value="group_user.id" v-model="selectedGroupUsers">
 			</template>
 			<template v-slot:header>
-				{{ group_user.fullName }}
+				<span class="px-1">
+					{{ group_user.fullName }}
+				</span>
 			</template>
 			<template v-slot:append>
 				<EditModal dialog-class="modal-xl" fa-icon="user-edit" :form="`updateGroupUserForm${group_user.id}`">
