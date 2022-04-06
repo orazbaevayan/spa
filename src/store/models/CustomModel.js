@@ -22,8 +22,8 @@ export default class CustomModel extends Model {
 					return r;
 				});
 			},
-			update(event, id, query = '') {
-				let formData = new FormData(event.currentTarget);
+			update(form, id, query = '') {
+				let formData = new FormData(form);
 				formData.append('_method', 'PATCH');
 				return this.post(`/api/${this.model?.entity}/${id}${query}`, formData)
 				.then(r => {
@@ -34,8 +34,8 @@ export default class CustomModel extends Model {
 				})
 				.catch(e => console.log(e));
 			},
-			store(event, query = '') {
-				let formData = new FormData(event.currentTarget);
+			store(form, query = '') {
+				let formData = new FormData(form);
 				return this.post(`/api/${this.model?.entity}${query}`, formData)
 				.then(r => {
 					if (r.response.status === 201) {

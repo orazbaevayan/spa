@@ -11,6 +11,8 @@ import Template from '@/store/models/Template'
 import Field from '@/store/models/Field'
 import Option from '@/store/models/Option'
 import Exam from '@/store/models/Exam'
+import Question from '@/store/models/Question'
+import Answer from '@/store/models/Answer'
 
 VuexORM.use(VuexORMAxios, { axios, dataKey: 'data' })
 
@@ -25,5 +27,7 @@ database.register(Template)
 database.register(Field)
 database.register(Option)
 database.register(Exam)
+database.register(Question)
+database.register(Answer)
 
 export default database

@@ -213,7 +213,7 @@
 				}
 			},
 			updateGroup(event) {
-				Group.api().update(event, this.$route.params.group_id, '?includes=fields.options');
+				Group.api().update(event.currentTarget, this.$route.params.group_id, '?includes=fields.options');
 			},
 			addUser(user) {
 				GroupUser.api().post(`/api/group_users?include=user,fields.options`, {
@@ -227,7 +227,7 @@
 			},
 			updateGroupUser(event, groupUser) {
 				//User.api().update(event, groupUser.user.id);
-				GroupUser.api().update(event, groupUser.id, '?includes=user,fields.options');
+				GroupUser.api().update(event.currentTarget, groupUser.id, '?includes=user,fields.options');
 			},
 			deleteGroupUser(groupUser) {
 				GroupUser.api().deleteById(groupUser.id);
@@ -237,7 +237,7 @@
 			},
 			storeUser(event) {
 				if (event.currentTarget.elements['iin'].value) {
-					User.api().store(event).then(r => {
+					User.api().store(event.currentTarget).then(r => {
 						if (r.response.status === 200) {
 							this.addUser(r.response.data.data);
 						}
@@ -247,7 +247,7 @@
 				}
 			},
 			storeGroupUser(event) {
-				GroupUser.api().store(event, '?include=user,fields.options');
+				GroupUser.api().store(event.currentTarget, '?include=user,fields.options');
 			},
 			print(template) {
 				this.$axios({
