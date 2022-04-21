@@ -48,4 +48,21 @@ export default [
 	},
 	component: () => import('../views/pages/user/Exam.vue')
 },
+{
+	name: 'user-exam-training',
+	path: '/user/my_courses/:group_user_id/exams/:exam_id/training',
+	meta: {
+		title: () => t('pages.Тренировка'),
+		requiresAuth: true,
+		layout: 'MainLayout',
+		breadcrumbs: [
+		{ name: 'Home' },
+		{ isLink: false, text: () => t('roles.Пользователь') },
+		{ name: 'user-my-courses' },
+		{ name: 'user-my-course' },
+		{ name: 'user-exam' },
+		]
+	},
+	component: () => import('../views/pages/user/Training.vue')
+},
 ];

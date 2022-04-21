@@ -36,6 +36,7 @@ app.component('EditModal', defineAsyncComponent(() => import('./components/EditM
 app.component('CreateModal', defineAsyncComponent(() => import('./components/CreateModal')))
 app.component('Pagination', defineAsyncComponent(() => import('./components/Pagination')))
 app.component('Exam', defineAsyncComponent(() => import('./components/Exam')))
+app.component('Training', defineAsyncComponent(() => import('./components/Training')))
 
 // Fields
 app.component('TextField', defineAsyncComponent(() => import('./components/fields/TextField')))

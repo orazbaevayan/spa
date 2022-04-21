@@ -14,11 +14,7 @@
 							<div class="flex flex-fill px-1">
 								{{ exam.name }}
 							</div>
-							<div class="flex flex-fill text-end px-1">
-								<span class="text-secondary">
-									Нет оценки
-								</span>
-							</div>
+							<div class="flex flex-fill text-end px-1" v-html="`${exam.gradeHTML}`"></div>
 							<div class="px-1">
 								<router-link class="text-primary px-1 py-0" :to="{ name: 'user-exam', params: { exam_id: exam.id } }">
 									<font-awesome-icon :icon="['fa', 'arrow-right']" />

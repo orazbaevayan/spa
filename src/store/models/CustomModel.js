@@ -12,34 +12,34 @@ export default class CustomModel extends Model {
 			fetchById(id, query = '') {
 				return this.get(`/api/${this.model?.entity}/${id}${query}`);
 			},
-			deleteById(id) {
+			deleteById(id, notification = 'Запись успешно удалена') {
 				return this.delete(`/api/${this.model?.entity}/${id}`, {
 					delete: id
 				}).then((r) => {
 					if (r.response.data === true) {
-						store.dispatch('ui/notify', { text: 'Запись успешно удалена', status: 'danger' });
+						if (notification) store.dispatch('ui/notify', { text: notification, status: 'danger' });
 					}
 					return r;
 				});
 			},
-			update(form, id, query = '') {
+			update(form, id, query = '', notification = 'Запись успешно отредактирована') {
 				let formData = new FormData(form);
 				formData.append('_method', 'PATCH');
 				return this.post(`/api/${this.model?.entity}/${id}${query}`, formData)
 				.then(r => {
 					if (r.response.status === 200) {
-						store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
+						if (notification) store.dispatch('ui/notify', { text: notification, status: 'warning' });
 					}
 					return r;
 				})
 				.catch(e => console.log(e));
 			},
-			store(form, query = '') {
+			store(form, query = '', notification = 'Запись успешно создана') {
 				let formData = new FormData(form);
 				return this.post(`/api/${this.model?.entity}${query}`, formData)
 				.then(r => {
 					if (r.response.status === 201) {
-						store.dispatch('ui/notify', { text: 'Запись успешно создана', status: 'success' });
+						if (notification) store.dispatch('ui/notify', { text: notification, status: 'success' });
 					}
 					return r;
 				})
