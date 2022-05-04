@@ -1,5 +1,5 @@
 <template>
-	<Modal :header="true" :footer="true" :dialog-class="dialogClass">
+	<Modal :header="true" :footer="true" :dialog-class="dialogClass" :modal-id="modalId" :open-button="openButton">
 		<template v-slot:open-button>
 			<font-awesome-icon class="text-warning mx-1" :icon="['fa', faIcon ]"/>
 		</template>
@@ -29,6 +29,14 @@
 			faIcon: {
 				type: String,
 				default: 'pencil-alt'
+			},
+			modalId: {
+				type: String,
+				default: ''
+			},
+			openButton: {
+				type: Boolean,
+				default: true
 			}
 		},
 		emits: ['update']

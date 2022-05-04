@@ -1,5 +1,5 @@
 <template>
-	<Modal :header="true" :footer="true">
+	<Modal :header="true" :footer="true" :modal-id="modalId" :open-button="openButton">
 		<template v-slot:open-button>
 			<font-awesome-icon class="text-danger mx-1" :icon="['fa', 'trash-alt']" />
 		</template>
@@ -20,6 +20,16 @@
 
 <script>
 	export default {
-		emits: ['delete']
+		emits: ['delete'],
+		props: {
+			modalId: {
+				type: String,
+				default: ''
+			},
+			openButton: {
+				type: Boolean,
+				default: true
+			}
+		}
 	}
 </script>

@@ -25,6 +25,7 @@ export default class GroupUser extends CustomModel {
 			group: this.belongsTo(Group, 'group_id'),
 			fields: this.morphMany(Field, 'fieldable_id', 'fieldable_type'),
 			exams: this.morphMany(Exam, 'examable_id', 'examable_type'),
+			all_exams_passed: this.attr(null),
 		}
 	}
 

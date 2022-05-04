@@ -51,8 +51,15 @@
 			
 		</div>
 
-		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
+<!-- 		<div class="mx-2 my-1 p-1 d-flex justify-content-between" style="border: 1px solid transparent;">
 			<input type="checkbox" class="mx-1" @click="toggleCheckboxes">
+
+			<span class="px-1">Ф.И.О</span>
+			<span class="flex-fill px-1">Компания</span>
+			<span class="flex-fill px-1">Должность</span>
+			<span class="flex-fill px-1">Требование</span>
+			<span class="flex-fill px-1">Рег. №</span>
+			<span class="flex-fill px-1">Экзамены</span>
 
 			<Modal v-for="user in users" :key="user.id" :header="true" :footer="true" :open-button="false" dialog-class="modal-xl" :modal-id="`create_user_modal${user.id}`">
 				<template v-slot:header>
@@ -158,15 +165,52 @@
 						<span class="px-1">{{ field.value }}</span>
 					</div>
 				</div>
-				<!-- <form class="d-flex flex-wrap p-2" @submit.prevent="updateGroupUser($event, group_user)">
-					<component class="p-2 col-6" :is="`${field.type}Field`" :value="field" v-for="field in group_user.fields" :key="field.id" />
-					<div class="col-12">
-						<input type="submit" value="Сохранить" class="btn btn-sm btn-warning text-white m-2">
-					</div>
-				</form> -->
-				<!-- <UserForm class="p-2" :can-edit="false" :value="group_user.user"/> -->
 			</template>
-		</Card>
+		</Card> -->
+
+		<div class="p-2">
+			<table class="table table-striped custom-table">
+				<thead>
+					<tr>
+						<th><input type="checkbox" class="mx-1" @click="toggleCheckboxes"></th>
+						<th scope="col">#</th>
+						<th scope="col">Ф.И.О</th>
+						<th scope="col">Экзамены</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="group_user in group.group_users" :key="group_user.id">
+						<td><input type="checkbox" class="mx-1" :value="group_user.id" v-model="selectedGroupUsers"></td>
+						<td scope="row">1</td>
+						<td>{{ group_user.fullName }}</td>
+						<td>{{ group_user.all_exams_passed }}</td>
+						<td>
+							<div class="d-flex">
+								<span class="btn btn-link text-warning mx-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#edit_group_user_modal_${group_user.id}`" data-bs-toggle="modal">
+									<font-awesome-icon :icon="['fa', 'user-edit']" />
+								</span>
+								<span class="btn btn-link text-danger mx-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#delete_group_user_${group_user.id}`" data-bs-toggle="modal">
+									<font-awesome-icon :icon="['fa', 'trash-alt']" />
+								</span>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div v-for="group_user in group.group_users" :key="group_user.id">
+			<EditModal :open-button="false" :modal-id="`edit_group_user_modal_${group_user.id}`" dialog-class="modal-xl" fa-icon="user-edit" :form="`updateGroupUserForm${group_user.id}`">
+				<GroupUserForm :autocomplete="group.group_users" :fields="group_user.fields" :value="group_user" :id="`updateGroupUserForm${group_user.id}`" @submit.prevent="updateGroupUser($event, group_user)">
+					<input type="submit" class="d-none">
+				</GroupUserForm>
+			</EditModal>
+			<DeleteModal :open-button="false" :modal-id="`delete_group_user_${group_user.id}`" @delete="deleteGroupUser(group_user)">
+				Вы действительно хотите удалить запись <span class="fw-bold">{{ group_user.fullName }}</span>?
+			</DeleteModal>
+		</div>
+
 	</div>
 </template>
 
@@ -184,7 +228,7 @@
 
 	export default {
 		beforeCreate() {
-			Group.api().fetchById(this.$route.params.group_id, '?include=fields.options,course.group.group_users.fields.options,templates,group_users.user,group_users.fields.options');
+			Group.api().fetchById(this.$route.params.group_id, '?include=fields.options,course.group.group_users.fields.options,templates,group_users.user,group_users.fields.options,group_users.exams');
 		},
 		data() {
 			return {
@@ -266,7 +310,7 @@
 		},
 		computed: {
 			group() {
-				return Group.query().with(['fields.options', 'course.group.group_users.fields.options', 'templates', 'group_users.user', 'group_users.fields.options']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['fields.options', 'course.group.group_users.fields.options', 'templates', 'group_users.user', 'group_users.fields.options', 'group_users.exams']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
 				return User.findIn(this.foundUsers);
@@ -274,3 +318,24 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	.custom-table {
+		overflow-x: auto;
+		display: block;
+		tr {
+			th, td {
+				border-bottom: 0;
+			}
+			th:nth-child(2), td:nth-child(2) {
+				width: 1%;
+			}
+			th:first-child, td:first-child {
+				width: 1%; position: sticky; left: 0;
+			}
+			th:last-child, td:last-child {
+				width: 1%; position: sticky; right: 0;
+			}
+		}
+	}
+</style>

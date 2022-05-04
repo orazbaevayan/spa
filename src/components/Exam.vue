@@ -63,7 +63,9 @@
 				<div class="card-body p-2 text-center">
 					<div class="p-1">
 						<h6 class="mb-0 p-1 text-center">Результат</h6>
-						<div class="p-1" v-html="`${exam.gradeHTML}`"></div>
+						<div class="p-1">
+							<ExamResult :exam="exam" />
+						</div>
 					</div>
 				</div>
 			</div>
