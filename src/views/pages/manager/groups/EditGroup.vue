@@ -175,15 +175,21 @@
 						<th><input type="checkbox" class="mx-1" @click="toggleCheckboxes"></th>
 						<th scope="col">#</th>
 						<th scope="col">Ф.И.О</th>
+						<th scope="col" v-for="field in fields" :key="field">{{ field }}</th>
 						<th scope="col">Экзамены</th>
-						<th scope="col"></th>
+						<th scope="col" class="text-end">
+							<span class="btn btn-link text-primary mx-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#addGroupUser`" data-bs-toggle="modal">
+								<font-awesome-icon :icon="['fa', 'plus-square']" />
+							</span>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="group_user in group.group_users" :key="group_user.id">
+					<tr v-for="(group_user, index) in group.group_users" :key="group_user.id">
 						<td><input type="checkbox" class="mx-1" :value="group_user.id" v-model="selectedGroupUsers"></td>
-						<td scope="row">1</td>
+						<td scope="row">{{ index + 1 }}</td>
 						<td>{{ group_user.fullName }}</td>
+						<td scope="col" v-for="field in fields" :key="field">{{ findField(index, field)?.value }}</td>
 						<td>{{ group_user.all_exams_passed }}</td>
 						<td>
 							<div class="d-flex">
@@ -198,6 +204,84 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+
+		<div>
+			<Modal v-for="user in users" :key="user.id" :header="true" :footer="true" :open-button="false" dialog-class="modal-xl" :modal-id="`create_user_modal${user.id}`">
+				<template v-slot:header>
+					Создать нового пользователя
+				</template>
+				<template v-slot:body>
+					<GroupUserForm :autocomplete="group.group_users" :fields="group.course?.group.group_users[0].fields" :value="{ ...user, user: user }" :id="`storeGroupUserForm${user.id}`" @submit.prevent="storeGroupUser">
+						<input type="hidden" name="group_id" :value="group.id">
+						<input type="hidden" name="user_id" :value="user.id">
+						<input type="submit" class="d-none">
+					</GroupUserForm>
+				</template>
+				<template v-slot:footer>
+					<button type="submit" class="m-0 m-2 btn btn-sm btn-primary text-white" data-bs-dismiss="modal" :form="`storeGroupUserForm${user.id}`">Создать</button>
+					<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
+				</template>
+			</Modal>
+
+			<Modal dialog-class="modal-md" :header="true" :open-button="false" :modal-id="'addGroupUser'">
+				<template v-slot:open-button>
+					<font-awesome-icon class="mx-1 my-0 text-primary" :icon="['fa', 'plus-square']" />
+				</template>
+				<template v-slot:header>
+					Добавить студента
+				</template>
+				<template v-slot:body>
+					<SearchUsers class="p-2" v-model="foundUsers" :init-search="false" />
+
+					<Card class="m-2">
+						<template v-slot:header>
+							<span class="w-100 d-flex align-items-center justify-content-center text-primary" data-bs-dismiss="modal" data-bs-target="#create_user_modal" data-bs-toggle="modal">
+								<span class="me-2">Создать нового пользователя</span>
+								<font-awesome-icon :icon="['fa', 'plus-square']" />
+							</span>
+						</template>
+					</Card>
+
+					<div class="p-1 d-flex flex-column" v-if="users.length">
+						<Card :toggle-on="true" class="m-1" v-for="user in users" :key="user.id">
+							<template v-slot:header>
+								<span class="px-1">
+									{{ user.fullName }}
+								</span>
+							</template>
+							<template v-slot:append>
+								<span class="btn btn-link text-primary px-1 py-0" data-bs-dismiss="modal" :data-bs-target="`#create_user_modal${user.id}`" data-bs-toggle="modal" v-if="!isUserInGroup(user)">
+									<font-awesome-icon :icon="['fa', 'plus-square']" />
+								</span>
+
+								<button type="button" class="btn btn-link text-success px-1 py-0" v-if="isUserInGroup(user)">
+									<font-awesome-icon :icon="['fa', 'check-square']"/>
+								</button>
+							</template>
+							<template v-slot:content>
+								<UserForm class="p-2" :can-edit="false" :value="user"/>
+							</template>
+						</Card>
+					</div>
+				</template>
+			</Modal>
+
+			<Modal :header="true" :footer="true" :open-button="false" dialog-class="modal-xl" modal-id="create_user_modal">
+				<template v-slot:header>
+					Создать нового пользователя
+				</template>
+				<template v-slot:body>
+					<GroupUserForm :autocomplete="group.group_users" :fields="group.course?.group.group_users[0]?.fields" id="storeUserForm" @submit.prevent="storeGroupUser">
+						<input type="hidden" name="group_id" :value="group.id">
+						<input type="submit" class="d-none">
+					</GroupUserForm>
+				</template>
+				<template v-slot:footer>
+					<button type="submit" class="m-0 m-2 btn btn-sm btn-primary text-white" data-bs-dismiss="modal" form="storeUserForm">Создать</button>
+					<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" data-bs-dismiss="modal">Отмена</button>
+				</template>
+			</Modal>
 		</div>
 
 		<div v-for="group_user in group.group_users" :key="group_user.id">
@@ -307,6 +391,11 @@
 					console.log(e)
 				});
 			},
+			findField(group_user_index, field) {
+				let index = this.group.group_users[group_user_index].fields.findIndex(item => item.name === field);
+				let result = index != -1 ? this.group.group_users[group_user_index].fields[index] : null;
+				return result;
+			}
 		},
 		computed: {
 			group() {
@@ -315,6 +404,9 @@
 			users() {
 				return User.findIn(this.foundUsers);
 			},
+			fields() {
+				return this.group.course?.table?.split(',');
+			}
 		}
 	}
 </script>
@@ -323,6 +415,7 @@
 	.custom-table {
 		overflow-x: auto;
 		display: block;
+		margin-bottom: 0;
 		tr {
 			th, td {
 				border-bottom: 0;

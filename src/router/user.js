@@ -43,7 +43,7 @@ export default [
 		{ name: 'Home' },
 		{ isLink: false, text: () => t('roles.Пользователь') },
 		{ name: 'user-my-courses' },
-		{ name: 'user-my-course' },
+		{ name: 'user-my-course', query: { tab: 1 } },
 		]
 	},
 	component: () => import('../views/pages/user/Exam.vue')

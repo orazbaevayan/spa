@@ -8,6 +8,10 @@
 			<label class="form-label" for="order_groups_by">Сортировка групп по</label>
 			<input type="text" class="form-control form-control-sm" id="order_groups_by" name="order_groups_by" :value="value.order_groups_by">
 		</div>
+		<div class="col-12 p-2">
+			<label class="form-label" for="table">Таблица</label>
+			<input type="text" class="form-control form-control-sm" id="table" name="table" :value="value.table">
+		</div>
 		<div class="w-100 text-center">
 			<slot />
 		</div>

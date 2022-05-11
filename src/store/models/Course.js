@@ -8,6 +8,7 @@ export default class Course extends CustomModel {
 		return {
 			id: this.attr(null),
 			name: this.attr(''),
+			table: this.attr(''),
 			order_groups_by: this.attr(''),
 			groups: this.hasMany(Group, 'course_id'),
 			group_id: this.attr(null),

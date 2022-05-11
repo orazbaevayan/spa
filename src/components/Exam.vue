@@ -46,7 +46,7 @@
 				</template>
 				<template v-slot:body>
 					<p class="p-2 m-0">
-						Вы уверены что хотите завершить этот экзамен? {{ questionsWithoutAnswerConformation }}
+						Вы уверены что хотите завершить этот экзамен? <span v-html="questionsWithoutAnswerConformation"></span>
 					</p>
 				</template>
 				<template v-slot:footer>
@@ -82,7 +82,7 @@
 
 		<div id="details" class="p-2" v-if="exam.is_ended">
 			<div class="card">
-				<div class="card-body px-2 py-0 text-center">
+				<div class="card-body px-2 pt-0 pb-2 text-center">
 					<div v-for="question in exam.questions" :key="question.id">
 						<div class="px-1 py-2">
 							<p class="text-start m-0 px-2 py-1"><b>{{ question.text }}</b></p>
@@ -157,7 +157,7 @@
 				return count;
 			},
 			questionsWithoutAnswerConformation() {
-				return (this.questionsWithoutAnswerCount > 0) ? 'Вы оставили без ответа ' + this.questionsWithoutAnswerCount + ' вопрос(a|ов). ' : '';
+				return (this.questionsWithoutAnswerCount > 0) ? 'Вы оставили без ответа <b>' + this.questionsWithoutAnswerCount + ' вопрос(a|ов)</b>. ' : '';
 			},
 			displayTimer() {
 				return `${this.timer.h}:${this.timer.m}:${this.timer.s}`;

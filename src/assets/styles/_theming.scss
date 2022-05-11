@@ -2,7 +2,6 @@ $sidebar-width: 300px;
 $header-hight: 40px;
 
 $primary: #227093;
-$table-bg: #fff;
 
 /*$warning: #ffb142;
 $danger: #EC777D;
@@ -18,6 +17,7 @@ $lighten-primary: lighten($primary, 10%);
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
+$table-bg: $gray-100;
 
 $secondary: $gray-500;
 
