@@ -8,16 +8,16 @@
 				</div>
 				<div class="card-body p-2">
 					<div class="question p-2">
-						<p class="mb-0"><b>{{ currentQuestion.text }}</b></p>
+						<p class="mb-0"><b>{{ currentQuestion?.text }}</b></p>
 					</div>
 					<div class="answers p-2">
 						<ul class="list-unstyled mb-0">
 							<form>
-								<li v-for="answer in currentQuestion.answers" :key="answer.id">
+								<li v-for="answer in currentQuestion?.answers" :key="answer.id">
 									<!-- <span class="mb-0">{{ answer.text }}</span> -->
 									<label :for="'answer_' + answer.id" class="mb-0 d-inline">
 										<div class="p-2">
-											<input type="radio" v-model="currentQuestion.answer_id" name="answer_id" :value="answer.id" class="me-2" @change="changeAnswer($event, currentQuestion.id)" :id="'answer_' + answer.id">
+											<input type="radio" v-model="currentQuestion.answer_id" name="answer_id" :value="answer.id" class="me-2" @change="changeAnswer($event, currentQuestion?.id)" :id="'answer_' + answer.id">
 											<span>{{ answer.text }}</span>
 										</div>
 									</label>

@@ -1,5 +1,6 @@
 import CustomModel from '@/store/models/CustomModel'
 import Group from '@/store/models/Group'
+import Exam from '@/store/models/Exam'
 
 export default class Course extends CustomModel {
 	static entity = 'courses'
@@ -13,6 +14,7 @@ export default class Course extends CustomModel {
 			groups: this.hasMany(Group, 'course_id'),
 			group_id: this.attr(null),
 			group: this.belongsTo(Group, 'group_id'),
+			exams: this.morphMany(Exam, 'examable_id', 'examable_type'),
 		}
 	}
 
