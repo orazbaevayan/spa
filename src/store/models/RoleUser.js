@@ -1,5 +1,4 @@
 import CustomModel from '@/store/models/CustomModel'
-/*import { Model } from '@vuex-orm/core'*/
 
 export default class RoleUser extends CustomModel {
 	static entity = 'role_user'

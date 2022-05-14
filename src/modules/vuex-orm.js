@@ -13,6 +13,8 @@ import Option from '@/store/models/Option'
 import Exam from '@/store/models/Exam'
 import Question from '@/store/models/Question'
 import Answer from '@/store/models/Answer'
+import Company from '@/store/models/Company'
+import CompanyUser from '@/store/models/CompanyUser'
 
 VuexORM.use(VuexORMAxios, { axios, dataKey: 'data' })
 
@@ -29,5 +31,7 @@ database.register(Option)
 database.register(Exam)
 database.register(Question)
 database.register(Answer)
+database.register(Company)
+database.register(CompanyUser)
 
 export default database

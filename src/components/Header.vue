@@ -3,7 +3,7 @@
 		<div class="container">
 			<LeftSidebarButton />
 			<Logo />
-			<div><SelectLanguage /></div>
+			<!-- <div><SelectLanguage /></div> -->
 			<RightSidebarButton />
 		</div>
 	</div>
@@ -13,14 +13,14 @@
 	import RightSidebarButton from '@/components/RightSidebarButton'
 	import LeftSidebarButton from '@/components/LeftSidebarButton'
 	import Logo from '@/components/Logo'
-	import SelectLanguage from '@/components/SelectLanguage'
+	/*import SelectLanguage from '@/components/SelectLanguage'*/
 
 	export default {
 		components: {
 			RightSidebarButton,
 			LeftSidebarButton,
 			Logo,
-			SelectLanguage
+			/*SelectLanguage*/
 		}
 	}
 </script>

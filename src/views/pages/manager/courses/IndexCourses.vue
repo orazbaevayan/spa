@@ -1,7 +1,8 @@
 <template>
 	<Title class="mt-2">{{ $t('pages.Группы') }}</Title>
-	<div class="p-2 d-flex flex-column">
-		<Card class="mx-2 my-1" v-for="course in courses" :key="course.id">
+	<div class="p-2 d-flex flex-column" v-for="company in user.companies" :key="company.id">
+		<span class="mb-0 p-2 fw-bold">{{ company.name }}</span>
+		<Card class="mx-2 my-1" v-for="course in company.courses" :key="course.id">
 			<template v-slot:header>
 				<span class="px-1">
 					{{ course.name }}
@@ -17,17 +18,15 @@
 </template>
 
 <script>
-	import Course from '@/store/models/Course'
+	import User from '@/store/models/User'
 
 	export default {
 		created() {
-			this.$fetchApiData([
-				Course.api().fetch(),
-			]);
+			User.api().get('/api/user?include=roles,companies.courses', 'company');
 		},
 		computed: {
-			courses() {
-				return Course.all();
+			user() {
+				return User.query().with(['roles', 'companies.courses', 'company']).find(this.$store.getters['auth/user'].id);
 			}
 		}
 	}

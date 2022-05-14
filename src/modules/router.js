@@ -14,15 +14,6 @@ router.beforeEach((to, from, next) => {
 			})
 		}
 		next()
-		/*let previousRoute = {
-			path: localStorage.getItem('previous_route_path'),
-			query: JSON.parse(localStorage.getItem('previous_route_query'))
-		}
-		localStorage.setItem('previous_route_path', from.path);
-		localStorage.setItem('previous_route_query', JSON.stringify(from.query));
-		
-		if (to.query.page) store.commit('pagination/SET_CURRENT_PAGE', to.query.page);
-		(to.path == previousRoute.path && from.path != to.path) ? next(previousRoute) : next()*/
 	});
 })
 

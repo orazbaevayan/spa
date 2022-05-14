@@ -1,9 +1,9 @@
 import CustomModel from '@/store/models/CustomModel'
-/*import { Model } from '@vuex-orm/core'*/
-/*import store from '@/store'*/
 import RoleUser from '@/store/models/RoleUser'
 import Role from '@/store/models/Role'
 import GroupUser from '@/store/models/GroupUser'
+import CompanyUser from '@/store/models/CompanyUser'
+import Company from '@/store/models/Company'
 
 export default class User extends CustomModel {
 	static entity = 'users'
@@ -24,29 +24,11 @@ export default class User extends CustomModel {
 			photo: this.attr(null),
 			roles: this.belongsToMany(Role, RoleUser, 'user_id', 'role_id'),
 			group_users: this.hasMany(GroupUser, 'user_id'),
+			companies: this.belongsToMany(Company, CompanyUser, 'user_id', 'company_id'),
+			company_id: this.attr(null),
+			company: this.belongsTo(Company, 'company_id'),
 		}
 	}
-
-/*	static apiConfig = {
-		actions: {
-			fetch: {
-				method: 'get',
-				url: '/api/users'
-			},
-			fetchById(id) {
-				return this.get(`/api/users/${id}`);
-			},
-			deleteById(id) {
-				return this.delete(`/api/users/${id}`, {
-					delete: id
-				}).then((r) => {
-					if (r.response.data === true) {
-						store.dispatch('ui/notify', { text: 'Запись успешно удалена', status: 'danger' });
-					}
-				});
-			}
-		}
-	}*/
 
 	get fullName() {
 		return this.last_name + ' ' + this.first_name + (this.middle_name ? ' ' + this.middle_name : '');

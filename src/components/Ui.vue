@@ -8,6 +8,7 @@
 		<div id="right">
 			<RightSidebar />
 		</div>
+		<CompanySwitcher />
 		<Notifications />
 		<Loading />
 	</div>
@@ -20,6 +21,7 @@
 	import RightSidebar from '@/components/RightSidebar'
 	import Notifications from '@/components/Notifications'
 	import Loading from '@/components/Loading'
+	import CompanySwitcher from '@/components/CompanySwitcher'
 
 	export default {
 		components: {
@@ -28,7 +30,8 @@
 			LeftSidebar,
 			RightSidebar,
 			Notifications,
-			Loading
+			Loading,
+			CompanySwitcher
 		}
 	}
 </script>

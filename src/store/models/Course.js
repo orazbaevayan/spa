@@ -1,6 +1,7 @@
 import CustomModel from '@/store/models/CustomModel'
 import Group from '@/store/models/Group'
 import Exam from '@/store/models/Exam'
+import Company from '@/store/models/Company'
 
 export default class Course extends CustomModel {
 	static entity = 'courses'
@@ -15,27 +16,8 @@ export default class Course extends CustomModel {
 			group_id: this.attr(null),
 			group: this.belongsTo(Group, 'group_id'),
 			exams: this.morphMany(Exam, 'examable_id', 'examable_type'),
+			company_id: this.attr(null),
+			company: this.belongsTo(Company, 'company_id'),
 		}
 	}
-
-/*	static apiConfig = {
-		actions: {
-			fetch: {
-				method: 'get',
-				url: '/api/courses'
-			},
-			fetchById (id) {
-				return this.get(`/api/courses/${id}`)
-			},
-			deleteById(id) {
-				return this.delete(`/api/courses/${id}`, {
-					delete: id
-				}).then((r) => {
-					if (r.response.data === true) {
-						store.dispatch('ui/notify', { text: 'Запись успешно удалена', status: 'danger' });
-					}
-				});
-			}
-		}
-	}*/
 }

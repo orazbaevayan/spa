@@ -1,6 +1,4 @@
 import CustomModel from '@/store/models/CustomModel'
-/*import store from '@/store'
-import router from '@/router'*/
 import GroupUser from '@/store/models/GroupUser'
 import Course from '@/store/models/Course'
 import Template from '@/store/models/Template'
@@ -23,39 +21,7 @@ export default class Group extends CustomModel {
 			fields: this.morphMany(Field, 'fieldable_id', 'fieldable_type'),
 		}
 	}
-
-/*	static apiConfig = {
-		actions: {
-			fetch: {
-				method: 'get',
-				url: '/api/groups'
-			},
-			fetchById(id) {
-				return this.get(`/api/groups/${id}`);
-			},
-			deleteById(id) {
-				return this.delete(`/api/groups/${id}`, {
-					delete: id
-				}).then((r) => {
-					if (r.response.data === true) {
-						store.dispatch('ui/notify', { text: 'Запись успешно удалена', status: 'danger' });
-					}
-				});
-			},
-			update(event) {
-				let formData = new FormData(event.currentTarget);
-				formData.append('_method', 'PATCH');
-				this.post('/api/groups/' + router.currentRoute._value.params.group_id, formData)
-				.then(r => {
-					if (r.response.status === 200) {
-						this.$store.dispatch('ui/notify', { text: 'Запись успешно отредактирована', status: 'warning' });
-					}
-				})
-				.catch(e => console.log(e));
-			},
-		}
-	}*/
-
+	
 	get usersCount() {
 		return this.group_users.length || 0;
 	}

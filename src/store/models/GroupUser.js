@@ -1,6 +1,4 @@
 import CustomModel from '@/store/models/CustomModel'
-/*import { Model } from '@vuex-orm/core'*/
-/*import store from '@/store'*/
 import User from '@/store/models/User'
 import Group from '@/store/models/Group'
 import Field from '@/store/models/Field'
@@ -32,25 +30,4 @@ export default class GroupUser extends CustomModel {
 	get fullName() {
 		return this.last_name + ' ' + this.first_name + (this.middle_name ? ' ' + this.middle_name : '');
 	}
-
-/*	static apiConfig = {
-		actions: {
-			fetch: {
-				method: 'get',
-				url: '/api/group_users'
-			},
-			fetchById(id) {
-				return this.get(`/api/group_users/${id}`);
-			},
-			deleteById(id) {
-				return this.delete(`/api/group_users/${id}`, {
-					delete: id
-				}).then((r) => {
-					if (r.response.data === true) {
-						store.dispatch('ui/notify', { text: 'Запись успешно удалена', status: 'danger' });
-					}
-				});
-			}
-		}
-	}*/
 }

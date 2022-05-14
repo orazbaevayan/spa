@@ -1,7 +1,6 @@
 import CustomModel from '@/store/models/CustomModel'
 import Exam from '@/store/models/Exam'
 import Answer from '@/store/models/Answer'
-/*import store from '@/store'*/
 
 export default class Question extends CustomModel {
 	static entity = 'questions'
