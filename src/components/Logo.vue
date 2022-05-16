@@ -1,10 +1,12 @@
 <template>
-	<div v-if="user.company" id="logo" class="px-2" :data-bs-target="`#company_switch_modal`" data-bs-toggle="modal">
+	<div id="logo" :data-bs-target="`#company_switch_modal`" data-bs-toggle="modal">
 		<!-- <img src="/images/logo-light.svg" alt="Учебный центр АЗиЯ 2012"> -->
-		<span >{{ user.company.name }}</span>
-		<span class="d-flex ms-1">
-			<font-awesome-icon :icon="['fa', 'caret-down']" />
-		</span>
+		<div v-if="user.company && user.companies.length" id="company" class="px-2" >
+			<span >{{ user.company.name }}</span>
+			<span class="d-flex ms-1">
+				<font-awesome-icon :icon="['fa', 'caret-down']" />
+			</span>
+		</div>
 	</div>
 </template>
 
@@ -14,7 +16,7 @@
 	export default {
 		computed: {
 			user() {
-				return User.query().with(['company']).find(this.$store.getters['auth/user'].id);
+				return User.query().with(['company', 'companies']).find(this.$store.getters['auth/user'].id);
 			}
 		}
 	}
@@ -22,16 +24,21 @@
 
 <style lang="scss" scoped>
 #logo {
-	cursor: pointer;
 	display: flex;
-	flex-direction: row;
-	color: #fff;
 	align-items: center;
-	line-height: 1;
-	height: 40px;
-	@media(hover: hover) and (pointer: fine) {
-		&:hover {
-			background-color: darken($header-background, 5%);
+	#company {
+		height: 40px;
+		display: flex;
+		flex-direction: row;
+		color: #fff;
+		align-items: center;
+		justify-content: flex-start;
+		line-height: 1;
+		cursor: pointer;
+		@media(hover: hover) and (pointer: fine) {
+			&:hover {
+				background-color: darken($header-background, 5%);
+			}
 		}
 	}
 }

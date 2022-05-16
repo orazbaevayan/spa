@@ -7,7 +7,7 @@
 				<font-awesome-icon :icon="['fa', 'plus-square']" />
 			</router-link>
 		</div>
-		<Card class="mx-2 my-1" v-for="course in courses" :key="course.id">
+		<Card class="mx-2 my-1" v-for="course in user.company.courses" :key="course.id">
 			<template v-slot:prepend>
 				<input type="checkbox" class="mx-1">
 			</template>
@@ -30,10 +30,12 @@
 
 <script>
 	import Course from '@/store/models/Course'
+	import User from '@/store/models/User'
 
 	export default {
 		beforeCreate() {
-			Course.api().fetch()
+			/*Course.api().fetch()*/
+			User.api().get('/api/user?include=company.courses');
 		},
 		methods: {
 			deleteCourse(course) {
@@ -43,6 +45,9 @@
 		computed: {
 			courses() {
 				return Course.all();
+			},
+			user() {
+				return User.query().with(['company.courses']).find(this.$store.getters['auth/user'].id);
 			}
 		}
 	}

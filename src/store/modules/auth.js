@@ -25,7 +25,7 @@ export default {
 			return axios.get('sanctum/csrf-cookie');
 		},
 		getUser(context) {
-			return User.api().get('/api/user?include=roles').then(response => {
+			return User.api().get('/api/user?include=roles,company,companies').then(response => {
 				if (response.response.status === 200) {
 					context.commit('SET_USER', response.response.data.data.id);
 				}
