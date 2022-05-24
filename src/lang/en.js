@@ -46,6 +46,8 @@ export default {
 			'Ф.И.О': 'Full Name',
 			'ИИН': 'IIN',
 			'Телефон': 'Phone',
+			'Компания': 'Company',
+			'Должность': 'Position',
 			'Фамилия': 'Last name',
 			'Имя': 'First name',
 			'Отчество': 'Middle name',

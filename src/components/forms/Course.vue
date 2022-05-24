@@ -9,8 +9,12 @@
 			<input type="text" class="form-control form-control-sm" id="order_groups_by" name="order_groups_by" :value="value.order_groups_by">
 		</div>
 		<div class="col-12 p-2">
-			<label class="form-label" for="table">Таблица</label>
-			<input type="text" class="form-control form-control-sm" id="table" name="table" :value="value.table">
+			<label class="form-label" for="table">Таблица Групп</label>
+			<input type="text" class="form-control form-control-sm" id="table" name="table" :value="value.groups_table">
+		</div>
+		<div class="col-12 p-2">
+			<label class="form-label" for="table">Таблица Студентов</label>
+			<input type="text" class="form-control form-control-sm" id="table" name="table" :value="value.students_table">
 		</div>
 		<div class="w-100 text-center">
 			<slot />

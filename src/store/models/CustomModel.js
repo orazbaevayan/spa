@@ -1,13 +1,17 @@
 import { Model } from '@vuex-orm/core'
 import store from '@/store'
+import router from '@/router'
 
 export default class CustomModel extends Model {
 	static entity = '';
 
 	static apiConfig = {
 		actions: {
-			fetch(query = '') {
-				return this.get(`/api/${this.model?.entity}${query}`);
+			fetch(query = '', options = { pagination: { name: 'page', entity: this.model?.entity } }) {
+				let page = router.currentRoute.value.query[options.pagination.name] ? (query != '' ? `&page=${router.currentRoute.value.query[options.pagination.name]}` : `?page=${router.currentRoute.value.query[options.pagination.name]}`) : '';
+				return this.get(`/api/${this.model?.entity}${query}${page}`).then(r => {
+					store.commit('pagination/SET_DATA', { entity: options.pagination.entity, ...{ items: r.response.data.data.map(a => a.id), meta: r.response.data.meta, links: r.response.data.links } });
+				});
 			},
 			fetchById(id, query = '') {
 				return this.get(`/api/${this.model?.entity}/${id}${query}`);

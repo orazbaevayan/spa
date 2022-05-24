@@ -54,10 +54,10 @@
 						</td>
 						<td>
 							<div class="d-flex">
-								<span class="btn btn-link text-warning mx-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#edit_group_user_modal_${group_user.id}`" data-bs-toggle="modal">
+								<span class="btn btn-link text-warning px-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#edit_group_user_modal_${group_user.id}`" data-bs-toggle="modal">
 									<font-awesome-icon :icon="['fa', 'pencil-alt']" />
 								</span>
-								<span class="btn btn-link text-danger mx-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#delete_group_user_${group_user.id}`" data-bs-toggle="modal">
+								<span class="btn btn-link text-danger px-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#delete_group_user_${group_user.id}`" data-bs-toggle="modal">
 									<font-awesome-icon :icon="['fa', 'trash-alt']" />
 								</span>
 							</div>
@@ -268,7 +268,7 @@
 				return User.findIn(this.foundUsers);
 			},
 			fields() {
-				return this.group.course?.table?.split(',');
+				return this.group.course?.students_table?.split(',');
 			}
 		}
 	}

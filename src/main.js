@@ -35,6 +35,7 @@ app.component('DeleteModal', defineAsyncComponent(() => import('./components/Del
 app.component('EditModal', defineAsyncComponent(() => import('./components/EditModal')))
 app.component('CreateModal', defineAsyncComponent(() => import('./components/CreateModal')))
 app.component('Pagination', defineAsyncComponent(() => import('./components/Pagination')))
+app.component('Paginator', defineAsyncComponent(() => import('./components/Paginator')))
 app.component('Exam', defineAsyncComponent(() => import('./components/Exam')))
 app.component('Training', defineAsyncComponent(() => import('./components/Training')))
 app.component('ExamResult', defineAsyncComponent(() => import('./components/Exam/Result')))

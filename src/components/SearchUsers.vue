@@ -14,7 +14,7 @@
 
 <script>
 	import User from '@/store/models/User'
-	import Fuse from 'fuse.js'
+	//import Fuse from 'fuse.js'
 
 	export default {
 		props: {
@@ -29,7 +29,7 @@
 			}
 		},
 		mounted() {
-			if (this.initSearch) this.query()
+			if (this.initSearch) this.search()
 		},
 		data() {
 			return {
@@ -39,20 +39,23 @@
 		},
 		methods: {
 			search() {
-				this.query().then(() => {
+				return User.api().fetch();
+				/*this.query().then(() => {
 					if (this.useRouteQuery) this.$router.replace({ query: { ...this.$route.query, search: this.searchText, field: this.searchField, page: 1 } })
-				});
+				});*/
 			},
 			query() {
 				return User.api().fetch().then(() => {
-					const options = {
+					/*const options = {
 						includeScore: true,
 						ignoreLocation: true,
 						threshold: this.threshold,
 						keys: [this.searchField]
 					}
-					const result = this.searchText !== '' ? new Fuse(User.all(), options).search(this.searchText).map(i => i.item.id) : User.all().map(i => i.id);
-					this.$emit('update:modelValue', result);
+					const result = this.searchText !== '' ? new Fuse(User.all(), options).search(this.searchText).map(i => i.item.id) : User.all().map(i => i.id);*/
+					
+					/*let result = r.response.data.data.map(a => a.id);
+					this.$emit('update:modelValue', result);*/
 				});
 			}
 		},
