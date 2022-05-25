@@ -47,7 +47,7 @@
 				return Course.all();
 			},
 			user() {
-				return User.query().with(['company.courses']).find(this.$store.getters['auth/user'].id);
+				return User.query().with(['company.courses']).find(this.$store.getters['auth/user']?.id);
 			}
 		}
 	}

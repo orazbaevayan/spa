@@ -1,7 +1,7 @@
 <template>
 	<div id="logo" :data-bs-target="`#company_switch_modal`" data-bs-toggle="modal">
 		<!-- <img src="/images/logo-light.svg" alt="Учебный центр АЗиЯ 2012"> -->
-		<div v-if="user.company && user.companies.length" id="company" class="px-2" >
+		<div v-if="user && user.company && user.companies.length" id="company" class="px-2" >
 			<span >{{ user.company.name }}</span>
 			<span class="d-flex ms-1">
 				<font-awesome-icon :icon="['fa', 'caret-down']" />
@@ -16,7 +16,7 @@
 	export default {
 		computed: {
 			user() {
-				return User.query().with(['company', 'companies']).find(this.$store.getters['auth/user'].id);
+				return User.query().with(['company', 'companies']).find(this.$store.getters['auth/user']?.id);
 			}
 		}
 	}

@@ -56,7 +56,7 @@
 					threshold: 0.0,
 					keys: ['key', 'value']
 				}
-				const result = [...(this.text ? new Fuse(this.value.options, options).search(this.text).map(i => i.item) : this.value.options)];
+				const result = [...(this.text ? new Fuse((this.value.parent_field_id ? this.value.parent?.options : this.value.options), options).search(this.text).map(i => i.item) : (this.value.parent_field_id ? this.value.parent?.options : this.value.options) || [])];
 				return [...new Set(result)];
 			}
 		}

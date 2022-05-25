@@ -1,5 +1,5 @@
 <template>
-	<Modal v-if="user.company" :header="true" :footer="true" :dialog-class="'modal-md'" :modal-id="'company_switch_modal'" :open-button="false">
+	<Modal v-if="user && user.company" :header="true" :footer="true" :dialog-class="'modal-md'" :modal-id="'company_switch_modal'" :open-button="false">
 		<template v-slot:header>
 			Учебный центр
 		</template>
@@ -35,7 +35,7 @@
 		},
 		computed: {
 			user() {
-				return User.query().with(['company', 'companies']).find(this.$store.getters['auth/user'].id);
+				return User.query().with(['company', 'companies']).find(this.$store.getters['auth/user']?.id);
 			}
 		}
 	}

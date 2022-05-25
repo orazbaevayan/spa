@@ -85,7 +85,7 @@
 				</template>
 			</Modal>
 
-			<Modal dialog-class="modal-md" :header="true" :open-button="false" :modal-id="'addGroupUser'">
+			<Modal dialog-class="modal-lg" :header="true" :open-button="false" :modal-id="'addGroupUser'">
 				<template v-slot:open-button>
 					<font-awesome-icon class="mx-1 my-0 text-primary" :icon="['fa', 'plus-square']" />
 				</template>
@@ -174,7 +174,7 @@
 
 	export default {
 		beforeCreate() {
-			Group.api().fetchById(this.$route.params.group_id, '?include=fields.options,course.group.group_users.fields.options,templates,group_users.user,group_users.fields.options,group_users.exams,course.exams');
+			Group.api().fetchById(this.$route.params.group_id, '?include=fields.options,course.group.group_users.fields.options,templates,group_users.user,group_users.fields.parent.options,group_users.exams,course.exams');
 		},
 		data() {
 			return {
@@ -262,11 +262,14 @@
 		},
 		computed: {
 			group() {
-				return Group.query().with(['fields.options', 'course.group.group_users.fields.options', 'templates', 'group_users.user', 'group_users.fields.options', 'group_users.exams', 'group_users.group.course.exams']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['fields.options', 'course.group.group_users.fields.options', 'templates', 'group_users.user', 'group_users.fields.parent.options', 'group_users.exams', 'group_users.group.course.exams']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
-				return User.findIn(this.foundUsers);
+				return User.findIn(this.$store.getters['pagination/data']('users')?.items);
 			},
+/*			users() {
+				return User.findIn(this.foundUsers);
+			},*/
 			fields() {
 				return this.group.course?.students_table?.split(',');
 			}

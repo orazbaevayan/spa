@@ -68,12 +68,6 @@
       }
     },
     computed: {
-/*      ...mapGetters({
-        'range': 'pagination/range',
-        'elements': 'pagination/elements',
-        'paginationData': 'pagination/paginationData',
-        'currentPage': 'pagination/currentPage',
-      }),*/
       paginationData() {
         return this.$store.getters['pagination/data'](this.entity);
       },
