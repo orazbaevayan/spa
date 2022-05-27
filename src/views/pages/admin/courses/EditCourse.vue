@@ -39,7 +39,7 @@
 
 	export default {
 		created() {
-			Course.api().fetchById(this.$route.params.course_id, '?includes=group.templates,group.fields.options,group.group_users.fields.options');
+			Course.api().fetchById(this.$route.params.course_id, '?include=group.templates,group.fields.options,group.group_users.fields.options');
 
 /*			this.$fetchApiData([
 				Option.api().fetch(),
@@ -69,7 +69,7 @@
 		},
 		computed: {
 			course() {
-				return Course.query().with(['groups', 'templates', 'group.fields']).find(this.$route.params.course_id) || new Course;
+				return Course.query().with(['group.templates', 'group.fields.options', 'group.group_users.fields.options']).find(this.$route.params.course_id) || new Course;
 			}
 		}
 	}
