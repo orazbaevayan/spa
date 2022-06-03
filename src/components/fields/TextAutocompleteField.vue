@@ -52,7 +52,7 @@
 		computed: {
 			options() {
 				const options = [];
-				if (this.value.parent) options.push(...(this.value.parent_field_id ? this.value.parent?.options : this.value.options).map(i => i.value));
+				options.push(...this.value.options.map(i => i.value));
 				for (var i = 0; i < this.autocomplete.length; i++) {
 					for (var j = 0; j < this.autocomplete[i].fields.length; j++) {
 						if (this.autocomplete[i].fields[j].name == this.value.name && !!this.autocomplete[i].fields[j].value) options.push(this.autocomplete[i].fields[j].value);

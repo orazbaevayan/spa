@@ -133,7 +133,7 @@
 					Создать нового пользователя
 				</template>
 				<template v-slot:body>
-					<GroupUserForm :autocomplete="group.group_users" :fields="group.course?.group.group_users[0]?.fields" id="storeUserForm" @submit.prevent="storeGroupUser">
+					<GroupUserForm :autocomplete="group.group_users" :fields="group.course_version?.group_user?.fields" id="storeUserForm" @submit.prevent="storeGroupUser">
 						<input type="hidden" name="group_id" :value="group.id">
 						<input type="submit" class="d-none">
 					</GroupUserForm>
@@ -174,7 +174,7 @@
 
 	export default {
 		beforeCreate() {
-			Group.api().fetchById(this.$route.params.group_id, '?include=course_version.group,course_version.group_user,group_users.user,group_users.fields.parent.options,group_users.exams,course.exams');
+			Group.api().fetchById(this.$route.params.group_id, '?include=course_version.group,course_version.group_user.fields.options,group_users.user,group_users.fields.parent.options,group_users.exams,course.exams,course_version.course');
 		},
 		data() {
 			return {
@@ -262,7 +262,7 @@
 		},
 		computed: {
 			group() {
-				return Group.query().with(['course_version.group,course_version.group_user', 'group_users.user', 'group_users.fields.parent.options', 'group_users.exams', 'group_users.group.course.exams']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['course_version.group', 'course_version.group_user.fields.options', 'group_users.user', 'group_users.fields.parent.options', 'group_users.exams', 'course.exams', 'course_version.course']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
 				return User.findIn(this.$store.getters['pagination/data']('users')?.items);
