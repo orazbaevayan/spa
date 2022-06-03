@@ -63,7 +63,7 @@
 <script>
 	import FieldForm from '@/components/forms/Field'
 	import Option from '@/store/models/Option'
-	import Course from '@/store/models/Course'
+	import CourseVersion from '@/store/models/CourseVersion'
 	import Field from '@/store/models/Field'
 	/*import FieldOption from '@/store/models/FieldOption'*/
 	import OptionForm from '@/components/forms/Option'
@@ -132,17 +132,17 @@
 			},
 		},
 		computed: {
-			course() {
-				return Course.query().with(['group.group_users.fields.options']).find(this.$route.params.course_id) || new Course;
+			courseVersion() {
+				return CourseVersion.query().with(['group_user.fields.options']).find(this.$route.params.course_version_id) || new CourseVersion;
 			},
 			options() {
 				return Option.query().with(['field_options']).get();
 			},
 			group_user() {
-				return this.course?.group?.group_users[0];
+				return this.courseVersion.group_user;
 			},
 			fields() {
-				return this.course?.group?.group_users[0]?.fields;
+				return this.courseVersion.group_user?.fields;
 			}
 		}
 	}

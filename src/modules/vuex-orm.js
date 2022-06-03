@@ -5,6 +5,7 @@ import User from '@/store/models/User'
 import Role from '@/store/models/Role'
 import RoleUser from '@/store/models/RoleUser'
 import Course from '@/store/models/Course'
+import CourseVersion from '@/store/models/CourseVersion'
 import Group from '@/store/models/Group'
 import GroupUser from '@/store/models/GroupUser'
 import Template from '@/store/models/Template'
@@ -23,6 +24,7 @@ database.register(User)
 database.register(Role)
 database.register(RoleUser)
 database.register(Course)
+database.register(CourseVersion)
 database.register(Group)
 database.register(GroupUser)
 database.register(Template)

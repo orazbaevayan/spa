@@ -17,7 +17,7 @@
 				</span>
 			</template>
 			<template v-slot:append>
-				<router-link class="text-warning px-1 py-0" :to="{ name: 'admin-edit-course', params: { course_id: course.id } }">
+				<router-link class="text-warning px-1 py-0" :to="{ name: 'admin-index-course-versions', params: { course_id: course.id } }">
 					<font-awesome-icon :icon="['fa', 'pencil-alt']" />
 				</router-link>
 				<DeleteModal @delete="deleteCourse(course)">

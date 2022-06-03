@@ -9,7 +9,7 @@
 			</CreateModal>
 		</template>
 	</Card>
-	<Card class="mx-2 my-1" v-for="template in course.group?.templates" :key="template.id">
+	<Card class="mx-2 my-1" v-for="template in courseVersion.templates" :key="template.id">
 		<template v-slot:append>
 			<EditModal dialog-class="modal-xl" :form="`editTemplateForm${template.id}`">
 				<TemplateForm :value="template" :id="`editTemplateForm${template.id}`" @submit.prevent="updateTemplate($event, template.id)" />
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-	import Course from '@/store/models/Course'
+	import CourseVersion from '@/store/models/CourseVersion'
 	import Template from '@/store/models/Template'
 	import TemplateForm from '@/components/forms/Template'
 
@@ -65,11 +65,11 @@
 			},
 		},
 		computed: {
-			course() {
-				return Course.query().with(['group.templates']).find(this.$route.params.course_id) || new Course;
+			courseVersion() {
+				return CourseVersion.query().with(['templates']).find(this.$route.params.course_version_id) || new CourseVersion;
 			},
 			newTemplate() {
-				return new Template({ group_id: 1 });
+				return new Template({ course_version_id: this.$route.params.course_version_id });
 			}
 		}
 	}

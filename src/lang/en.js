@@ -27,6 +27,7 @@ export default {
 		'Экзамен': 'Exam',
 		'Мои курсы': 'My courses',
 		'Мой курс': 'My course',
+		'Версии курса': 'Course versions',
 	},
 	roles: {
 		'Студент': 'Student',

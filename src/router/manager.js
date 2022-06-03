@@ -64,7 +64,7 @@ export default [
 },
 {
 	name: 'manager-index-groups',
-	path: '/manager/course/:course_id/groups',
+	path: '/manager/course/:course_id/course_versions/:course_version_id/groups',
 	meta: {
 		title: (route) => Course.find(route.params.course_id)?.name,
 		requiresAuth: true,
@@ -95,7 +95,7 @@ export default [
 },
 {
 	name: 'manager-edit-group',
-	path: '/manager/course/:course_id/groups/:group_id',
+	path: '/manager/course/:course_id/course_version/:course_version_id/groups/:group_id',
 	meta: {
 		title: (route) => Group.find(route.params.group_id)?.group_name,
 		requiresAuth: true,
