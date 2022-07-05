@@ -1,7 +1,7 @@
 import CustomModel from '@/store/models/CustomModel'
 import GroupUser from '@/store/models/GroupUser'
 import CourseVersion from '@/store/models/CourseVersion'
-import Field from '@/store/models/Field'
+import Value from '@/store/models/Value'
 
 export default class Group extends CustomModel {
 	static entity = 'groups'
@@ -16,7 +16,7 @@ export default class Group extends CustomModel {
 			course_version_id: this.attr(null),
 			course_version: this.belongsTo(CourseVersion, 'course_version_id'),
 			group_users: this.hasMany(GroupUser, 'group_id'),
-			fields: this.morphMany(Field, 'fieldable_id', 'fieldable_type'),
+			values: this.morphMany(Value, 'valueable_id', 'valueable_type'),
 		}
 	}
 	

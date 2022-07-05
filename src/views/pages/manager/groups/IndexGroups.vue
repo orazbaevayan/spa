@@ -1,5 +1,5 @@
 <template>
-	<Title class="mt-2">{{ courseVersion.course?.name }}</Title>
+	<Title class="mt-2">{{ course_version.course?.name }}</Title>
 	<div class="p-2">
 		<div class="p-2">
 			<table class="table table-striped table-borderless mb-0 custom-table">
@@ -8,7 +8,7 @@
 						<th><input type="checkbox" class="mx-1" @click="toggleCheckboxes"></th>
 						<th scope="col">#</th>
 						<th scope="col">Название</th>
-						<th scope="col" v-for="field in fields" :key="field">{{ field }}</th>
+						<th scope="col" v-for="field in tableFields" :key="field">{{ field }}</th>
 						<th scope="col" class="text-end">
 							
 							<span class="btn btn-link text-primary px-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#create_group_modal`" data-bs-toggle="modal">
@@ -23,7 +23,7 @@
 						<td><input type="checkbox" class="mx-1" :value="group.id" v-model="selectedGroups"></td>
 						<td scope="row">{{ index + 1 }}</td>
 						<td>{{ group.group_name }}</td>
-						<td scope="col" v-for="field in fields" :key="field">{{ findField(index, field)?.value }}</td>
+						<td scope="col" v-for="field in tableFields" :key="field">{{ findField(index, field)?.value }}</td>
 						<td>
 							<div class="d-flex">
 								<span class="px-1 d-flex flex-column justify-content-center align-items-center text-secondary" style="line-height: 1;">
@@ -43,15 +43,15 @@
 			</table>
 
 			<CreateModal :open-button="false" :modal-id="`create_group_modal`" dialog-class="modal-md" :form="`storeGroup`">
-				<form action="d-flex flex-wrap text-start" :id="`storeGroup`" @submit.prevent="storeGroup" v-if="!group.generate_name">
+				<form action="d-flex flex-wrap text-start" :id="`storeGroup`" @submit.prevent="storeGroup" v-if="!course_version.generate_group_name">
 					<div class="col-12 p-2 text-start">
 						<label class="form-label" for="name">Название</label>
 						<input type="text" class="form-control form-control-sm" name="name">
 						<input type="hidden" name="course_version_id" :value="$route.params.course_version_id">
 					</div>
 				</form>
-				<form class="d-flex flex-wrap text-start" :id="`storeGroup`" @submit.prevent="storeGroup" v-if="group.generate_name">
-					<component class="p-2 col-12" :is="`${field.type}Field`" :autocomplete="group" :value="field" v-for="field in group.fields" :key="field.id" />
+				<form class="d-flex flex-wrap text-start" :id="`storeGroup`" @submit.prevent="storeGroup" v-if="course_version.generate_group_name">
+					<component class="p-2 col-12" :is="`${field.type}Field`" :autocomplete="group" :field="field" v-for="field in fields" :key="field.id" />
 					<input type="hidden" name="course_version_id" :value="$route.params.course_version_id">
 				</form>
 			</CreateModal>
@@ -74,7 +74,7 @@
 
 	export default {
 		beforeMount() {
-			CourseVersion.api().fetchById(this.$route.params.course_version_id, '?include=course,group.fields.options');
+			CourseVersion.api().fetchById(this.$route.params.course_version_id, '?include=course,fields.options');
 			this.getGroups();
 		},
 		data() {
@@ -97,7 +97,7 @@
 				}
 			},
 			getGroups() {
-				Group.api().fetch(`?filter[course_version_id]=${this.$route.params.course_version_id}&include=group_users`);
+				Group.api().fetch(`?filter[course_version_id]=${this.$route.params.course_version_id}&include=group_users,values.field`);
 			},
 			storeGroup(event) {
 				let formData = new FormData(event.currentTarget);
@@ -117,17 +117,17 @@
 				});
 			},
 			findField(group_index, field) {
-				let index = this.groups[group_index].fields.findIndex(item => item.name === field);
-				let result = index != -1 ? this.groups[group_index].fields[index] : null;
+				let index = this.groups[group_index].values.findIndex(value => value.field.name === field);
+				let result = index != -1 ? this.groups[group_index].values[index] : null;
 				return result;
 			}
 		},
 		computed: {
-			courseVersion() {
-				return CourseVersion.query().with(['course', 'group.fields.options']).find(this.$route.params.course_version_id) || new CourseVersion;
+			course_version() {
+				return CourseVersion.query().with(['course', 'fields.options']).find(this.$route.params.course_version_id) || new CourseVersion;
 			},
 			group() {
-				return this.courseVersion.group || new Group;
+				return this.course_version.group || new Group;
 			},
 /*			...mapGetters({
 				'currentPageElements': 'pagination/currentPageElements',
@@ -138,10 +138,15 @@
 				return this.currentPageElements(groups);
 			},*/
 			groups() {
-				return Group.query().with(['group_users']).where('course_version_id', parseInt(this.$route.params.course_version_id)).findIn(this.$store.getters['pagination/data']('groups')?.items);
+				return Group.query().with(['group_users', 'values.field']).where('course_version_id', parseInt(this.$route.params.course_version_id)).findIn(this.$store.getters['pagination/data']('groups')?.items);
 			},
 			fields() {
-				return this.courseVersion?.groups_table?.split(',');
+				return this.course_version.fields.filter(field => {
+					return field.category == 'groups';
+				});
+			},
+			tableFields() {
+				return this.course_version?.groups_table?.split(',');
 			}
 		},
 		watch: {

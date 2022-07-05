@@ -1,5 +1,6 @@
 import CustomModel from '@/store/models/CustomModel'
 import Option from '@/store/models/Option'
+import CourseVersion from '@/store/models/CourseVersion'
 
 export default class Field extends CustomModel {
 	static entity = 'fields'
@@ -12,12 +13,9 @@ export default class Field extends CustomModel {
 			type: this.attr(''),
 			validation: this.attr(''),
 			category: this.attr(''),
-			fieldable_id: this.attr(null),
-			fieldable_type: this.attr(null),
-			fieldable: this.morphTo('fieldable_id', 'fieldable_type'),
+			course_version: this.belongsTo(CourseVersion, 'course_version_id'),
+			course_version_id: this.attr(null),
 			options: this.hasMany(Option, 'field_id'),
-			parent_field_id: this.attr(null),
-			parent: this.belongsTo(Field, 'parent_field_id'),
 		}
 	}
 }

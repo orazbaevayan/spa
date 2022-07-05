@@ -1,16 +1,16 @@
 <template>
-	<div class="p-2 d-flex flex-column">
+	<div class="p-2 d-flex flex-column" v-if="!loading">
 		<Title class="d-flex align-items-center justify-content-center">
 			<span>{{ group.group_name }}</span>
 			<EditModal dialog-class="modal-md" :form="`updateGroup${group.id}`">
-				<form action="d-flex flex-wrap text-start" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup" v-if="!group.generate_name">
+				<form action="d-flex flex-wrap text-start" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup" v-if="!group.course_version.generate_group_name">
 					<div class="col-12 p-2 text-start">
 						<label class="form-label" for="name">Название</label>
 						<input type="text" class="form-control form-control-sm" name="name" :value="group.name">
 					</div>
 				</form>
-				<form class="d-flex flex-wrap text-start" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup" v-if="group.generate_name">
-					<component class="p-2 col-12" :is="`${field.type}Field`" :autocomplete="group" :value="field" v-for="field in group.fields" :key="field.id" />
+				<form class="d-flex flex-wrap text-start" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup" v-if="group.course_version.generate_group_name">
+					<component class="p-2 col-12" :is="`${field.type}Field`" :autocomplete="group" :value="findValue(field.id)" :field="field" v-for="field in fields" :key="field.id" />
 				</form>
 			</EditModal>
 		</Title>
@@ -34,7 +34,7 @@
 						<th><input type="checkbox" class="mx-1" @click="toggleCheckboxes"></th>
 						<th scope="col">#</th>
 						<th scope="col">Ф.И.О</th>
-						<th scope="col" v-for="field in fields" :key="field">{{ field }}</th>
+						<th scope="col" v-for="field in tableFields" :key="field">{{ field }}</th>
 						<th scope="col">Экзамены</th>
 						<th scope="col" class="text-end">
 							<span class="btn btn-link text-primary mx-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#addGroupUser`" data-bs-toggle="modal">
@@ -48,9 +48,9 @@
 						<td><input type="checkbox" class="mx-1" :value="group_user.id" v-model="selectedGroupUsers"></td>
 						<td scope="row">{{ index + 1 }}</td>
 						<td>{{ group_user.fullName }}</td>
-						<td scope="col" v-for="field in fields" :key="field">{{ findField(index, field)?.value }}</td>
+						<td scope="col" v-for="field in tableFields" :key="field">{{ group_user.values?.find(value => value.field_id == (group.course_version.fields.find(item => item.name == field))?.id)?.value }}</td>
 						<td>
-							<GroupUserExams :group-user="group_user" />
+							<!-- <GroupUserExams :group-user="group_user" /> -->
 						</td>
 						<td>
 							<div class="d-flex">
@@ -73,7 +73,7 @@
 					Создать нового пользователя
 				</template>
 				<template v-slot:body>
-					<GroupUserForm :autocomplete="group.group_users" :fields="group.course?.group.group_users[0].fields" :value="{ ...user, user: user }" :id="`storeGroupUserForm${user.id}`" @submit.prevent="storeGroupUser">
+					<GroupUserForm :autocomplete="group.group_users" :fields="fieldsGroupUser" :value="{ ...user, user: user }" :id="`storeGroupUserForm${user.id}`" @submit.prevent="storeGroupUser">
 						<input type="hidden" name="group_id" :value="group.id">
 						<input type="hidden" name="user_id" :value="user.id">
 						<input type="submit" class="d-none">
@@ -133,7 +133,7 @@
 					Создать нового пользователя
 				</template>
 				<template v-slot:body>
-					<GroupUserForm :autocomplete="group.group_users" :fields="group.course_version?.group_user?.fields" id="storeUserForm" @submit.prevent="storeGroupUser">
+					<GroupUserForm :autocomplete="group.group_users" :fields="fieldsGroupUser" id="storeUserForm" @submit.prevent="storeGroupUser">
 						<input type="hidden" name="group_id" :value="group.id">
 						<input type="submit" class="d-none">
 					</GroupUserForm>
@@ -147,7 +147,7 @@
 
 		<div v-for="group_user in group.group_users" :key="group_user.id">
 			<EditModal :open-button="false" :modal-id="`edit_group_user_modal_${group_user.id}`" dialog-class="modal-xl" fa-icon="user-edit" :form="`updateGroupUserForm${group_user.id}`">
-				<GroupUserForm :autocomplete="group.group_users" :fields="group_user.fields" :value="group_user" :id="`updateGroupUserForm${group_user.id}`" @submit.prevent="updateGroupUser($event, group_user)">
+				<GroupUserForm :autocomplete="group.group_users" :fields="fieldsGroupUser" :value="group_user" :id="`updateGroupUserForm${group_user.id}`" @submit.prevent="updateGroupUser($event, group_user)">
 					<input type="submit" class="d-none">
 				</GroupUserForm>
 			</EditModal>
@@ -174,10 +174,13 @@
 
 	export default {
 		beforeCreate() {
-			Group.api().fetchById(this.$route.params.group_id, '?include=course_version.group,course_version.group_user.fields.options,group_users.user,group_users.fields.parent.options,group_users.exams,course.exams,course_version.course');
+			Group.api().fetchById(this.$route.params.group_id, '?include=values,course_version.fields.options,group_users.user,group_users.values.field.options,group_users.exams,course_version.course').then(() => {
+				this.loading = false;
+			});
 		},
 		data() {
 			return {
+				loading: true,
 				foundUsers: [],
 				selectedGroupUsers: [],
 				allChecked: false
@@ -191,6 +194,9 @@
 			GroupUserExams
 		},
 		methods: {
+			findValue(fieldId) {
+				return this.group.values?.find(value => value.field_id == fieldId)
+			},
 			toggleCheckboxes() {
 				if (!this.allChecked) {
 					this.allChecked = true;
@@ -204,7 +210,7 @@
 				}
 			},
 			updateGroup(event) {
-				Group.api().update(event.currentTarget, this.$route.params.group_id, '?includes=fields.options');
+				Group.api().update(event.currentTarget, this.$route.params.group_id, '?includes=values');
 			},
 			addUser(user) {
 				GroupUser.api().post(`/api/group_users?include=user,fields.options`, {
@@ -218,7 +224,7 @@
 			},
 			updateGroupUser(event, groupUser) {
 				//User.api().update(event, groupUser.user.id);
-				GroupUser.api().update(event.currentTarget, groupUser.id, '?includes=user,fields.options');
+				GroupUser.api().update(event.currentTarget, groupUser.id, '?includes=user,values');
 			},
 			deleteGroupUser(groupUser) {
 				GroupUser.api().deleteById(groupUser.id);
@@ -238,7 +244,7 @@
 				}
 			},
 			storeGroupUser(event) {
-				GroupUser.api().store(event.currentTarget, '?include=user,fields.options,exams,group.course.exams');
+				GroupUser.api().store(event.currentTarget, '?include=user,values,exams,group.course.exams');
 			},
 			print(template) {
 				this.$axios({
@@ -262,7 +268,7 @@
 		},
 		computed: {
 			group() {
-				return Group.query().with(['course_version.group', 'course_version.group_user.fields.options', 'group_users.user', 'group_users.fields.parent.options', 'group_users.exams', 'course.exams', 'course_version.course']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['values', 'course_version.fields.options', 'group_users.user', 'group_users.values.field.options', 'group_users.exams', 'course_version.course']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
 				return User.findIn(this.$store.getters['pagination/data']('users')?.items);
@@ -271,7 +277,17 @@
 				return User.findIn(this.foundUsers);
 			},*/
 			fields() {
-				return this.group.course?.students_table?.split(',');
+				return this.group.course_version.fields.filter(field => {
+					return field.category == 'groups';
+				});
+			},
+			fieldsGroupUser() {
+				return this.group.course_version.fields.filter(field => {
+					return field.category == 'group_users';
+				});
+			},
+			tableFields() {
+				return this.group.course_version?.students_table?.split(',');
 			}
 		}
 	}

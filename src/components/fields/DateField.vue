@@ -1,21 +1,32 @@
 <template>
 	<div>
-		<label class="form-label">{{ value.name }}</label>
-		<input type="date" :name="`fields[${value.id}]`" class="form-control form-control-sm" :value="value.value">
+		<label class="form-label">{{ field.name }}</label>
+		<input type="date" :name="`fields[${field.id}]`" class="form-control form-control-sm" :value="value.value">
 	</div>
 </template>
 
 <script>
 	export default {
 		props: {
-			value: {
+			field: {
 				type: Object,
 				default: () => {
 					return {
 						name: '',
+					}
+				}
+			},
+			value: {
+				type: Object,
+				default: () => {
+					return {
 						value: '',
 					}
 				}
+			},
+			autocomplete: {
+				type: Object,
+				default: () => {},
 			},
 			name: {
 				type: String,

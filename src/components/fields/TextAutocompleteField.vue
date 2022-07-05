@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<label class="form-label">{{ value.name }}</label>
+		<label class="form-label">{{ field.name }}</label>
 		<div class="d-flex position-relative">
-			<input type="text" :name="`fields[${value.id}]`" class="form-control form-control-sm" v-model="text" autocomplete="off">
+			<input type="text" :name="`fields[${field.id}]`" class="form-control form-control-sm" v-model="text" autocomplete="off">
 			<button tabindex="-1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false">
 				<span class="visually-hidden">Toggle Dropdown</span>
 			</button>
@@ -23,11 +23,18 @@
 <script>
 	export default {
 		props: {
-			value: {
+			field: {
 				type: Object,
 				default: () => {
 					return {
 						name: '',
+					}
+				}
+			},
+			value: {
+				type: Object,
+				default: () => {
+					return {
 						value: '',
 					}
 				}
@@ -52,10 +59,10 @@
 		computed: {
 			options() {
 				const options = [];
-				options.push(...this.value.options.map(i => i.value));
+				options.push(...this.field.options.map(i => i.value));
 				for (var i = 0; i < this.autocomplete.length; i++) {
-					for (var j = 0; j < this.autocomplete[i].fields.length; j++) {
-						if (this.autocomplete[i].fields[j].name == this.value.name && !!this.autocomplete[i].fields[j].value) options.push(this.autocomplete[i].fields[j].value);
+					for (var j = 0; j < this.autocomplete[i].values.length; j++) {
+						if (this.autocomplete[i].values[j].field.id == this.field.id && !!this.autocomplete[i].values[j].value) options.push(this.autocomplete[i].values[j].value);
 					}
 				}
 				return [...new Set(options)];

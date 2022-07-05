@@ -1,7 +1,7 @@
 <template>
 	<form class="w-100 d-flex flex-row flex-wrap" v-if="value">
-		<input type="hidden" name="fieldable_id" :value="fieldableId">
-		<input type="hidden" name="fieldable_type" :value="fieldableType">
+		<input type="hidden" name="course_version_id" :value="courseVersionId" v-if="courseVersionId != null">
+		<input type="hidden" name="category" :value="category" v-if="category != null">
 		<div class="col-12 p-2">
 			<label class="form-label" for="type">{{ $t(`models.ALL['Тип']`) }}</label>
 			<select class="form-select form-select-sm" name="type" id="type" :value="value.type" :readonly="!canEdit">
@@ -43,11 +43,11 @@
 				type: Boolean,
 				default: true
 			},
-			fieldableType: {
+			category: {
 				type: String,
 				default: null
 			},
-			fieldableId: {
+			courseVersionId: {
 				type: Number,
 				default: null
 			},

@@ -4,6 +4,7 @@ import Group from '@/store/models/Group'
 import Field from '@/store/models/Field'
 import Exam from '@/store/models/Exam'
 import CourseVersion from '@/store/models/CourseVersion'
+import Value from '@/store/models/Value'
 
 export default class GroupUser extends CustomModel {
 	static entity = 'group_users'
@@ -25,6 +26,7 @@ export default class GroupUser extends CustomModel {
 			group: this.belongsTo(Group, 'group_id'),
 			fields: this.morphMany(Field, 'fieldable_id', 'fieldable_type'),
 			exams: this.morphMany(Exam, 'examable_id', 'examable_type'),
+			values: this.morphMany(Value, 'valueable_id', 'valueable_type'),
 			all_exams_passed: this.attr(null),
 		}
 	}

@@ -1,14 +1,14 @@
 <template>
-	<GroupForm :value="group" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup($event, group.id)">
+	<!-- <GroupForm :value="group" :id="`updateGroup${group.id}`" @submit.prevent="updateGroup($event, group.id)">
 		<button type="submit" class="m-0 m-2 btn btn-sm btn-warning text-white" :form="`updateGroup${group.id}`">Сохранить</button>
-	</GroupForm>
+	</GroupForm> -->
 	<Card class="mx-2 my-1" :is-control-panel="true">
 		<template v-slot:prepend>
 			<input type="checkbox" class="mx-1">
 		</template>
 		<template v-slot:append>
 			<CreateModal dialog-class="modal-md" form="storeFieldForm">
-				<FieldForm fieldable-type="groups" :fieldable-id="group?.id" id="storeFieldForm" @submit.prevent="storeField" />
+				<FieldForm category="groups" :course-version-id="course_version.id" id="storeFieldForm" @submit.prevent="storeField" />
 			</CreateModal>
 		</template>
 	</Card>
@@ -20,7 +20,7 @@
 		</template>
 		<template v-slot:append>
 			<EditModal dialog-class="modal-md" :form="`editFieldForm${field.id}`">
-				<FieldForm fieldable-type="groups" :fieldable-id="group?.id" :value="field" :id="`editFieldForm${field.id}`" @submit.prevent="updateField($event, field.id)" />
+				<FieldForm :value="field" :id="`editFieldForm${field.id}`" @submit.prevent="updateField($event, field.id)" />
 			</EditModal>
 			<DeleteModal @delete="deleteField(field)">
 				Вы уверены что хотите удалить запись <b>{{ field.name }}</b>?
@@ -69,7 +69,7 @@
 	import Group from '@/store/models/Group'
 	/*import FieldOption from '@/store/models/FieldOption'*/
 	import OptionForm from '@/components/forms/Option'
-	import GroupForm from '@/components/forms/Group'
+	/*import GroupForm from '@/components/forms/Group'*/
 
 	export default {
 		created() {
@@ -78,7 +78,7 @@
 		components: {
 			FieldForm,
 			OptionForm,
-			GroupForm,
+			/*GroupForm,*/
 		},
 		methods: {
 			updateGroup(event, id) {
@@ -147,17 +147,19 @@
 			},
 		},
 		computed: {
-			courseVersion() {
-				return CourseVersion.query().with(['group.fields.options']).find(this.$route.params.course_version_id) || new CourseVersion;
+			course_version() {
+				return CourseVersion.query().with(['fields.options']).find(this.$route.params.course_version_id) || new CourseVersion;
 			},
 			options() {
 				return Option.query().with(['field_options']).get();
 			},
 			group() {
-				return this.courseVersion.group || new Group;
+				return this.course_version.group || new Group;
 			},
 			fields() {
-				return this.courseVersion.group?.fields;
+				return this.course_version.fields.filter(field => {
+					return field.category == 'groups';
+				});
 			}
 		}
 	}

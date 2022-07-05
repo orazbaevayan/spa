@@ -1,22 +1,22 @@
 <template>
 	<Title>{{ $t('pages.Редактирование курса') }}</Title>
 	<div class="p-2 d-flex flex-column">
-		<Tabs :tabs="['Курс', 'Версия', 'Шаблоны', 'Группа', 'Студент']">
+		<Tabs :tabs="['Версия', 'Курс', 'Шаблоны', 'Группа', 'Студент']">
 
 			<template v-slot:0>
-				<CourseForm :value="course_version.course" @submit.prevent="updateCourse">
-					<div class="p-2 text-start">
-						<input type="submit" class="btn btn-sm btn-warning text-white" :value="$t('ui.Сохранить')">
-					</div>
-				</CourseForm>
-			</template>
-
-			<template v-slot:1>
 				<CourseVersionForm :value="course_version" @submit.prevent="updateCourseVersion">
 					<div class="p-2 text-start">
 						<input type="submit" class="btn btn-sm btn-warning text-white" :value="$t('ui.Сохранить')">
 					</div>
 				</CourseVersionForm>
+			</template>
+
+			<template v-slot:1>
+				<CourseForm :value="course_version.course" @submit.prevent="updateCourse">
+					<div class="p-2 text-start">
+						<input type="submit" class="btn btn-sm btn-warning text-white" :value="$t('ui.Сохранить')">
+					</div>
+				</CourseForm>
 			</template>
 
 			<template v-slot:2>
@@ -49,7 +49,7 @@
 
 	export default {
 		created() {
-			CourseVersion.api().fetchById(this.$route.params.course_version_id, '?include=course,templates,group.fields.options,group_user.fields.options');
+			CourseVersion.api().fetchById(this.$route.params.course_version_id, '?include=course,templates,fields.options');
 		},
 		components: {
 			CourseForm,
@@ -71,12 +71,12 @@
 				.catch(e => console.log(e));
 			},
 			updateCourseVersion(event) {
-				CourseVersion.api().update(event.currentTarget, this.$route.params.course_version_id, '?include=course,templates,group.fields.options,group_user.fields.options');
+				CourseVersion.api().update(event.currentTarget, this.$route.params.course_version_id, '?include=course,templates,fields.options');
 			},
 		},
 		computed: {
 			course_version() {
-				return CourseVersion.query().with(['course', 'templates', 'group.fields.options', 'group_user.fields.options']).find(this.$route.params.course_version_id) || new CourseVersion;
+				return CourseVersion.query().with(['course', 'templates', 'fields.options']).find(this.$route.params.course_version_id) || new CourseVersion;
 				
 			}
 		}

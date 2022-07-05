@@ -46,7 +46,7 @@
 			</div>
 		</div>
 		<div class="w-100 d-flex flex-row flex-wrap">
-			<component class="p-2 col-12 col-md-6" :is="`${field.type}Field`" :autocomplete="autocomplete" :value="field" v-for="field in fields" :key="field.id" />
+			<component class="p-2 col-12 col-md-6" :is="`${field.type}Field`" :autocomplete="autocomplete" :field="field" :value="findValue(field.id)" v-for="field in fields" :key="field.id" />
 			<input type="submit" class="d-none">
 		</div>
 		<div class="w-100 d-flex flex-row flex-wrap">
@@ -84,8 +84,11 @@
 		methods: {
 			updateField(field, event) {
 				this.$refs[field].value = event.currentTarget.value;
-			}
-		}
+			},
+			findValue(fieldId) {
+				return this.value.values?.find(value => value.field_id == fieldId)
+			},
+		},
 	}
 </script>
 

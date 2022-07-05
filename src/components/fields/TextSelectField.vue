@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<label class="form-label">{{ value.name }}</label>
+		<label class="form-label">{{ field.name }}</label>
 		<div class="d-flex position-relative">
-			<input type="text" :name="`fields[${value.id}]`" class="form-control form-control-sm" v-model="text" autocomplete="off">
+			<input type="text" :name="`fields[${field.id}]`" class="form-control form-control-sm" v-model="text" autocomplete="off">
 			<button tabindex="-1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" data-bs-reference="parent" aria-expanded="false">
 				<span class="visually-hidden">Toggle Dropdown</span>
 			</button>
@@ -25,14 +25,25 @@
 
 	export default {
 		props: {
-			value: {
+			field: {
 				type: Object,
 				default: () => {
 					return {
 						name: '',
+					}
+				}
+			},
+			value: {
+				type: Object,
+				default: () => {
+					return {
 						value: '',
 					}
 				}
+			},
+			autocomplete: {
+				type: Object,
+				default: () => {},
 			},
 			name: {
 				type: String,
@@ -56,7 +67,7 @@
 					threshold: 0.0,
 					keys: ['key', 'value']
 				}
-				const result = [...(this.text ? new Fuse((this.value.parent_field_id ? this.value.parent?.options : this.value.options), options).search(this.text).map(i => i.item) : (this.value.parent_field_id ? this.value.parent?.options : this.value.options) || [])];
+				const result = [...(this.text ? new Fuse(this.field.options, options).search(this.text).map(i => i.item) : this.field.options || [])];
 				return [...new Set(result)];
 			}
 		}

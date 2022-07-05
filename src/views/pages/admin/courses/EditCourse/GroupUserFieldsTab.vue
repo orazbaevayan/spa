@@ -5,7 +5,7 @@
 		</template>
 		<template v-slot:append>
 			<CreateModal dialog-class="modal-md" form="storeFieldForm">
-				<FieldForm fieldable-type="group_users" :fieldable-id="group_user?.id" id="storeFieldForm" @submit.prevent="storeField" />
+				<FieldForm category="group_users" :course-version-id="course_version.id" id="storeFieldForm" @submit.prevent="storeField" />
 			</CreateModal>
 		</template>
 	</Card>
@@ -17,7 +17,7 @@
 		</template>
 		<template v-slot:append>
 			<EditModal dialog-class="modal-md" :form="`editFieldForm${field.id}`">
-				<FieldForm fieldable-type="group_users" :fieldable-id="group_user?.id" :value="field" :id="`editFieldForm${field.id}`" @submit.prevent="updateField($event, field.id)" />
+				<FieldForm :value="field" :id="`editFieldForm${field.id}`" @submit.prevent="updateField($event, field.id)" />
 			</EditModal>
 			<DeleteModal @delete="deleteField(field)">
 				Вы уверены что хотите удалить запись <b>{{ field.name }}</b>?
@@ -132,17 +132,19 @@
 			},
 		},
 		computed: {
-			courseVersion() {
-				return CourseVersion.query().with(['group_user.fields.options']).find(this.$route.params.course_version_id) || new CourseVersion;
+			course_version() {
+				return CourseVersion.query().with(['fields.options']).find(this.$route.params.course_version_id) || new CourseVersion;
 			},
 			options() {
 				return Option.query().with(['field_options']).get();
 			},
 			group_user() {
-				return this.courseVersion.group_user;
+				return this.course_version.group_user;
 			},
 			fields() {
-				return this.courseVersion.group_user?.fields;
+				return this.course_version.fields.filter(field => {
+					return field.category == 'group_users';
+				});
 			}
 		}
 	}

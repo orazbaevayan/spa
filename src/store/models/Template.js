@@ -1,5 +1,5 @@
 import CustomModel from '@/store/models/CustomModel'
-import Group from '@/store/models/Group'
+import CourseVersion from '@/store/models/CourseVersion'
 
 export default class Template extends CustomModel {
 	static entity = 'templates'
@@ -10,9 +10,9 @@ export default class Template extends CustomModel {
 			name: this.attr(''),
 			file: this.attr(''),
 			code: this.attr(''),
-			group_id: this.attr(null),
+			course_version_id: this.attr(null),
 			selection_required: this.attr(false),
-			group: this.belongsTo(Group, 'group_id'),
+			course_version: this.belongsTo(CourseVersion, 'course_version_id'),
 		}
 	}
 }
