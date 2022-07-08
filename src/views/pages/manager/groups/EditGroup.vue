@@ -174,7 +174,7 @@
 
 	export default {
 		beforeCreate() {
-			Group.api().fetchById(this.$route.params.group_id, '?include=values,course_version.fields.options,group_users.user,group_users.values.field.options,group_users.exams,course_version.course').then(() => {
+			Group.api().fetchById(this.$route.params.group_id, '?include=values,course_version.fields.options,group_users.user,group_users.values.field.options,course_version.course').then(() => {
 				this.loading = false;
 			});
 		},
@@ -244,7 +244,7 @@
 				}
 			},
 			storeGroupUser(event) {
-				GroupUser.api().store(event.currentTarget, '?include=user,values,exams,group.course.exams');
+				GroupUser.api().store(event.currentTarget, '?include=user,values,group.course.exams');
 			},
 			print(template) {
 				this.$axios({
@@ -268,7 +268,7 @@
 		},
 		computed: {
 			group() {
-				return Group.query().with(['values', 'course_version.fields.options', 'group_users.user', 'group_users.values.field.options', 'group_users.exams', 'course_version.course']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['values', 'course_version.fields.options', 'group_users.user', 'group_users.values.field.options', 'course_version.course']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
 				return User.findIn(this.$store.getters['pagination/data']('users')?.items);
