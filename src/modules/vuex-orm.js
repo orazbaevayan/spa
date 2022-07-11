@@ -17,6 +17,7 @@ import Answer from '@/store/models/Answer'
 import Company from '@/store/models/Company'
 import CompanyUser from '@/store/models/CompanyUser'
 import Value from '@/store/models/Value'
+import Attempt from '@/store/models/Attempt'
 
 VuexORM.use(VuexORMAxios, { axios, dataKey: 'data' })
 
@@ -37,5 +38,6 @@ database.register(Answer)
 database.register(Company)
 database.register(CompanyUser)
 database.register(Value)
+database.register(Attempt)
 
 export default database

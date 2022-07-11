@@ -18,7 +18,7 @@ export default class CourseVersion extends CustomModel {
 			groups_table: this.attr(''),
 			students_table: this.attr(''),
 			groups: this.hasMany(Group, 'course_version_id'),
-			exams: this.morphMany(Exam, 'examable_id', 'examable_type'),
+			exams: this.hasMany(Exam, 'course_version_id'),
 			course_id: this.attr(null),
 			course: this.belongsTo(Course, 'course_id'),
 			templates: this.hasMany(Template, 'course_version_id'),

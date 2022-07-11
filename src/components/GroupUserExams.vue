@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Modal :modal-id="`group_user_exams_${groupUser.id}`" :header="true" :footer="false" :dialog-class="'modal-lg'" :open-button="true">
+		<Modal :modal-id="`group_user_attempts_${groupUser.id}`" :header="true" :footer="false" :dialog-class="'modal-lg'" :open-button="true">
 			<template v-slot:open-button>
 				{{ openButtonName }}
 			</template>
@@ -23,30 +23,30 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="(exam, index) in groupUser.exams" :key="exam.id">
+							<tr v-for="(attempt, index) in groupUser.attempts" :key="attempt.id">
 								<td><span class="mx-1">{{ index + 1 }}</span></td>
-								<td>{{ exam.name }}</td>
+								<td>{{ attempt.exam.name }}</td>
 								<td>
-									<ExamResult :exam="exam"/>
+									<!-- <ExamResult :exam="exam"/> -->
 								</td>
 								<td>
-									<span class="btn btn-link text-danger mx-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#delete_exam_${exam.id}`" data-bs-toggle="modal">
+									<span class="btn btn-link text-danger mx-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#delete_attempt_${attempt.id}`" data-bs-toggle="modal">
 										<font-awesome-icon :icon="['fa', 'trash-alt']" />
 									</span>
 								</td>
 							</tr>
-							<tr v-if="!groupUser.exams.length">
+							<tr v-if="!groupUser.attempts.length">
 								<td colspan="4" class="text-center">
 									Нет экзаменов
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					<form class="d-flex position-relative add-exam-form mt-3" @submit.prevent="addExamToGroupUser">
-						<select class="form-select form-select-sm" name="parent_exam_id">
-							<option v-for="exam in groupUser.group.course.exams" :key="exam.id" :value="exam.id">{{ exam.name }}</option>
+					<form class="d-flex position-relative add-attempt-form mt-3" @submit.prevent="addAttemptToGroupUser">
+						<select class="form-select form-select-sm" name="exam_id">
+							<option v-for="exam in groupUser.group.course_version.exams" :key="exam.id" :value="exam.id">{{ exam.name }}</option>
 						</select>
-						<input type="hidden" name="examable_id" :value="groupUser.id">
+						<input type="hidden" name="group_user_id" :value="groupUser.id">
 						<button type="submit" class="btn btn-sm btn-primary">
 							Добавить
 						</button>
@@ -59,7 +59,7 @@
 			</template>
 		</Modal>
 
-		<Modal v-for="exam in groupUser.exams" :key="exam.id" :header="true" :footer="true" :open-button="false" :modal-id="`delete_exam_${exam.id}`">
+		<Modal v-for="attempt in groupUser.attempts" :key="attempt.id" :header="true" :footer="true" :open-button="false" :modal-id="`delete_attempt_${attempt.id}`">
 			<template v-slot:open-button>
 				<font-awesome-icon class="text-danger mx-1" :icon="['fa', 'trash-alt']" />
 			</template>
@@ -68,12 +68,12 @@
 			</template>
 			<template v-slot:body>
 				<div class="p-2">
-					Вы действительно хотите удалить экзамен <span class="fw-bold">{{ groupUser.fullName }} - {{ exam.name }}</span>?
+					Вы действительно хотите удалить экзамен <span class="fw-bold">{{ groupUser.fullName }} - {{ attempt.exam.name }}</span>?
 				</div>
 			</template>
 			<template v-slot:footer>
-				<button type="button" class="m-0 m-2 btn btn-sm btn-danger text-white" :data-bs-target="`#group_user_exams_${groupUser.id}`" data-bs-toggle="modal" @click.prevent="deleteExam(exam)">Удалить</button>
-				<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" :data-bs-target="`#group_user_exams_${groupUser.id}`" data-bs-toggle="modal">Отмена</button>
+				<button type="button" class="m-0 m-2 btn btn-sm btn-danger text-white" :data-bs-target="`#group_user_attempts_${groupUser.id}`" data-bs-toggle="modal" @click.prevent="deleteAttempt(attempt)">Удалить</button>
+				<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" :data-bs-target="`#group_user_attempts_${groupUser.id}`" data-bs-toggle="modal">Отмена</button>
 			</template>
 		</Modal>
 	</div>
@@ -81,7 +81,7 @@
 
 <script>
 	import GroupUser from '@/store/models/GroupUser'
-	import Exam from '@/store/models/Exam'
+	import Attempt from '@/store/models/Attempt'
 
 	export default {
 		props: {
@@ -92,15 +92,15 @@
 		},
 		computed: {
 			openButtonName() {
-				return this.groupUser.exams.length;
+				return this.groupUser.attempts.length;
 			},
 		},
 		methods: {
-			deleteExam(exam) {
-				Exam.api().deleteById(exam.id);
+			deleteAttempt(attempt) {
+				Attempt.api().deleteById(attempt.id);
 			},
-			addExamToGroupUser() {
-				Exam.api().store(event.currentTarget);
+			addAttemptToGroupUser() {
+				Attempt.api().store(event.currentTarget);
 			}
 		}
 	}
@@ -136,7 +136,7 @@
 			background-color: #fff;
 		}
 	}
-	.add-exam-form {
+	.add-attempt-form {
 		select {
 			border-top-right-radius: 0;
 			border-bottom-right-radius: 0;

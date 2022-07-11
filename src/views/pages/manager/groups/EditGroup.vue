@@ -50,7 +50,7 @@
 						<td>{{ group_user.fullName }}</td>
 						<td scope="col" v-for="field in tableFields" :key="field">{{ group_user.values?.find(value => value.field_id == (group.course_version.fields.find(item => item.name == field))?.id)?.value }}</td>
 						<td>
-							<!-- <GroupUserExams :group-user="group_user" /> -->
+							<GroupUserExams :group-user="group_user" />
 						</td>
 						<td>
 							<div class="d-flex">
@@ -174,7 +174,7 @@
 
 	export default {
 		beforeCreate() {
-			Group.api().fetchById(this.$route.params.group_id, '?include=values,course_version.fields.options,group_users.user,group_users.values.field.options,course_version.course').then(() => {
+			Group.api().fetchById(this.$route.params.group_id, '?include=values,course_version.fields.options,group_users.user,group_users.values.field.options,course_version.course,course_version.exams,group_users.attempts.exam').then(() => {
 				this.loading = false;
 			});
 		},
@@ -268,7 +268,7 @@
 		},
 		computed: {
 			group() {
-				return Group.query().with(['values', 'course_version.fields.options', 'group_users.user', 'group_users.values.field.options', 'course_version.course']).find(this.$route.params.group_id) || new Group;
+				return Group.query().with(['values', 'course_version.fields.options', 'group_users.user', 'group_users.values.field.options', 'course_version.course', 'group_users.attempts.exam', 'group_users.group.course_version.exams']).find(this.$route.params.group_id) || new Group;
 			},
 			users() {
 				return User.findIn(this.$store.getters['pagination/data']('users')?.items);
