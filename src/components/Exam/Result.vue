@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<span v-if="result && exam.is_ended">{{ exam.result }}</span><span v-if="result && grade && exam.is_ended"> - </span><span v-if="grade" :class="textClass">{{ exam.grade }}</span>
+		<span v-if="result && attempt.is_ended">{{ attempt.result }}</span><span v-if="result && grade && attempt.is_ended"> - </span><span v-if="grade" :class="textClass">{{ attempt.grade }}</span>
 	</div>
 </template>
 
@@ -9,7 +9,7 @@
 
 	export default {
 		props: {
-			exam: {
+			attempt: {
 				type: Object,
 				default: new Exam
 			},
@@ -25,8 +25,8 @@
 		computed: {
 			textClass() {
 				let self = this;
-				let result = self.exam.passed ? 'text-success' : 'text-danger';
-				let textClass = self.exam.is_ended ? result : 'text-secondary';
+				let result = self.attempt.passed ? 'text-success' : 'text-danger';
+				let textClass = self.attempt.is_ended ? result : 'text-secondary';
 				return textClass; 
 			}
 		}

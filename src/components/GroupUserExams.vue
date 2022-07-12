@@ -27,7 +27,7 @@
 								<td><span class="mx-1">{{ index + 1 }}</span></td>
 								<td>{{ attempt.exam.name }}</td>
 								<td>
-									<!-- <ExamResult :exam="exam"/> -->
+									<ExamResult :attempt="attempt"/>
 								</td>
 								<td>
 									<span class="btn btn-link text-danger mx-1 p-0" data-bs-dismiss="modal" :data-bs-target="`#delete_attempt_${attempt.id}`" data-bs-toggle="modal">

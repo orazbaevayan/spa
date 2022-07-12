@@ -25,8 +25,6 @@
 
 	export default {
 		mounted() {
-			//console.log(this.$router.options.history.state.back);
-
 			this.$fetchApiData([
 				Exam.api().fetchById(this.$route.params.exam_id, '?include=examable.group.course,questions.answers'),
 			]);

@@ -21,7 +21,7 @@ export default [
 	name: 'user-my-course',
 	path: '/user/my_courses/:group_user_id',
 	meta: {
-		title: (route) => GroupUser.query().with(['group.course']).find(route.params.group_user_id)?.group.course.name + ' - ' + GroupUser.query().with(['group']).find(route.params.group_user_id)?.group.group_name,
+		title: (route) => GroupUser.query().with(['group.course_version.course']).find(route.params.group_user_id)?.group.course_version.course.name + ' - ' + GroupUser.query().with(['group']).find(route.params.group_user_id)?.group.group_name,
 		requiresAuth: true,
 		layout: 'MainLayout',
 		breadcrumbs: [
@@ -33,8 +33,8 @@ export default [
 	component: () => import('../views/pages/user/MyCourse.vue')
 },
 {
-	name: 'user-exam',
-	path: '/user/my_courses/:group_user_id/exams/:exam_id',
+	name: 'user-attempt',
+	path: '/user/my_courses/:group_user_id/attempt/:attempt_id',
 	meta: {
 		title: () => t('pages.Экзамен'),
 		requiresAuth: true,
@@ -46,11 +46,11 @@ export default [
 		{ name: 'user-my-course', query: { tab: 1 } },
 		]
 	},
-	component: () => import('../views/pages/user/Exam.vue')
+	component: () => import('../views/pages/user/Attempt.vue')
 },
 {
 	name: 'user-exam-training',
-	path: '/user/my_courses/:group_user_id/exams/:exam_id/training',
+	path: '/user/my_courses/:group_user_id/exams/:attempt_id/training',
 	meta: {
 		title: () => t('pages.Тренировка'),
 		requiresAuth: true,
