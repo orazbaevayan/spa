@@ -42,12 +42,12 @@
 							</tr>
 						</tbody>
 					</table>
-					<form class="d-flex position-relative add-attempt-form mt-3" @submit.prevent="addAttemptToGroupUser">
-						<select class="form-select form-select-sm" name="exam_id">
+					<form class="d-flex position-relative add-attempt-form mt-3" id="add_attempt_form" @submit.prevent="addAttemptToGroupUser">
+						<select class="form-select form-select-sm" v-model="selectedExamId" name="exam_id">
 							<option v-for="exam in groupUser.group.course_version.exams" :key="exam.id" :value="exam.id">{{ exam.name }}</option>
 						</select>
 						<input type="hidden" name="group_user_id" :value="groupUser.id">
-						<button type="submit" class="btn btn-sm btn-primary">
+						<button type="button" class="btn btn-primary" :class="{ disabled: !selectedExam }" data-bs-dismiss="modal" :data-bs-target="`#add_attempt`" data-bs-toggle="modal">
 							Добавить
 						</button>
 					</form>
@@ -76,6 +76,23 @@
 				<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" :data-bs-target="`#group_user_attempts_${groupUser.id}`" data-bs-toggle="modal">Отмена</button>
 			</template>
 		</Modal>
+
+		<Modal :header="true" :footer="true" :open-button="false" :modal-id="`add_attempt`">
+			<template v-slot:header>
+				Добавить экзамен
+			</template>
+			<template v-slot:body>
+				<div class="p-2">
+					Добавить экзамен <span class="fw-bold">{{ groupUser.fullName }} - {{ selectedExam?.name }}</span>?
+				</div>
+			</template>
+			<template v-slot:footer>
+				<button form="add_attempt_form" class="m-0 m-2 btn btn-sm btn-primary text-white" :data-bs-target="`#group_user_attempts_${groupUser.id}`" data-bs-toggle="modal">
+					Добавить
+				</button>
+				<button type="button" class="m-0 m-2 btn btn-sm btn-secondary" :data-bs-target="`#group_user_attempts_${groupUser.id}`" data-bs-toggle="modal">Отмена</button>
+			</template>
+		</Modal>
 	</div>
 </template>
 
@@ -90,10 +107,18 @@
 				default: new GroupUser
 			}
 		},
+		data() {
+			return {
+				selectedExamId: null
+			}
+		},
 		computed: {
 			openButtonName() {
 				return this.groupUser.attempts.length;
 			},
+			selectedExam() {
+				return this.groupUser.group.course_version.exams.find(exam => exam.id == this.selectedExamId);
+			}
 		},
 		methods: {
 			deleteAttempt(attempt) {

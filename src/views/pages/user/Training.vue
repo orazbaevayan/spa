@@ -1,18 +1,18 @@
 <template>
-	<div class="p-2" v-if="exam">
+	<div class="p-2" v-if="attempt && attempt.exam">
 		<div>
 			<div class="mb-0 p-2 text-center">
 				<h6 class="mb-0 p-0 pb-1">Тренировка</h6>
-				<p class="mb-0 p-0">{{ exam.examable?.group.course.name }}. {{ exam.name }}</p>
+				<p class="mb-0 p-0">{{ attempt.group_user.group.course_version.course.name }}. {{ attempt.exam.name }}</p>
 			</div>
 		</div>
 		
 		<div class="p-2">
-			<Training :exam-id="exam.parent_exam_id" />
+			<Training :exam-id="attempt.exam.id" />
 		</div>
 		<div class="p-2 d-flex justify-content-center">
 			<router-link
-			:to="{ name: 'user-exam'}"
+			:to="{ name: 'user-attempt'}"
 			class="btn btn-sm btn-outline-primary"
 			v-text="'Завершить тренировку'"
 			/>
@@ -21,22 +21,20 @@
 </template>
 
 <script>
-	import Exam from '@/store/models/Exam'
+	import Attempt from '@/store/models/Attempt'
 
 	export default {
 		mounted() {
-			this.$fetchApiData([
-				Exam.api().fetchById(this.$route.params.exam_id, '?include=examable.group.course,questions.answers'),
-			]);
+			Attempt.api().fetchById(this.$route.params.attempt_id, '?include=group_user.group.course_version.course,exam.questions.answers');
 		},
 		computed: {
-			exam() {
-				return Exam.query().with(['examable.group.course', 'questions.answers']).find(this.$route.params.exam_id) || null;
+			attempt() {
+				return Attempt.query().with(['group_user.group.course_version.course', 'exam.questions.answers']).find(this.$route.params.attempt_id) || null;
 			}
 		},
 		methods: {
 			startExam(event) {
-				Exam.api().update(event.currentTarget, this.$route.params.exam_id, '?include=examable.group.course,questions.answers', false);
+				Attempt.api().update(event.currentTarget, this.$route.params.exam_id, '?include=examable.group.course,questions.answers', false);
 			}
 		}
 /*		methods: {

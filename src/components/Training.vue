@@ -19,7 +19,7 @@
 					</li>
 				</ul>
 			</div>
-			<div class="p-2 d-flex justify-content-end">
+			<div class="p-2 d-flex" :class="{ 'justify-content-end': check, 'justify-content-center': !check }">
 				<button class="btn btn-sm btn-primary" @click.prevent="submit" v-if="!check" :disabled="!userAnswerId">Ответить</button>
 				<button class="btn btn-sm btn-primary" @click.prevent="nextQuestion" v-if="check">Далее</button>
 			</div>
@@ -49,8 +49,8 @@
 		},
 		methods: {
 			getExam() {
-				Exam.api().fetchById(this.$route.params.exam_id, '?include=examable.group.course,questions.answers,parent.questions.answers').then(() => {
-					let questions = this.exam.parent.questions;
+				Exam.api().fetchById(this.$route.params.exam_id, '?include=course_version.course,questions.answers').then(() => {
+					let questions = this.exam.questions;
 					let result = [];
 					while (questions.length > 0) {
 						let random = Math.floor(Math.random() * ((questions.length - 1) - 0 + 1)) + 0;

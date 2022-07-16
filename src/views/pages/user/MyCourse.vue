@@ -18,7 +18,7 @@
 								<ExamResult :attempt="attempt"/>
 							</div>
 							<div class="px-1">
-								<router-link class="text-primary px-1 py-0" :to="{ name: 'user-attempt', params: { attempt_id: attempt.id } }">
+								<router-link class="text-primary px-1 py-0" :to="{ name: 'user-attempt', params: { exam_id: attempt.exam.id, attempt_id: attempt.id } }">
 									<font-awesome-icon :icon="['fa', 'arrow-right']" />
 								</router-link>
 							</div>

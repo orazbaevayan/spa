@@ -67,6 +67,13 @@
 						<div class="p-1">
 							<ExamResult :attempt="attempt" />
 						</div>
+						<div class="p-1">
+							<router-link
+							:to="{ name: 'user-my-course', query: { tab: 1 } }"
+							class="btn btn-sm btn-primary"
+							v-text="'Назад'"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

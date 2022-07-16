@@ -34,7 +34,7 @@ export default [
 },
 {
 	name: 'user-attempt',
-	path: '/user/my_courses/:group_user_id/attempt/:attempt_id',
+	path: '/user/my_courses/:group_user_id/exams/:exam_id/attempts/:attempt_id',
 	meta: {
 		title: () => t('pages.Экзамен'),
 		requiresAuth: true,
@@ -50,7 +50,7 @@ export default [
 },
 {
 	name: 'user-exam-training',
-	path: '/user/my_courses/:group_user_id/exams/:attempt_id/training',
+	path: '/user/my_courses/:group_user_id/exams/:exam_id/attempts/:attempt_id/training',
 	meta: {
 		title: () => t('pages.Тренировка'),
 		requiresAuth: true,
@@ -60,7 +60,7 @@ export default [
 		{ isLink: false, text: () => t('roles.Пользователь') },
 		{ name: 'user-my-courses' },
 		{ name: 'user-my-course' },
-		{ name: 'user-exam' },
+		{ name: 'user-attempt' },
 		]
 	},
 	component: () => import('../views/pages/user/Training.vue')
